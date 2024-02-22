@@ -43,16 +43,20 @@ function Login() {
         event.preventDefault()
         setIsLoading(true)
 
+
+
         try{
-            const res = await fetch("http://127.0.0.1:8000/api/v1/login-email-otp/",{
+
+            const res = await fetch("http://127.0.0.1:8000/api/v1/users/login-phone-otp/",{
                 method:"POST",
                 headers:{"Content-Type":"application/json",},
     
                 body:JSON.stringify({
-                    "email": Email.email
+                    "phone": "+5549998398642"
                 })
             })
-    
+
+
             if (!res.ok) {
                 throw new Error(`${res.status} ${res.statusText}`);
             }
@@ -66,6 +70,7 @@ function Login() {
                 SetPhoneLogin(false)
             }
 
+
             setIsLoading(false)
 
         } catch(error){
@@ -77,7 +82,7 @@ function Login() {
     async function GetUserData(token){
         setIsLoading(true)
         try{
-            const res = await fetch("http://127.0.0.1:8000/api/v1/@me/",{
+            const res = await fetch("http://127.0.0.1:8000/api/v1/users/@me/",{
                 method:"GET",
                 headers:{
                     "Content-Type":"application/json", 
@@ -109,7 +114,7 @@ function Login() {
         setIsLoading(true)
 
         try{
-            const res = await fetch("http://127.0.0.1:8000/api/v1/validate-otp/",{
+            const res = await fetch("http://127.0.0.1:8000/api/v1/users/validate-otp/",{
                 method:"POST",
                 headers:{"Content-Type":"application/json",},
     
@@ -182,7 +187,7 @@ function Login() {
                                     : 
                                         <>
                                             <input name="phone" id='phone' type="text" className="input input-bordered input-md w-full max-w-xs" placeholder="+5549999999999" 
-                                                {...register("phone", { required: "Campo obrigatório.", maxLength:{value:15, message:'Máximo de 15 caracteres'}, minLength:{value:7, message:'Necessita no minímo 7 caracteres '}, onChange: (e) => {SetPhone({...Phone, phome:e.target.value})}, })}
+                                                {...register("phone", { required: "Campo obrigatório.", maxLength:{value:15, message:'Máximo de 15 caracteres'}, minLength:{value:7, message:'Necessita no minímo 7 caracteres '}, onChange: (e) => {SetPhone({...Phone, phone:e.target.value})}, })}
                                             />
                                             <ErrorMessage
                                                 errors={errors}
