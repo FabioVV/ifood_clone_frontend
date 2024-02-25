@@ -38,6 +38,7 @@ function Navbar() {
                 </div>
 
                 {getCurrentUserToken() ? 
+                
                         <div className="navbar-center hidden lg:flex">
                             <ul className="menu menu-horizontal px-1">
                                 <li><NavLink  className=""  to="/restaurantes">Restaurantes</NavLink></li>
@@ -67,8 +68,8 @@ function Navbar() {
                 
                 :
                     <div className="navbar-end">
-                        <NavLink className="btn mr-5"  to="/register">Criar conta</NavLink>
-                        <NavLink className="btn"  to="/login">Login</NavLink>
+                        <NavLink className="btn mr-5" to="/register">Criar conta</NavLink>
+                        <NavLink className="btn" to="/login">Login</NavLink>
                     </div>
                 }
                 
