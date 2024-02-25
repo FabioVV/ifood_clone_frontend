@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import DefaultPage from '../../components/DefaultPage'
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from './utils';
+import brflag from '../../public/img/brflag.svg'
 
 function Login() {
 
@@ -33,11 +34,6 @@ function Login() {
         }
     )
 
-    const [Loggedin, SetLoggedIn] = useState(
-        {
-            token:"",
-        }
-    )
 
     async function onSubmit(form, event){
         event.preventDefault()
@@ -87,7 +83,7 @@ function Login() {
                     throw new Error(`${res.status} ${res.statusText}`);
                 }
                 
-                const sent_otp = await res.json()
+                const sent_otp = await res.json() 
 
 
                 if(sent_otp['error_no_phone_account']){
@@ -230,7 +226,7 @@ function Login() {
                                     : 
                                         <>
                                             <label className="input input-bordered input-lg flex items-center gap-2">
-                                                +55
+                                            <img src={brflag} width={25}/> +55 
                                                 <input name="phone" id='phone' type="text" className="w-full max-w grow" placeholder="49999999999" 
                                                     {...register("phone", { required: "Campo obrigatório.", maxLength:{value:15, message:'Máximo de 15 caracteres'}, minLength:{value:7, message:'Necessita no minímo 7 caracteres '}, onChange: (e) => {SetPhone({...Phone, phone:`+55` + e.target.value})}, })}
                                                 />
@@ -323,6 +319,14 @@ function Login() {
                                         Código
                                     </label>
 
+                                    <label className="text-md mb-4"> 
+                                        {EmailLogin ? `Digite o código de 6 digítos que enviamos para ${Email.email}`
+                                        : 
+                                            `Digite o código de 6 digítos que enviamos para ${Phone.phone}`
+                                        }
+                                    </label>
+
+
                                     <input name="otp" id='otp' type="text" className="input input-bordered input-lg w-full max-w" placeholder="000000" 
                                         {...register("otp", { required: "Campo obrigatório.", maxLength:{value:6, message:'Máximo de 6 caracteres'}, minLength:{value:6, message:'Necessita no minímo 6 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp:e.target.value})}, })}
                                     />
@@ -369,9 +373,6 @@ function Login() {
                                     />
 
 
-                                    <label className="text-xs mb-4"> 
-                                        Digite o código de acesso que chegou no seu email para completar seu login.
-                                    </label>
 
                                     <button disabled={isLoading} type='submit' className="btn btn-outline">
                                         
