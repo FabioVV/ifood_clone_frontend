@@ -14,7 +14,7 @@ function Register() {
 
 
   
-  const [EmailRegister, SetEmailRegister] = useState(false)
+  const [EmailRegister, SetEmailRegister] = useState(true) // MANTER COMO TRUE PARA ENTRAR DIRETO NO LOGIN EMAIL
   const [PhoneRegister, SetPhoneRegister] = useState(false)
 
 
@@ -60,10 +60,10 @@ function Register() {
 
     try{
 
-        if(Email.registered != true){
+        if(Email.registered != false){
 
             const res = await fetch("http://127.0.0.1:8000/api/v1/users/register-phone/",{
-                method:"POST",
+                method:"PATCH",
                 headers:{"Content-Type":"application/json",},
     
                 body:JSON.stringify({
@@ -138,20 +138,6 @@ function Register() {
             }
 
 
-
-            // if(sent_otp['error_no_email_account']){
-
-            //     setError('email', {
-            //         type: 'email_does_not_exist',
-            //         message:'Este E-mail não está associado a nenhuma conta.'
-            //     })
-    
-            // }
-
-
-
-
-
             setIsLoading(false)
 
         }
@@ -184,6 +170,27 @@ function Register() {
         }
 
         const success_email = await res.json()
+
+        if(success_email['error_does_not_exist']){
+
+            setError('otp', {
+                type: 'error_does_not_exist',
+                message:'Endereço de E-mail inválido.'
+            })
+            setIsLoading(false)
+  
+        }
+
+          
+        if(success_email['error_invalid_otp']){
+
+            setError('otp', {
+                type: 'error_does_not_exist',
+                message:'Código de confirmação errado.'
+            })
+            setIsLoading(false)
+  
+        }
 
 
         if(success_email['success']){
@@ -222,6 +229,29 @@ function Register() {
         }
 
         const success_phone = await res.json()
+
+        
+        if(success_phone['error_does_not_exist']){
+
+            setError('otp', {
+                type: 'error_does_not_exist',
+                message:'Número de telefone inválido.'
+            })
+            setIsLoading(false)
+  
+        }
+
+          
+        if(success_phone['error_invalid_otp']){
+
+            setError('otp', {
+                type: 'error_invalid_otp',
+                message:'Código de confirmação errado.'
+            })
+            setIsLoading(false)
+  
+        }
+
 
         if(success_phone['success']){
 
@@ -392,11 +422,11 @@ function Register() {
                                     {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Continuar'}
 
                                 </button>
-                                <button disabled={isLoading} onClick={() => {SetEmailRegister(false); SetPhoneRegister(false)}} className="btn btn-outline">
+                                {/* <button disabled={isLoading} onClick={() => {SetEmailRegister(false); SetPhoneRegister(false)}} className="btn btn-outline">
                                     
                                     {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Retornar'}
 
-                                </button>
+                                </button> */}
                                 
                             </form>
                         </div>
@@ -704,25 +734,3 @@ function Register() {
 
 
 export default Register
-
-
-
-
-
-            // if(sent_otp['email_exists']){
-
-            //     setError('email', {
-            //       type: 'email_already_registered',
-            //       message:'Já existe cadastro para este Email.'
-            //     })
-        
-            // }
-
-            // if(sent_otp['phone_exists']){
-
-            //     setError('email', {
-            //       type: 'phone_already_registered',
-            //       message:'Já existe cadastro para este telefone.'
-            //     })
-        
-            // }

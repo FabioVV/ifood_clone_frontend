@@ -4,7 +4,6 @@ import Home from './pages/home'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 
-
 function App() {
 
   return (

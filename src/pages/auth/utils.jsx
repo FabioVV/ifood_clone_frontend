@@ -3,6 +3,8 @@ export function getCurrentUser(){
 
         if (localStorage.getItem("userBytefood") != null) {
             return JSON.parse(localStorage.getItem('userBytefood'))
+        }else {
+            return null
         }
 
     } catch(error){
@@ -14,6 +16,8 @@ export function getCurrentUserToken(){
     try{
         if (localStorage.getItem("userBytefood") != null) {
             return JSON.parse(localStorage.getItem('userBytefood'))['token']
+        } else {
+            return null
         }
         
     } catch(error){

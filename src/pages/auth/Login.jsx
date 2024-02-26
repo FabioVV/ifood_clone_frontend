@@ -53,11 +53,20 @@ function Login() {
                 })
 
                 if (!res.ok) {
-                    throw new Error(`${res.status} ${res.statusText}`);
+                    console.log(res.status)
                 }
                 
                 const sent_otp = await res.json()
     
+                if(sent_otp['error_no_phone_account']){
+
+                    setError('phone', {
+                        type: 'phone_does_not_exist',
+                        message:'Este número de telefone não está associado a nenhuma conta.'
+                    })
+                    setIsLoading(false)
+
+                }
     
                 if(sent_otp['success']){
                     SetCheckOTP(true)
@@ -80,25 +89,16 @@ function Login() {
                 })
 
                 if (!res.ok) {
-                    throw new Error(`${res.status} ${res.statusText}`);
+                    console.log(res.status)
                 }
                 
                 const sent_otp = await res.json() 
 
 
-                if(sent_otp['error_no_phone_account']){
-
-                    setError('phone', {
-                        type: 'phone_does_not_exist',
-                        message:'Este número de telefone não está associado a nenhuma conta.'
-                    })
-        
-                }
-
-                if(sent_otp['error_no_email_account']){
+                if(sent_otp['error_email_does_not_exist']){
 
                     setError('email', {
-                        type: 'email_does_not_exist',
+                        type: 'error_email_does_not_exist',
                         message:'Este E-mail não está associado a nenhuma conta.'
                     })
         

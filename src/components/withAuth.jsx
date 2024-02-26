@@ -18,7 +18,7 @@ const withAuth = (Component) => {
 
 
 /*
-EXEMPLO DE USO DESSA PORRA
+EXEMPLO DE USO
 
 import withAuth from "../components/withAuth";
 
