@@ -88,13 +88,15 @@ function Login() {
             const user_created = await create_google_user.json()
 
             if(user_created['id']){
+                Object.assign(google_user_data, {'django_id':user_created['id']})
+
                 setCurrentUser(google_user_data, token_result['key'])
                 window.location.replace("http://localhost:5173/");            
             }
 
 
         },
-      });
+    });
 
 
     async function onSubmit(form, event){
@@ -182,7 +184,7 @@ function Login() {
 
 
         } catch(error){
-            alert(error)
+            console.log(errors)
         }
 
     }
@@ -199,7 +201,7 @@ function Login() {
             })
     
             if (!res.ok) {
-                throw new Error(`${res.status} ${res.statusText}`);
+                console.log(res.status)
             }
             
             const userData = await res.json()
@@ -212,7 +214,8 @@ function Login() {
             setIsLoading(false)
 
         } catch(error){
-            alert(error)
+            console.log(error)
+
         }
 
     }
@@ -233,7 +236,8 @@ function Login() {
             })
     
             if (!res.ok) {
-                throw new Error(`${res.status} ${res.statusText}`);
+                console.log(res.status)
+
             }
 
             const logged = await res.json()
@@ -246,7 +250,8 @@ function Login() {
             setIsLoading(false)
 
         } catch(error){
-            alert(error)
+            console.log(error)
+
         }
 
     }

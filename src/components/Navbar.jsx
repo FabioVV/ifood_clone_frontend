@@ -19,8 +19,6 @@ function Navbar() {
         clearLocalStorage()
         navigate("/"); navigate(0);
     }
-
-    console.log(getCurrentUser())
     
     return (
         <div style={{padding:'28px'}} className="navbar bg-base-100 sticky top-0 z-10 ">
