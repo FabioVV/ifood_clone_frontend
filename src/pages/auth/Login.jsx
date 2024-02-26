@@ -178,7 +178,7 @@ function Login() {
 
             if(logged['token']){
                 GetUserData(logged['token'])
-                navigate("/"); 
+                window.location.replace("http://localhost:5173/");
             }
 
             setIsLoading(false)

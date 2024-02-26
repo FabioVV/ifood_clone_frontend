@@ -1,10 +1,9 @@
-import {React, useEffect, useState} from 'react'
+import {React, useState} from 'react'
 import DefaultPage from '../../components/DefaultPage'
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
-import { setCurrentUser } from './utils';
 import brflag from '../../public/img/brflag.svg'
 
 function Register() {

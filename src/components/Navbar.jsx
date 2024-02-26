@@ -14,14 +14,15 @@ function Navbar() {
         navigate("/"); navigate(0);
     }
 
-    // useEffect(()=>{
 
-    //     if(tok != null){
-    //         navigate(0)
+    // useEffect(() => {
+    //     if(getCurrentUserToken() != null) {
+    //         navigate(0);
 
     //     }
-        
-    // }, [tok])
+
+    // }, [getCurrentUserToken()]);
+
     
     return (
         <div style={{padding:'28px'}} className="navbar bg-base-100 sticky top-0 z-10 ">
