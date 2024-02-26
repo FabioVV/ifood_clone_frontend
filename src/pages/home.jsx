@@ -3,7 +3,6 @@ import DefaultPage from '../components/DefaultPage'
 import hero_food from '../public/img/hero_food.jpg'
 
 function Home() {
-
   return (
     <DefaultPage>
         <div className="hero min-h-screen" style={{ backgroundImage:`url(${hero_food})` }}>

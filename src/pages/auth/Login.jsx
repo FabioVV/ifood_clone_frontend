@@ -3,14 +3,14 @@ import DefaultPage from '../../components/DefaultPage'
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from './utils';
-import brflag from '../../public/img/brflag.svg'
+import brflag from '../../public/img/brflag.svg';
+import { useGoogleLogin } from '@react-oauth/google';
+
 
 function Login() {
 
     const { register, handleSubmit,setError,formState: { errors } } = useForm();
-    let navigate = useNavigate();
 
     const [EmailLogin, SetEmailLogin] = useState(false)
     const [PhoneLogin, SetPhoneLogin] = useState(false)
@@ -33,6 +33,68 @@ function Login() {
             otp:"",
         }
     )
+
+
+    const login_google = useGoogleLogin({
+        onSuccess: async codeResponse => {
+
+            const res = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${codeResponse['access_token']}`,{
+                    method:"GET",
+                    headers:{"Content-Type":"application/json",},
+                    Authorization: `${codeResponse['token_type']} ${codeResponse['access_token']}`
+
+                })
+
+            if (!res.ok) {
+                console.log(res.status)
+            }
+            
+            const google_user_data = await res.json()
+        
+
+            const res_login_backend = await fetch(`http://localhost:8000/api/v1/users/authenticate/google/`,{
+                    method:"POST",
+                    headers:{"Content-Type":"application/json",},
+
+                    body:JSON.stringify({
+                        "access_token": codeResponse['access_token'],
+                    })
+                })
+
+            if (!res.ok) {
+                console.log(res.status)
+            }
+            
+            const token_result = await res_login_backend.json()
+
+            Object.assign(google_user_data, {'is_google_user':true})
+            
+            const create_google_user = await fetch(`http://localhost:8000/api/v1/users/register-user-google/`,{
+                    method:"POST",
+                    headers:{"Content-Type":"application/json",},
+
+                    body:JSON.stringify({
+                        "google_id": google_user_data['id'],
+                        "email":" ",
+                        "first_name":google_user_data['name'],
+                        "last_name":" "
+                    })
+                })
+
+            if (!res.ok) {
+                console.log(res.status)
+            }
+            
+            const user_created = await create_google_user.json()
+
+            if(user_created['id']){
+                setCurrentUser(google_user_data, token_result['key'])
+                window.location.replace("http://localhost:5173/");            
+            }
+
+
+        },
+      });
 
 
     async function onSubmit(form, event){
@@ -289,8 +351,10 @@ function Login() {
                                 <form className="card-body gap-2" style={{justifyContent:'center'}}>
 
                                     <div className="form-control mt-1">
-                                        <GoogleLoginButton onClick={() => alert("Hello")} />
+                                        <GoogleLoginButton onClick={() => login_google()} ></GoogleLoginButton>
                                     </div>
+
+                                    
 
                                     <div className="form-control mt-2">
                                         <button onClick={() => SetEmailLogin(true)} type='button' className="btn btn-outline">Email</button>
