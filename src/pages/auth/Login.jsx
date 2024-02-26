@@ -9,7 +9,7 @@ import brflag from '../../public/img/brflag.svg'
 
 function Login() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit,setError,formState: { errors } } = useForm();
     let navigate = useNavigate();
 
     const [EmailLogin, SetEmailLogin] = useState(false)
@@ -330,38 +330,7 @@ function Login() {
                                     <input name="otp" id='otp' type="text" className="input input-bordered input-lg w-full max-w" placeholder="000000" 
                                         {...register("otp", { required: "Campo obrigatório.", maxLength:{value:6, message:'Máximo de 6 caracteres'}, minLength:{value:6, message:'Necessita no minímo 6 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp:e.target.value})}, })}
                                     />
-                                    {/* CRIAR UM CAMPO PARA CADA OTP, E PEGAR O ULTIMO NUMERO DA STRING GERADO, JA Q A CADA INPUT ELE E ADICIONADO NA STRING */}
 
-                                    {/* <div className="join join-vertical lg:join-horizontal"> */}
-
-
-                                        {/* <input name="otp1" id='otp1' className='btn join-item input input-bordered input-md w-full max-w-xs' type="number"  
-                                            {...register("otp1", { required: "Campo obrigatório.",  valueAsNumber: true, maxLength:{value:1, message:'Máximo de 1 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp: OTP.otp + e.target.value})}, })}
-
-                                        />
-                                        <input name="otp2" id='otp2' className='btn join-item input input-bordered input-md w-full max-w-xs' type="number" 
-                                            {...register("otp2", { required: "Campo obrigatório.", valueAsNumber: true,  maxLength:{value:1, message:'Máximo de 1 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp: OTP.otp + e.target.value})}, })}
-
-                                        />
-                                        <input name="otp3" id='otp3' className='btn join-item input input-bordered input-md w-full max-w-xs' type="number"  
-                                            {...register("otp3", { required: "Campo obrigatório.", valueAsNumber: true, maxLength:{value:1, message:'Máximo de 1 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp: OTP.otp + e.target.value})}, })}
-
-                                        />
-
-                                        <input name="otp4" id='otp4' className='btn join-item input input-bordered input-md w-full max-w-xs' type="number"  
-                                            {...register("otp4", { required: "Campo obrigatório.", valueAsNumber: true, maxLength:{value:1, message:'Máximo de 1 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp: OTP.otp + e.target.value})}, })}
-
-                                        />
-                                        <input name="otp5" id='otp5' className='btn join-item input input-bordered input-md w-full max-w-xs' type="number"  
-                                            {...register("otp5", { required: "Campo obrigatório.", valueAsNumber: true, maxLength:{value:1, message:'Máximo de 1 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp: OTP.otp + e.target.value})}, })}
-
-                                        />
-                                        <input name="otp6" id='otp6' className='btn join-item input input-bordered input-md w-full max-w-xs' type="number"  
-                                            {...register("otp6", { required: "Campo obrigatório.", valueAsNumber: true, maxLength:{value:1, message:'Máximo de 1 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp: OTP.otp + e.target.value})}, })}
-
-                                        /> */}
-
-                                    {/* </div> */}
 
                                     <ErrorMessage
                                         errors={errors}

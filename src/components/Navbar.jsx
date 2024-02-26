@@ -16,8 +16,8 @@ function Navbar() {
     
     return (
         <>
-            <div style={{padding:'28px'}} className="navbar bg-base-100 sticky top-0 z-10">
-                <div className="navbar-start">
+            <div style={{padding:'28px'}} className="navbar bg-base-100 sticky top-0 z-10 ">
+                <div className="navbar-start justify-center">
                     <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
@@ -62,12 +62,12 @@ function Navbar() {
                 }
 
                 {getCurrentUserToken() ? 
-                    <div className="navbar-end">
+                    <div className="navbar-end justify-center">
                         <button className="btn" onClick={() => SignOut()}>Sair</button>
                     </div>
                 
                 :
-                    <div className="navbar-end">
+                    <div className="navbar-end justify-center">
                         <NavLink className="btn mr-5" to="/register">Criar conta</NavLink>
                         <NavLink className="btn" to="/login">Login</NavLink>
                     </div>
