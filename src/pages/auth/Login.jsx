@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import DefaultPage from '../../components/DefaultPage'
-import { GoogleLoginButton } from "react-social-login-buttons";
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { setCurrentUser } from './utils';
 import brflag from '../../public/img/brflag.svg';
 import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLoginButton } from "react-social-login-buttons";
 
 
 function Login() {
@@ -75,9 +75,9 @@ function Login() {
 
                     body:JSON.stringify({
                         "google_id": google_user_data['id'],
-                        "email":" ",
+                        "email":"",
                         "first_name":google_user_data['name'],
-                        "last_name":" "
+                        "last_name":""
                     })
                 })
 
@@ -358,8 +358,6 @@ function Login() {
                                     <div className="form-control mt-1">
                                         <GoogleLoginButton onClick={() => login_google()} ></GoogleLoginButton>
                                     </div>
-
-                                    
 
                                     <div className="form-control mt-2">
                                         <button onClick={() => SetEmailLogin(true)} type='button' className="btn btn-outline">Email</button>

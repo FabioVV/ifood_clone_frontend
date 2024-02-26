@@ -1,10 +1,14 @@
 import {React, useState} from 'react'
 import DefaultPage from '../../components/DefaultPage'
-import { GoogleLoginButton } from "react-social-login-buttons";
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
 import brflag from '../../public/img/brflag.svg'
+import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLoginButton } from "react-social-login-buttons";
+import { setCurrentUser } from './utils';
+
+
 
 function Register() {
 
@@ -52,6 +56,71 @@ function Register() {
 
     }
 )
+
+
+const login_google = useGoogleLogin({
+    onSuccess: async codeResponse => {
+
+        const res = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${codeResponse['access_token']}`,{
+                method:"GET",
+                headers:{"Content-Type":"application/json",},
+                Authorization: `${codeResponse['token_type']} ${codeResponse['access_token']}`
+
+            })
+
+        if (!res.ok) {
+            console.log(res.status)
+        }
+        
+        const google_user_data = await res.json()
+    
+
+        const res_login_backend = await fetch(`http://localhost:8000/api/v1/users/authenticate/google/`,{
+                method:"POST",
+                headers:{"Content-Type":"application/json",},
+
+                body:JSON.stringify({
+                    "access_token": codeResponse['access_token'],
+                })
+            })
+
+        if (!res.ok) {
+            console.log(res.status)
+        }
+        
+        const token_result = await res_login_backend.json()
+
+        Object.assign(google_user_data, {'is_google_user':true})
+        
+        const create_google_user = await fetch(`http://localhost:8000/api/v1/users/register-user-google/`,{
+                method:"POST",
+                headers:{"Content-Type":"application/json",},
+
+                body:JSON.stringify({
+                    "google_id": google_user_data['id'],
+                    "email":"",
+                    "first_name":google_user_data['name'],
+                    "last_name":""
+                })
+            })
+
+        if (!res.ok) {
+            console.log(res.status)
+        }
+        
+        const user_created = await create_google_user.json()
+
+        if(user_created['id']){
+            Object.assign(google_user_data, {'django_id':user_created['id']})
+
+            setCurrentUser(google_user_data, token_result['key'])
+            window.location.replace("http://localhost:5173/");            
+        }
+
+
+    },
+});
+
 
   async function onSubmit(form, event){
     event.preventDefault()
@@ -172,7 +241,7 @@ function Register() {
 
         if(success_email['error_does_not_exist']){
 
-            setError('otp', {
+            setError('otp_email', {
                 type: 'error_does_not_exist',
                 message:'Endereço de E-mail inválido.'
             })
@@ -183,7 +252,7 @@ function Register() {
           
         if(success_email['error_invalid_otp']){
 
-            setError('otp', {
+            setError('otp_email', {
                 type: 'error_does_not_exist',
                 message:'Código de confirmação errado.'
             })
@@ -196,7 +265,6 @@ function Register() {
 
           SetCheckOTPmail(false)
           SetEmail({...Email, registered:true})
-          document.getElementById('otp').value = ''
 
         }
 
@@ -232,7 +300,7 @@ function Register() {
         
         if(success_phone['error_does_not_exist']){
 
-            setError('otp', {
+            setError('otp_phone', {
                 type: 'error_does_not_exist',
                 message:'Número de telefone inválido.'
             })
@@ -243,7 +311,7 @@ function Register() {
           
         if(success_phone['error_invalid_otp']){
 
-            setError('otp', {
+            setError('otp_phone', {
                 type: 'error_invalid_otp',
                 message:'Código de confirmação errado.'
             })
@@ -289,16 +357,16 @@ function Register() {
 
         const user_created = await res.json()
 
-        if(user_created['cpf']){
+        // if(user_created['cpf']){
 
-          setError('cpf', {
-              type: 'cpf_too_big',
-              message:'Máximo de 11 caracteres.'
-          })
+        //   setError('cpf', {
+        //       type: 'cpf_too_big',
+        //       message:'Máximo de 11 caracteres.'
+        //   })
 
-          setIsLoading(false)
+        //   setIsLoading(false)
 
-        }
+        // }
 
         if(user_created['first_name']){
 
@@ -361,6 +429,10 @@ function Register() {
                         <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
 
                             <form method='post' onSubmit={handleSubmit(onSubmit)} id='form' className="card-body gap-4">
+                                   
+                                    <div className="form-control mt-1">
+                                        <GoogleLoginButton onClick={() => login_google()} ></GoogleLoginButton>
+                                    </div>
 
                                     {EmailRegister ? "Email": "Telefone"}
 
@@ -456,14 +528,14 @@ function Register() {
                               </label>
 
 
-                              <input name="otp" id='otp' type="text" className="input input-bordered input-lg w-full max-w" placeholder="000000" 
-                                  {...register("otp", { required: "Campo obrigatório.", maxLength:{value:6, message:'Máximo de 6 caracteres'}, minLength:{value:6, message:'Necessita no minímo 6 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp:e.target.value})}, })}
+                              <input name="otp_email" id='otp_email' type="text" className="input input-bordered input-lg w-full max-w" placeholder="000000" 
+                                  {...register("otp_email", { required: "Campo obrigatório.", maxLength:{value:6, message:'Máximo de 6 caracteres'}, minLength:{value:6, message:'Necessita no minímo 6 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp:e.target.value})}, })}
                               />
 
 
                               <ErrorMessage
                                   errors={errors}
-                                  name="otp"
+                                  name="otp_email"
                                   render={({ message }) => 
                                   <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                       <strong className="font-bold">* {message}</strong>
@@ -514,14 +586,14 @@ function Register() {
                                 </label>
 
 
-                                <input name="otp" id='otp' type="text" className="input input-bordered input-lg w-full max-w" placeholder="000000" 
-                                    {...register("otp", { required: "Campo obrigatório.", maxLength:{value:6, message:'Máximo de 6 caracteres'}, minLength:{value:6, message:'Necessita no minímo 6 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp:e.target.value})}, })}
+                                <input name="otp_phone" id='otp_phone' type="text" className="input input-bordered input-lg w-full max-w" placeholder="000000" 
+                                    {...register("otp_phone", { required: "Campo obrigatório.", maxLength:{value:6, message:'Máximo de 6 caracteres'}, minLength:{value:6, message:'Necessita no minímo 6 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp:e.target.value})}, })}
                                 />
 
 
                                 <ErrorMessage
                                     errors={errors}
-                                    name="otp"
+                                    name="otp_phone"
                                     render={({ message }) => 
                                     <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                         <strong className="font-bold">* {message}</strong>
