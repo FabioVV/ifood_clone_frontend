@@ -86,11 +86,11 @@ Para iniciar o projeto, siga os passos abaixo.
    ```sh
    git clone https://github.com/FabioVV/ifood_clone_backend
    ```
-3. Na pasta do projeto web-lab, instale as dependências
+3. Na pasta do projeto ifood_clone_frontend, instale as dependências
    ```sh
    npm install
    ```
-4. Na pasta do projeto api-lab, instale as dependências presentes no arquivo `requirements.txt`
+4. Na pasta do projeto ifood_clone_backend, instale as dependências presentes no arquivo `requirements.txt`
    ```sh
     pip install -r requirements.txt
    ```
@@ -167,6 +167,7 @@ Distríbuido sob a licença GNU General Public License v3.0. Veja `LICENSE` para
 Links do projeto ->
 
 Back-end: https://github.com/FabioVV/ifood_clone_backend
+<br/>
 Front-end: https://github.com/FabioVV/ifood_clone_frontend
 
 
