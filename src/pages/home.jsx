@@ -13,7 +13,7 @@ function Home() {
                 <div className="max-w-md">
                   <h1 className="mb-5 text-6xl font-bold">Você tem fome do quê?</h1>
 
-                  <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+                  <p className="mb-5">alguma coisa ai</p>
                 
                   <label className="input input-bordered flex items-center gap-2 text-black">
                     <input type="text" className="grow text-black" placeholder="Qual seu endereço?" />
