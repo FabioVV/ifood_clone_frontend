@@ -9,7 +9,11 @@ export default function DefaultPage(props) {
    <>
 
     <Navbar/>
-        {props.children}
+
+    
+    {props.children}
+
+
     <Footer/>
     
    </>
