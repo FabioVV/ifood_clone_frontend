@@ -14,7 +14,9 @@
 
   <p align="center">
    	Projeto SI - 5 semestre
-	</p>
+	  <br/>
+	  ByteFood
+   </p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -56,6 +58,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Construido com
 <a id='built-with'></a>
+* [![Vite][Vite]][Vite-url]
 * [![React][React.js]][React-url]
 * [![Django][Django]][Django-url]
 * [![Tailwind][Tail]][Tail-url]
@@ -218,6 +221,8 @@ Front-end: https://github.com/FabioVV/ifood_clone_frontend
 [product-screenshot]: images/screenshot.png
 [React.js]: https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=for-the-badge
 [React-url]: https://react.dev/
+[Vite]: https://img.shields.io/badge/-Vite-61DAFB?logo=vite&logoColor=white&style=for-the-badge
+[Vite-url]: https://vitejs.dev/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Django]: https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white
