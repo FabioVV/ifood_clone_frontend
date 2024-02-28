@@ -6,6 +6,7 @@ import { setCurrentUser } from './utils';
 import brflag from '../../public/img/brflag.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from "react-social-login-buttons";
+import delivery from "../../public/img/deli.jpg";
 
 
 function Login() {
@@ -241,10 +242,13 @@ function Login() {
 
   return (
         <DefaultPage>
+            
+
+            
             {EmailLogin || PhoneLogin? 
             
                 // card shrink-0 w-full max-w-sm shadow-2xl bg-base-100
-                <div className="hero min-h-screen bg-base-200">
+                <div style={{backgroundImage:`url()`}} className="hero min-h-screen bg-base-200">
                     <div  className="hero-content flex-col lg:flex-row">
                         <div  className="text-center lg:text-left">
                             <h1 className="text-5xl font-bold">Entre agora!</h1>
@@ -328,7 +332,7 @@ function Login() {
             
             :
                 !CheckOTP ? 
-                    <div className="hero min-h-screen bg-base-200">
+                    <div style={{backgroundImage:`url()`}} className="hero min-h-screen bg-base-200">
                         <div  className="hero-content flex-col lg:flex-row">
                             <div  className="text-center lg:text-left">
                                 <h1 className="text-5xl font-bold">Entre agora!</h1>
@@ -355,7 +359,7 @@ function Login() {
 
                 :
 
-                    <div className="hero min-h-screen bg-base-200">
+                    <div style={{backgroundImage:`url()`}} className="hero min-h-screen bg-base-200">
                         <div  className="hero-content flex-col lg:flex-row">
                             <div  className="text-center lg:text-left">
                                 <h1 className="text-5xl font-bold">Entre agora!</h1>
@@ -408,7 +412,6 @@ function Login() {
                         </div>
                     </div>
 
-                
             }
 
         </DefaultPage>

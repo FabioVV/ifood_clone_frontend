@@ -94,13 +94,13 @@ function Navbar() {
                         <ul className="menu menu-horizontal px-1">
 
                             <li><a>Lord of this world!</a></li>
-                            <li><a>So you think you can tell heaven from hell?</a></li>
+                            <li><a>So you think you can tell..... heaven from hell?</a></li>
 
                         </ul>
                     </div>
-                    <div  className="navbar-end gap-3">
-                        <NavLink className='btn' to="/register">Criar conta</NavLink>
-                        <NavLink className='btn' to="/login">Login</NavLink>
+                    <div style={{marginRight:'2.2rem'}} className="navbar-end gap-3">
+                        <NavLink className='btn btn-ghost' to="/register">Criar conta</NavLink>
+                        <NavLink className='btn btn-neutral' to="/login">Login</NavLink>
                     </div>
                 </>
             )
