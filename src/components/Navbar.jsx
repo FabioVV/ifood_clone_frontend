@@ -23,7 +23,7 @@ function Navbar() {
     }
     
     return (
-        <div style={{padding:'18px'}} className="navbar bg-base-100 sticky top-0 z-10 ">
+        <div style={{padding:''}} className="navbar bg-base-100 sticky top-0 z-10 ">
 
             { getCurrentUserToken() ? (
                 <>
@@ -49,6 +49,7 @@ function Navbar() {
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal px-1">
 
+                            <li><a>{getCurrentUserToken()}</a></li>
                             <li><a>Something in the way...</a></li>
                             <li><a>Wait till their judgement day comes, yeah!</a></li>
 
@@ -82,7 +83,7 @@ function Navbar() {
                                 <li><a>Item 3</a></li>
                             </ul> */}
                         </div>
-                        <div style={{maxWidth:'85px'}}>
+                        <div style={{maxWidth:'85px', marginLeft:'2.2rem'}}>
                             
                             <NavLink  to="/"><img width={350} height={50} src={logo3}/></NavLink>
                        

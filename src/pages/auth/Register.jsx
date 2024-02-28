@@ -92,26 +92,8 @@ const login_google = useGoogleLogin({
 
         Object.assign(google_user_data, {'is_google_user':true})
         
-        const create_google_user = await fetch(`http://localhost:8000/api/v1/users/register-user-google/`,{
-                method:"POST",
-                headers:{"Content-Type":"application/json",},
 
-                body:JSON.stringify({
-                    "google_id": google_user_data['id'],
-                    "email":"",
-                    "first_name":google_user_data['name'],
-                    "last_name":""
-                })
-            })
-
-        if (!res.ok) {
-            console.log(res.status)
-        }
-        
-        const user_created = await create_google_user.json()
-
-        if(user_created['id']){
-            Object.assign(google_user_data, {'django_id':user_created['id']})
+        if(google_user_data){
 
             setCurrentUser(google_user_data, token_result['key'])
             window.location.replace("http://localhost:5173/");            
