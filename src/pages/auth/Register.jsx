@@ -7,6 +7,7 @@ import brflag from '../../public/img/brflag.svg'
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { setCurrentUser } from './utils';
+import hero_food from "../../public/img/hero_food.jpg";
 
 
 
@@ -371,14 +372,15 @@ const login_google = useGoogleLogin({
     <DefaultPage>
 
           {!EmailRegister && !PhoneRegister ?  
-            <div className="hero min-h-screen bg-base-200">
-                <div  className="hero-content flex-col lg:flex-row">
+            <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
+                <div class="hero-overlay bg-opacity-60"></div>
+                <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                     <div  className="text-center lg:text-left">
                         <h1 className="text-5xl font-bold">Registre-se agora!</h1>
                         <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                     </div>
                     <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
-                        <form className="card-body gap-2" style={{justifyContent:'center'}}>
+                        <form className="card-body gap-2 text-black" style={{justifyContent:'center'}}>
 
                             <div className="form-control mt-1">
                                 <GoogleLoginButton onClick={() => alert("Hello")} />
@@ -401,8 +403,10 @@ const login_google = useGoogleLogin({
             !RegisterUser ? 
                 
               // card shrink-0 w-full max-w-sm shadow-2xl bg-base-100
-                <div className="hero min-h-screen bg-base-200">
-                    <div  className="hero-content flex-col lg:flex-row">
+                <div style={{backgroundImage:`url(${hero_food})`}}  className="hero min-h-screen bg-base-200">
+                    <div class="hero-overlay bg-opacity-60"></div>
+
+                    <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                         <div  className="text-center lg:text-left">
                             <h1 className="text-5xl font-bold">Registre-se agora!</h1>
                             <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
@@ -410,7 +414,7 @@ const login_google = useGoogleLogin({
 
                         <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
 
-                            <form method='post' onSubmit={handleSubmit(onSubmit)} id='form' className="card-body gap-4">
+                            <form method='post' onSubmit={handleSubmit(onSubmit)} id='form' className="card-body gap-4 text-black">
                                    
                                     <div className="form-control mt-1">
                                         <GoogleLoginButton onClick={() => login_google()} ></GoogleLoginButton>
@@ -489,15 +493,16 @@ const login_google = useGoogleLogin({
 
               CheckOTPemail ?  
 
-                <div className="hero min-h-screen bg-base-200">
-                  <div  className="hero-content flex-col lg:flex-row">
+                <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
+                <div class="hero-overlay bg-opacity-60"></div>
+                  <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                       <div  className="text-center lg:text-left">
                           <h1 className="text-5xl font-bold">Registre-se agora!</h1>
                           <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                       </div>
                       <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
 
-                          <form method='post' onSubmit={handleSubmit(onSubmitOTPemail)} style={{justifyContent:'center'}} id='form' className="card-body gap-4" >
+                          <form method='post' onSubmit={handleSubmit(onSubmitOTPemail)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" >
                               <label className="text-4xl mb-5"> 
                                   Código
                               </label>
@@ -546,8 +551,10 @@ const login_google = useGoogleLogin({
                 :
                 CheckOTPphone ?
 
-                  <div className="hero min-h-screen bg-base-200">
-                    <div  className="hero-content flex-col lg:flex-row">
+                  <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
+                    <div class="hero-overlay bg-opacity-60"></div>
+
+                    <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                         <div  className="text-center lg:text-left">
                             <h1 className="text-5xl font-bold">Registre-se agora!</h1>
                             <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
@@ -555,7 +562,7 @@ const login_google = useGoogleLogin({
                         <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
 
 
-                            <form method='post' onSubmit={handleSubmit(onSubmitOTPphone)} style={{justifyContent:'center'}} id='form' className="card-body gap-4" >
+                            <form method='post' onSubmit={handleSubmit(onSubmitOTPphone)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" >
                                 <label className="text-4xl mb-5"> 
                                     Código - Telefone
                                 </label>
@@ -605,8 +612,10 @@ const login_google = useGoogleLogin({
                 :
                   !Phone.registered ? 
 
-                  <div className="hero min-h-screen bg-base-200">
-                      <div  className="hero-content flex-col lg:flex-row">
+                  <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
+                        <div class="hero-overlay bg-opacity-60"></div>
+
+                      <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                           <div  className="text-center lg:text-left">
                               <h1 className="text-5xl font-bold">Registre-se agora!</h1>
                               <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
@@ -614,7 +623,7 @@ const login_google = useGoogleLogin({
 
                           <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
 
-                              <form method='post' onSubmit={handleSubmit(onSubmit)} id='form' className="card-body gap-4">
+                              <form method='post' onSubmit={handleSubmit(onSubmit)} id='form' className="card-body gap-4 text-black">
                                     <label className="text-4xl mb-5"> 
                                         Tudo certo com seu email!
                                     </label>
@@ -693,8 +702,10 @@ const login_google = useGoogleLogin({
 
                   :
 
-                  <div className="hero min-h-screen bg-base-200">
-                    <div  className="hero-content flex-col lg:flex-row">
+                  <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
+                    <div class="hero-overlay bg-opacity-60"></div>
+
+                    <div  className="hero-content flex-col lg:flex-row" text-neutral-content>
                         <div  className="text-center lg:text-left">
                             <h1 className="text-5xl font-bold">Registre-se agora!</h1>
                             <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
@@ -702,7 +713,7 @@ const login_google = useGoogleLogin({
                         <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
 
 
-                            <form method='post' onSubmit={handleSubmit(onSubmitCreateUser)} style={{justifyContent:'center'}} id='form' className="card-body gap-4" >
+                            <form method='post' onSubmit={handleSubmit(onSubmitCreateUser)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" >
                                 <label className="text-4xl mb-5"> 
                                     Tudo certo com seu telefone!
                                 </label>

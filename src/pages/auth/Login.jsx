@@ -6,7 +6,7 @@ import { setCurrentUser } from './utils';
 import brflag from '../../public/img/brflag.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from "react-social-login-buttons";
-import delivery from "../../public/img/deli.jpg";
+import hero_food from "../../public/img/hero_food.jpg";
 
 
 function Login() {
@@ -248,16 +248,17 @@ function Login() {
             {EmailLogin || PhoneLogin? 
             
                 // card shrink-0 w-full max-w-sm shadow-2xl bg-base-100
-                <div style={{backgroundImage:`url()`}} className="hero min-h-screen bg-base-200">
-                    <div  className="hero-content flex-col lg:flex-row">
+                <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
+                    <div class="hero-overlay bg-opacity-60"></div>
+                    <div className="hero-content flex-col lg:flex-row text-neutral-content">
                         <div  className="text-center lg:text-left">
-                            <h1 className="text-5xl font-bold">Entre agora!</h1>
+                            <h1 className="text-5xl font-bold text">Entre agora!</h1>
                             <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                         </div>
 
                         <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
 
-                            <form method='post' onSubmit={handleSubmit(onSubmit)} id='form' className="card-body gap-4">
+                            <form method='post' onSubmit={handleSubmit(onSubmit)} id='form' className="card-body gap-4 text-black">
 
                                     {EmailLogin ? "Email": "Telefone"}
 
@@ -332,14 +333,16 @@ function Login() {
             
             :
                 !CheckOTP ? 
-                    <div style={{backgroundImage:`url()`}} className="hero min-h-screen bg-base-200">
-                        <div  className="hero-content flex-col lg:flex-row">
+                    <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
+                        <div class="hero-overlay bg-opacity-60"></div>
+
+                        <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                             <div  className="text-center lg:text-left">
-                                <h1 className="text-5xl font-bold">Entre agora!</h1>
+                                <h1 className="mb-5 text-6xl font-bold">Entre agora!</h1>
                                 <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                             </div>
-                            <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
-                                <form className="card-body gap-2" style={{justifyContent:'center'}}>
+                            <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100 ">
+                                <form className="card-body gap-2 text-black" style={{justifyContent:'center'}}>
 
                                     <div className="form-control mt-1">
                                         <GoogleLoginButton onClick={() => login_google()} ></GoogleLoginButton>
@@ -359,15 +362,15 @@ function Login() {
 
                 :
 
-                    <div style={{backgroundImage:`url()`}} className="hero min-h-screen bg-base-200">
-                        <div  className="hero-content flex-col lg:flex-row">
+                    <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
+                        <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                             <div  className="text-center lg:text-left">
                                 <h1 className="text-5xl font-bold">Entre agora!</h1>
                                 <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                             </div>
                             <div className="card shrink-0 w-full max-w-lg h-max shadow-2xl bg-base-100">
 
-                                <form method='post' onSubmit={handleSubmit(onSubmitOTP)} style={{justifyContent:'center'}}id='form' className="card-body gap-4" >
+                                <form method='post' onSubmit={handleSubmit(onSubmitOTP)} style={{justifyContent:'center'}}id='form' className="card-body gap-4 text-black" >
                                     <label className="text-4xl mb-5"> 
                                         Código
                                     </label>
