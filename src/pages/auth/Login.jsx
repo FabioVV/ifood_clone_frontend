@@ -38,7 +38,6 @@ function Login() {
 
     const login_google = useGoogleLogin({
         onSuccess: async codeResponse => {
-
             const res = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${codeResponse['access_token']}`,{
                     method:"GET",
                     headers:{"Content-Type":"application/json",},
@@ -224,12 +223,28 @@ function Login() {
             }
 
             const logged = await res.json()
-
             if(logged['token']){
-                GetUserData(logged['token'])
+                await GetUserData(logged['token'])
                 window.location.replace("http://localhost:5173/");
             }
 
+            if(logged['error_login_expired_otp']){
+                setError('otp', {
+                    type: 'error_login_expired_otp',
+                    message:'Código expirado.'
+                })
+                setIsLoading(false)
+            }
+
+            if(logged['error_login_invalid_otp']){
+                setError('otp', {
+                    type: 'error_login_invalid_otp',
+                    message:'Código incorreto ou expirado.'
+                })
+                setIsLoading(false)
+            }
+
+            
             setIsLoading(false)
 
         } catch(error){
@@ -249,7 +264,7 @@ function Login() {
             
                 // card shrink-0 w-full max-w-sm shadow-2xl bg-base-100
                 <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
-                    <div class="hero-overlay bg-opacity-60"></div>
+                    <div className="hero-overlay bg-opacity-60"></div>
                     <div className="hero-content flex-col lg:flex-row text-neutral-content">
                         <div  className="text-center lg:text-left">
                             <h1 className="text-5xl font-bold text">Entre agora!</h1>
@@ -334,7 +349,7 @@ function Login() {
             :
                 !CheckOTP ? 
                     <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
-                        <div class="hero-overlay bg-opacity-60"></div>
+                        <div className="hero-overlay bg-opacity-60"></div>
 
                         <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                             <div  className="text-center lg:text-left">
@@ -349,7 +364,7 @@ function Login() {
                                     </div>
 
                                     <div className="form-control mt-2">
-                                        <button onClick={() => SetEmailLogin(true)} type='button' className="btn btn-outline">Email</button>
+                                        <button onClick={() => {SetEmailLogin(true); SetPhoneLogin(false)}} type='button' className="btn btn-outline">Email</button>
                                     </div>
 
                                     <div className="form-control mt-2">
@@ -363,6 +378,8 @@ function Login() {
                 :
 
                     <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
+                            <div className="hero-overlay bg-opacity-60"></div>
+
                         <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                             <div  className="text-center lg:text-left">
                                 <h1 className="text-5xl font-bold">Entre agora!</h1>
