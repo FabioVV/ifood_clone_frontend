@@ -2,8 +2,7 @@ import React from 'react'
 import { NavLink, useNavigate  } from 'react-router-dom'
 import { getCurrentUserToken, getCurrentUser, clearLocalStorage } from '../pages/auth/utils'
 import { googleLogout } from '@react-oauth/google';
-import logo1 from '../public/img/logo1.png'
-import logo2 from '../public/img/logo2.png'
+import user_icon from '../public/img/user.svg'
 import logo3 from '../public/img/logo3.png'
 
 
@@ -44,19 +43,65 @@ function Navbar() {
                             <li><a>Item 3</a></li>
                         </ul>
                         </div>
-                        <NavLink className="btn btn-ghost text-xl" to="/">byteFood</NavLink>
+
+                        <div style={{maxWidth:'85px', marginLeft:'2.2rem'}}>
+                            
+                            <NavLink  to="/"><img width={65} height={50} src={logo3}/></NavLink>
+                       
+                        </div>
                     </div>
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal px-1">
 
-                            <li><a>{getCurrentUserToken()}</a></li>
-                            <li><a>Something in the way...</a></li>
-                            <li><a>Wait till their judgement day comes, yeah!</a></li>
+                            {/* <li><a>{getCurrentUserToken()}</a></li> */}
 
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <button className="btn" onClick={() => SignOut()}>Sair</button>
+
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                <div style={{width:'1.5rem'}} className="rounded-full">
+                                    <img width={1} height={1} src={user_icon}/>
+                                </div>
+                            </div>
+                            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                                <li>
+                                    <NavLink className="justify-between"  to="minha-conta">Seus dados</NavLink>
+                                </li>
+                                <li>
+                                    <a onClick={() => SignOut()}>Sair</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="drawer-end ">
+                            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+                            
+                            <div className="drawer-content">
+                                {/* Page content here */}
+
+                                <label htmlFor="my-drawer-4" className="drawer-button btn btn-ghost">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+
+                                </label>
+                            </div> 
+                            <div className="drawer-side">
+                                <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
+
+                                <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+
+                                    <h1 className='text-center'>Seu carrinho está vazio ); </h1>
+                                    
+
+                                    {/* <li><a>Sidebar Item 1</a></li>
+                                    <li><a>Sidebar Item 2</a></li> */}
+                                </ul>
+                            </div>
+                        </div>
+
+
+
                     </div>
                 </> 
         
@@ -93,8 +138,8 @@ function Navbar() {
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal px-1">
 
-                            <li><a>Lord of this world!</a></li>
-                            <li><a>So you think you can tell..... heaven from hell?</a></li>
+                            {/* <li><a>Lord of this world!</a></li>
+                            <li><a>So you think you can tell..... heaven from hell?</a></li> */}
 
                         </ul>
                     </div>
