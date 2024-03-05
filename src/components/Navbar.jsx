@@ -9,7 +9,7 @@ import logo3 from '../public/img/logo3.png'
 function Navbar() {
     
     const navigate = useNavigate();
-
+        
     function SignOut(){
         let user = getCurrentUser()
 

@@ -6,17 +6,17 @@ import Footer from './Footer'
 export default function DefaultPage(props) {
 
   return (
-   <>
+   <div className='main-container'>
 
-    <Navbar/>
-
+      <Navbar/>
+      
+      <main>
+        {props.children}
+      </main>
+      
+      <Footer/>
     
-    {props.children}
-
-
-    <Footer/>
-    
-   </>
+    </div>
   )
   
 }

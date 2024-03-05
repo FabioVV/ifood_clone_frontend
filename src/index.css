@@ -3,6 +3,47 @@
 @tailwind utilities;
 
 
-.container{
-    max-width: 85rem;
+
+.container-user-info{
+    display: flex;
+    justify-content: center;
+}
+
+.ul-user{
+    display: flex;
+    flex-direction: column;
+}
+
+.ul-user > li.data-user{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ededed;
+    padding: 16px 0;
+    cursor: pointer;
+    gap: 8rem;
+}
+
+li > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.user-info-data{
+    color: #717171;
+}
+
+.nav-user-account{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    min-height: 60px;
+    z-index: 9997;
+}
+
+
+.arrow{
+    color: purple;
+    font-size: 29px;
 }
