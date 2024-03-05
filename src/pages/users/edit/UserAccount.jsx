@@ -10,7 +10,7 @@ function UserAccount() {
           <div className='container-user-info'>
             <ul className='ul-user'>
 
-                <li>
+                <li style={{marginBottom:'2.5rem'}}>
                   <div className='user-info-edit'>
                     <strong>
                       <h1 style={{fontSize:'1.5em', paddingBottom:'1rem'}}>Meus dados</h1>
