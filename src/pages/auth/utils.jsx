@@ -37,6 +37,26 @@ export function setCurrentUser(user, token){
     }
 }
 
+
+export function updateCurrentUser(user_new_data){
+    try{
+        let user = getCurrentUser()
+        
+        Object.entries(user).forEach(([key, val]) => {
+            if(user_new_data[key]){
+                user[key] = user_new_data[key]
+            }
+        });
+        removeCurrentUser()
+        localStorage.setItem('userBytefood', JSON.stringify(user))
+
+
+    } catch(error){
+        console.log("Error updating user ->" + error)
+    }
+}
+
+
 export function removeCurrentUser(){
     try{
 
@@ -58,3 +78,4 @@ export function clearLocalStorage(){
         console.log("Error clearing local storage ->" + error)
     }
 }
+

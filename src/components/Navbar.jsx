@@ -22,7 +22,7 @@ function Navbar() {
     }
     
     return (
-        <div style={{padding:''}} className="navbar bg-base-100 sticky top-0 z-10 ">
+        <div style={{padding:''}} className="navbar bg-base-100 sticky top-0 z-10">
 
             { getCurrentUserToken() ? (
                 <>
@@ -67,7 +67,7 @@ function Navbar() {
                             </div>
                             <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                                 <li>
-                                    <NavLink className="justify-between"  to="minha-conta">Seus dados</NavLink>
+                                    <NavLink className="justify-between" to="/minha-conta" >Seus dados</NavLink>
                                 </li>
                                 <li>
                                     <a onClick={() => SignOut()}>Sair</a>

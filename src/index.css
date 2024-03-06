@@ -7,6 +7,7 @@
 .container-user-info{
     display: flex;
     justify-content: center;
+    margin-top: 2rem;
 }
 
 .ul-user{
@@ -46,4 +47,20 @@ li > div {
 .arrow{
     color: purple;
     font-size: 29px;
+}
+
+
+div.navbar{
+    box-shadow: inset 0 -1px 0 #dcdcdc;
+}
+
+.user_data_title{
+    color: #414143;
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.user_list_data_title{
+    color: #414143;
+    font-weight: 500;
 }

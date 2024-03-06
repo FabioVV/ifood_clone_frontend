@@ -1,21 +1,13 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import {BrowserRouter as Router} from 'react-router-dom'
 import './index.css'
-import Home from './pages/home'
-import Login from './pages/auth/Login'
-import Register from './pages/auth/Register'
-import UserAccount from './pages/users/edit/UserAccount'
+import _Routes from './routes'
 
 function App() {
 
   return (
     <>
       <Router>
-          <Routes>
-              <Route path='/' element={<Home/>} />
-              <Route path='login' element={<Login/>} />
-              <Route path='register' element={<Register/>} />
-              <Route path='minha-conta' element={<UserAccount/>} />
-          </Routes>
+          <_Routes/>
       </Router>
     </>
   )

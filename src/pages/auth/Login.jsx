@@ -38,41 +38,25 @@ function Login() {
 
     const login_google = useGoogleLogin({
         onSuccess: async codeResponse => {
-            const res = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${codeResponse['access_token']}`,{
-                    method:"GET",
-                    headers:{"Content-Type":"application/json",},
-                    Authorization: `${codeResponse['token_type']} ${codeResponse['access_token']}`
-
-                })
-
-            if (!res.ok) {
-                console.log(res.status)
-            }
-            
-            const google_user_data = await res.json()
-        
 
             const res_login_backend = await fetch(`http://localhost:8000/api/v1/users/authenticate/google/`,{
-                    method:"POST",
-                    headers:{"Content-Type":"application/json",},
+                method:"POST",
+                headers:{"Content-Type":"application/json",},
 
-                    body:JSON.stringify({
-                        "access_token": codeResponse['access_token'],
-                    })
+                body:JSON.stringify({
+                    "access_token": codeResponse['access_token'],
                 })
+            })
 
-            if (!res.ok) {
-                console.log(res.status)
-            }
-            
             const token_result = await res_login_backend.json()
 
-            Object.assign(google_user_data, {'is_google_user':true})
-            
+            if (!res_login_backend.ok) {
+                console.log(res_login_backend.status)
+            }
 
-            if(google_user_data){
+            const user = GetUserData(token_result['key'])
 
-                setCurrentUser(google_user_data, token_result['key'])
+            if(user){
                 window.location.replace("http://localhost:5173/");            
             }
 
