@@ -1,11 +1,16 @@
 import React from 'react'
 import {Route, Routes} from 'react-router-dom'
+
 import Home from './pages/home'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import UserAccount from './pages/users/edit/UserAccount'
-import PersonalInfo from './pages/users/edit/PersonalInfo'
 import { RequireAuth } from './components/RequireAuth'
+import PersonalInfo from './pages/users/edit/PersonalInfo'
+import Publicity from './pages/users/edit/publicity'
+import Credentials from './pages/users/edit/Credentials'
+import ContactData from './pages/users/edit/ContactData'
+
 
 function _Routes() {
 
@@ -23,9 +28,28 @@ function _Routes() {
                 </RequireAuth>
                 
             } />
+
             <Route path='informacoes-pessoais' element={
                 <RequireAuth redirectTo="/login">
                     <PersonalInfo />
+                </RequireAuth>
+            } />
+
+            <Route path='dados-de-contato' element={
+                <RequireAuth redirectTo="/login">
+                    <ContactData />
+                </RequireAuth>
+            } />
+
+            <Route path='credenciais' element={
+                <RequireAuth redirectTo="/login">
+                    <Credentials />
+                </RequireAuth>
+            } />
+
+            <Route path='publicidade' element={
+                <RequireAuth redirectTo="/login">
+                    <Publicity />
                 </RequireAuth>
             } />
 

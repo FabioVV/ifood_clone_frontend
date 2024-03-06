@@ -34,7 +34,7 @@ function UserAccount() {
                 </span>
               </li>
 
-              <li className='data-user'>
+              <li className='data-user' onClick={() =>{navigate('dados-de-contato')}}>
                 <div className='user-info-edit'>
                   <strong className='user_list_data_title'>
                     Dados de contato
@@ -48,7 +48,7 @@ function UserAccount() {
                 </span>
               </li>
 
-              <li className='data-user'>
+              <li className='data-user' onClick={() =>{navigate('credenciais')}}>
                 <div className='user-info-edit'>
                   <strong className='user_list_data_title'>
                     Credenciais
@@ -62,7 +62,7 @@ function UserAccount() {
                 </span>
               </li>
 
-              <li className='data-user'>
+              <li className='data-user' onClick={() =>{navigate('publicidade')}}>
                 <div className='user-info-edit'>
                   <strong className='user_list_data_title'>
                     Publicidade
