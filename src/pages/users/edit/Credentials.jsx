@@ -1,11 +1,18 @@
 import React from 'react'
 import DefaultPage from '../../../components/DefaultPage'
 import { getCurrentUser } from '../../auth/utils'
+import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
+
 
 function Credentials() {
 
     const User = getCurrentUser()
-    console.log(User)
+    const [isLoading, setIsLoading] = useState(false)
+    let navigate = useNavigate();
+
+
+
   return (
     <DefaultPage>
         <div className='container-user-info'>
@@ -43,8 +50,23 @@ function Credentials() {
                     {User?.phone}
                   </span>
                   <span className='user-info-data'>
-                    <span style={{color:'green'}}>Confirmado</span> em {User?.phone_confirmed_in}
+
+                    {User?.phone_confirmed_in ? 
+                        <>
+                            <span style={{color:'green'}}>Confirmado</span> <span>em {User?.phone_confirmed_in}</span>
+                        </>
+                    :
+                        <>
+                            <span style={{color:'salmon'}}>Não Confirmado</span> 
+                        </>
+                    }
                   </span>
+
+                    <button style={{marginTop:'2rem'}} type='button' disabled={isLoading} onClick={() => {navigate('/minha-conta')}} className="btn btn-outline">
+                            
+                        {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Voltar'}
+
+                    </button>
                 </div>
               </li>
 
