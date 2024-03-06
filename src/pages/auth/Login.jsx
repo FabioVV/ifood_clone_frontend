@@ -113,7 +113,8 @@ function Login() {
                     setIsLoading(false)
 
                 }
-    
+
+
                 if(sent_otp['success']){
                     SetCheckOTP(true)
                     SetEmailLogin(false)
@@ -213,6 +214,7 @@ function Login() {
     
                 body:JSON.stringify({
                     "email":Email.email,
+                    "phone":Phone.phone,
                     "otp": OTP.otp
                 })
             })

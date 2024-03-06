@@ -196,7 +196,7 @@ const login_google = useGoogleLogin({
 
 
     } catch(error){
-        alert(error)
+        console.log(error)
     }
 
 }
@@ -254,7 +254,7 @@ const login_google = useGoogleLogin({
         setIsLoading(false)
 
     } catch(error){
-        alert(error)
+        console.log(error)
     }
 
 }
@@ -312,7 +312,7 @@ const login_google = useGoogleLogin({
         setIsLoading(false)
 
     } catch(error){
-        alert(error)
+        console.log(error)
     }
 
 }
@@ -335,21 +335,21 @@ const login_google = useGoogleLogin({
         })
 
         if (!res.ok) {
-            throw new Error(`${res.status} ${res.statusText}`);
+           console.log(`${res.status} ${res.statusText}`);
         }
 
         const user_created = await res.json()
 
-        // if(user_created['cpf']){
+        if(user_created['cpf']){
 
-        //   setError('cpf', {
-        //       type: 'cpf_too_big',
-        //       message:'Máximo de 11 caracteres.'
-        //   })
+          setError('cpf', {
+              type: 'cpf_too_big',
+              message:'Máximo de 11 caracteres.'
+          })
 
-        //   setIsLoading(false)
+          setIsLoading(false)
 
-        // }
+        }
 
         if(user_created['first_name']){
 
@@ -361,7 +361,7 @@ const login_google = useGoogleLogin({
         setIsLoading(false)
 
     } catch(error){
-        alert(error)
+        console.log(error)
     }
 
 }
@@ -373,7 +373,7 @@ const login_google = useGoogleLogin({
 
           {!EmailRegister && !PhoneRegister ?  
             <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
-                <div class="hero-overlay bg-opacity-60"></div>
+                <div className="hero-overlay bg-opacity-60"></div>
                 <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                     <div  className="text-center lg:text-left">
                         <h1 className="text-5xl font-bold">Registre-se agora!</h1>
@@ -404,7 +404,7 @@ const login_google = useGoogleLogin({
                 
               // card shrink-0 w-full max-w-sm shadow-2xl bg-base-100
                 <div style={{backgroundImage:`url(${hero_food})`}}  className="hero min-h-screen bg-base-200">
-                    <div class="hero-overlay bg-opacity-60"></div>
+                    <div className="hero-overlay bg-opacity-60"></div>
 
                     <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                         <div  className="text-center lg:text-left">
@@ -494,7 +494,7 @@ const login_google = useGoogleLogin({
               CheckOTPemail ?  
 
                 <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
-                <div class="hero-overlay bg-opacity-60"></div>
+                <div className="hero-overlay bg-opacity-60"></div>
                   <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                       <div  className="text-center lg:text-left">
                           <h1 className="text-5xl font-bold">Registre-se agora!</h1>
@@ -552,7 +552,7 @@ const login_google = useGoogleLogin({
                 CheckOTPphone ?
 
                   <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
-                    <div class="hero-overlay bg-opacity-60"></div>
+                    <div className="hero-overlay bg-opacity-60"></div>
 
                     <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                         <div  className="text-center lg:text-left">
@@ -613,7 +613,7 @@ const login_google = useGoogleLogin({
                   !Phone.registered ? 
 
                   <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
-                        <div class="hero-overlay bg-opacity-60"></div>
+                        <div className="hero-overlay bg-opacity-60"></div>
 
                       <div  className="hero-content flex-col lg:flex-row text-neutral-content">
                           <div  className="text-center lg:text-left">
@@ -703,9 +703,9 @@ const login_google = useGoogleLogin({
                   :
 
                   <div style={{backgroundImage:`url(${hero_food})`}} className="hero min-h-screen bg-base-200">
-                    <div class="hero-overlay bg-opacity-60"></div>
+                    <div className="hero-overlay bg-opacity-60"></div>
 
-                    <div  className="hero-content flex-col lg:flex-row" text-neutral-content>
+                    <div  className="hero-content flex-col lg:flex-row" >
                         <div  className="text-center lg:text-left">
                             <h1 className="text-5xl font-bold">Registre-se agora!</h1>
                             <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
@@ -725,7 +725,7 @@ const login_google = useGoogleLogin({
                                 CPF
                                 <input name="cpf" id='cpf' type="text" className="input input-bordered input-lg w-full max-w" placeholder="00000000000" 
                                     {...register("cpf", { required: "Campo obrigatório.", pattern: {
-                                      value: /^([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})$/i,
+                                      value: /^([0-9]{2}[.]?[0-9]{3}[.]?[0-9]{3}[/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})$/i,
                                       message: "CPF inválido"
                                     } , valueAsNumber:true, maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, onChange: (e) => {SetUser({...User, cpf:e.target.value})}, })}
                                 />
