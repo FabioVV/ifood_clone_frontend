@@ -5,11 +5,11 @@ import Home from './pages/home'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import UserAccount from './pages/users/edit/UserAccount'
-import { RequireAuth } from './components/RequireAuth'
 import PersonalInfo from './pages/users/edit/PersonalInfo'
 import Publicity from './pages/users/edit/publicity'
 import Credentials from './pages/users/edit/Credentials'
 import ContactData from './pages/users/edit/ContactData'
+import { RequireAuth } from './components/RequireAuth'
 
 
 function _Routes() {

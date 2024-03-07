@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import brflag from '../../public/img/brflag.svg'
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from "react-social-login-buttons";
-import { setCurrentUser } from './utils';
+import { setCurrentUser } from '../../utils/localStorage';
 import hero_food from "../../public/img/hero_food.jpg";
 
 
