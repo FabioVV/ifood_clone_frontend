@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import user_icon from '../public/img/user.svg'
 import logo3 from '../public/img/logo3.png'
-import { getCurrentUser, clearLocalStorage} from '../utils/localStorage'
+import { getCurrentUser, clearLocalStorage} from '../utils/UserlocalStorage'
 import { googleLogout } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom";
 
