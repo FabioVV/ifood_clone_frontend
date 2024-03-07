@@ -5,10 +5,14 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser, getCurrentUserToken, updateCurrentUser } from '../../auth/utils';
+import Alert from '../../../components/Alert';
+import { show_flash_message } from '../../../utils/utils';
 
 function PersonalInfo() {
     const { register, handleSubmit, reset, setError, formState: { errors } } = useForm();
     const [isLoading, setIsLoading] = useState(false)
+    const [ShowAlert, setShowAlert] = useState(false)
+
     const CurrentUser = getCurrentUser()
 
     const [User, SetUser] = useState({
@@ -83,10 +87,10 @@ function PersonalInfo() {
 
             if(user_updated['first_name']){
                 updateCurrentUser(User)
-                //Flash message here
+                show_flash_message(setShowAlert)
             }   
-            setIsLoading(false)
 
+            setIsLoading(false)
         } catch(error){
             console.log(errors)
         }
@@ -94,87 +98,89 @@ function PersonalInfo() {
     }
 
 
-  return (
-    <DefaultPage>
+    return (
+        <DefaultPage>
+            {ShowAlert ? <Alert message='Dados alterados com sucesso' type='alert-success'/>: ""}
+            
 
-        <div className='container-user-info'>
-          <ul className=''>
+            <div className='container-user-info'>
+            <ul className=''>
 
-                <li>
-                    <form method='post' onSubmit={handleSubmit(onSubmit)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" >
-                        <label className="text-4xl mb-5"> 
-                            Editar informações pessoais
-                        </label>
+                    <li>
+                        <form method='post' onSubmit={handleSubmit(onSubmit)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" >
+                            <label className="text-4xl mb-5"> 
+                                Editar informações pessoais
+                            </label>
 
-                        Nome
-                        <input name="first_name" id='first_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="João" 
-                            {...register("first_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, first_name:e.target.value})}, })}
-                        />
-
-                        <ErrorMessage
-                            errors={errors}
-                            name="first_name"
-                            render={({ message }) => 
-                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
-                                <strong className="font-bold">* {message}</strong>
-                            </div>}
-                        />
-                        
-                        Sobrenome
-                        <input name="last_name" id='last_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="Souza" 
-                            {...register("last_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, last_name:e.target.value})}, })}
-                        />
-
-                        <ErrorMessage
-                            errors={errors}
-                            name="last_name"
-                            render={({ message }) => 
-                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
-                                <strong className="font-bold">* {message}</strong>
-                            </div>}
-                        />
-
-                        CPF
-                        {!CurrentUser['cpf'] ?
-                            <input name="cpf" id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
-                                {...register("cpf", { required: "Campo obrigatório.", maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, onChange: (e) => {SetUser({...User, cpf:e.target.value})}, })}
+                            Nome
+                            <input name="first_name" id='first_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="João" 
+                                {...register("first_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, first_name:e.target.value})}, })}
                             />
-                        :
-                            <input id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
-                                {...register("cpf", {disabled:true,  maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, })}
+
+                            <ErrorMessage
+                                errors={errors}
+                                name="first_name"
+                                render={({ message }) => 
+                                <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                    <strong className="font-bold">* {message}</strong>
+                                </div>}
                             />
-                        }
-
-                        <ErrorMessage
-                            errors={errors}
-                            name="cpf"
-                            render={({ message }) => 
-                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
-                                <strong className="font-bold">* {message}</strong>
-                            </div>}
-                        />
-
-
-                        <button disabled={isLoading} type='submit' className="btn btn-outline">
                             
-                            {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Salvar'}
+                            Sobrenome
+                            <input name="last_name" id='last_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="Souza" 
+                                {...register("last_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, last_name:e.target.value})}, })}
+                            />
 
-                        </button>
+                            <ErrorMessage
+                                errors={errors}
+                                name="last_name"
+                                render={({ message }) => 
+                                <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                    <strong className="font-bold">* {message}</strong>
+                                </div>}
+                            />
 
-                        <button type='button' disabled={isLoading} onClick={() => {navigate('/minha-conta')}} className="btn btn-outline">
-                            
-                            {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Voltar'}
-    
-                        </button>
+                            CPF
+                            {!CurrentUser['cpf'] ?
+                                <input name="cpf" id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
+                                    {...register("cpf", { required: "Campo obrigatório.", maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, onChange: (e) => {SetUser({...User, cpf:e.target.value})}, })}
+                                />
+                            :
+                                <input id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
+                                    {...register("cpf", {disabled:true,  maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, })}
+                                />
+                            }
 
-                    </form>
+                            <ErrorMessage
+                                errors={errors}
+                                name="cpf"
+                                render={({ message }) => 
+                                <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                    <strong className="font-bold">* {message}</strong>
+                                </div>}
+                            />
 
-                </li>
 
-          </ul>
-        </div>
+                            <button disabled={isLoading} type='submit' className="btn btn-outline">
+                                
+                                {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Salvar'}
+
+                            </button>
+
+                            <button type='button' disabled={isLoading} onClick={() => {navigate('/minha-conta')}} className="btn btn-outline">
+                                
+                                {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Voltar'}
         
-    </DefaultPage>  
+                            </button>
+
+                        </form>
+
+                    </li>
+
+            </ul>
+            </div>
+            
+        </DefaultPage>  
   )
 }
 

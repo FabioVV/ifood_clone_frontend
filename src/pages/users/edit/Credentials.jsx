@@ -1,15 +1,12 @@
 import React from 'react'
 import DefaultPage from '../../../components/DefaultPage'
 import { getCurrentUser } from '../../auth/utils'
-import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
-
 
 function Credentials() {
 
-    const User = getCurrentUser()
-    const [isLoading, setIsLoading] = useState(false)
-    let navigate = useNavigate();
+  const User = getCurrentUser()
+  let navigate = useNavigate();
 
 
 
@@ -36,7 +33,7 @@ function Credentials() {
                     {User?.email}
                   </span>
                   <span className='user-info-data'>
-                    <span style={{color:'green'}}>Confirmado</span> em {User?.email_confirmed_in ? User?.email_confirmed_in: User?.date_joined}
+                    <span style={{color:'green'}}>Confirmado</span> em {User?.email_confirmed_in ? User?.email_confirmed_in: User?.created_at}
                   </span>
                 </div>
               </li>
@@ -62,9 +59,9 @@ function Credentials() {
                     }
                   </span>
 
-                    <button style={{marginTop:'2rem'}} type='button' disabled={isLoading} onClick={() => {navigate('/minha-conta')}} className="btn btn-outline">
+                    <button style={{marginTop:'2rem'}} type='button' onClick={() => {navigate('/minha-conta')}} className="btn btn-outline">
                             
-                        {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Voltar'}
+                       Voltar
 
                     </button>
                 </div>
