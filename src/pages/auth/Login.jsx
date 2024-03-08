@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DefaultPage from '../../components/DefaultPage'
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { setCurrentUser } from '../../utils/UserlocalStorage';
+import { setCurrentUser } from '../../utils/localStorage';
 import brflag from '../../public/img/brflag.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from "react-social-login-buttons";

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser, getCurrentUserToken, updateCurrentUser } from '../../../utils/UserlocalStorage';
+import { getCurrentUser, getCurrentUserToken, updateCurrentUser } from '../../../utils/localStorage';
 import Alert from '../../../components/Alert';
 import { show_flash_message } from '../../../utils/FlashMessages';
 

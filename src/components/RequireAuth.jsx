@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { getCurrentUserToken } from "../utils/UserlocalStorage";
+import { getCurrentUserToken } from "../utils/localStorage";
 
 export function RequireAuth({ children, redirectTo }) {
     let navigate = useNavigate();

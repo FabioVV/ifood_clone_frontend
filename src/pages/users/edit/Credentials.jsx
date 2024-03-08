@@ -1,6 +1,6 @@
 import React from 'react'
 import DefaultPage from '../../../components/DefaultPage'
-import { getCurrentUser } from '../../../utils/UserlocalStorage'
+import { getCurrentUser } from '../../../utils/localStorage'
 import { useNavigate } from "react-router-dom";
 
 function Credentials() {
