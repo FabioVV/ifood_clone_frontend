@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import user_icon from '../public/img/user.svg'
 import logo3 from '../public/img/logo3.png'
+import n_logo from '../public/img/b-logo.png'
+
 import { getCurrentUser, clearLocalStorage } from '../utils/UserlocalStorage'
 import { googleLogout } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom";
@@ -43,7 +45,7 @@ function Navbar() {
 
                         <div style={{maxWidth:'85px', marginLeft:'2.2rem'}}>
                             
-                            <NavLink  to="/"><img width={65} height={50} src={logo3}/></NavLink>
+                            <NavLink  to="/"><img width={65} height={50} src={n_logo}/></NavLink>
                        
                         </div>
                     </div>
@@ -109,14 +111,14 @@ function Navbar() {
         
             ):(
                 <>                                
-                    <div className="navbar-start">
-                        <div className="dropdown">
+                    <div className="navbar-start justify-evenly">
+                        {/* <div className="dropdown">
                             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                             </div>
-                            {/* DROPDOWN MENU FOR UNLOGGED USERS */}
+                            DROPDOWN MENU FOR UNLOGGED USERS 
 
-                            {/* <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><a>Item 1</a></li>
                                 <li>
                                     <a>Parent</a>
@@ -128,16 +130,16 @@ function Navbar() {
                                     </ul>
                                 </li>
                                 <li><a>Item 3</a></li>
-                            </ul> */}
-                        </div>
+                            </ul>
+                        </div> */}
                         <div style={{maxWidth:'85px', marginLeft:'2.2rem'}}>
                             
-                            <NavLink  to="/"><img width={350} height={50} src={logo3}/></NavLink>
+                            <NavLink  to="/"><img width={350} height={50} src={n_logo}/></NavLink>
                        
                         </div>
 
                     </div>
-                    <div className="navbar-center hidden lg:flex">
+                    <div className="navbar-center hidden lg:flex ">
                         <ul className="menu menu-horizontal px-1">
 
                             {/* <li><a>Lord of this world!</a></li>
@@ -145,7 +147,7 @@ function Navbar() {
 
                         </ul>
                     </div>
-                    <div style={{marginRight:'2.2rem'}} className="navbar-end gap-3">
+                    <div style={{marginRight:'2.2rem'}} className="navbar-end gap-3 justify-center">
                         <NavLink className='btn btn-ghost' to="/register">Criar conta</NavLink>
                         <NavLink className='btn btn-neutral' to="/login">Login</NavLink>
                     </div>

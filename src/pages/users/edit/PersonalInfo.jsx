@@ -172,6 +172,7 @@ function PersonalInfo() {
                                 {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Voltar'}
         
                             </button>
+                            
 
                         </form>
 
