@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import user_icon from '../public/img/user.svg'
-import logo3 from '../public/img/logo3.png'
-import n_logo from '../public/img/b-logo.png'
+import logo from '../public/img/b-logo.png'
 
 import { getCurrentUser, clearLocalStorage } from '../utils/UserlocalStorage'
 import { googleLogout } from '@react-oauth/google';
@@ -45,7 +44,7 @@ function Navbar() {
 
                         <div style={{maxWidth:'85px', marginLeft:'2.2rem'}}>
                             
-                            <NavLink  to="/"><img width={65} height={50} src={n_logo}/></NavLink>
+                            <NavLink  to="/"><img width={65} height={50} src={logo}/></NavLink>
                        
                         </div>
                     </div>
@@ -134,7 +133,7 @@ function Navbar() {
                         </div> */}
                         <div style={{maxWidth:'85px', marginLeft:'2.2rem'}}>
                             
-                            <NavLink  to="/"><img width={350} height={50} src={n_logo}/></NavLink>
+                            <NavLink  to="/"><img width={350} height={50} src={logo}/></NavLink>
                        
                         </div>
 
