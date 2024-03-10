@@ -7,6 +7,7 @@ import brflag from '../../public/img/brflag.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from "react-social-login-buttons";
 import hero_food from "../../public/img/hero_food.jpg";
+import { useNavigate } from "react-router-dom";
 
 
 function Login() {
@@ -17,6 +18,8 @@ function Login() {
     const [PhoneLogin, SetPhoneLogin] = useState(false)
     const [CheckOTP, SetCheckOTP] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+
+    let navigate = useNavigate()
 
     const [Email, SetEmail] = useState(
         {
@@ -54,11 +57,7 @@ function Login() {
                 console.log(res_login_backend.status)
             }
 
-            const user = GetUserData(token_result['key'])
-
-            if(user){
-                window.location.replace("http://localhost:5173/");            
-            }
+            const USER = await GetUserData(token_result['key'])
 
 
         },
@@ -176,6 +175,11 @@ function Login() {
 
             if(userData['email']){
                 setCurrentUser(userData, token)
+
+                //window.location.replace("http://localhost:5173/");      
+                navigate(`/`) 
+                navigate(0)          
+                
             }
 
             setIsLoading(false)
@@ -209,9 +213,10 @@ function Login() {
             }
 
             const logged = await res.json()
+
             if(logged['token']){
                 await GetUserData(logged['token'])
-                window.location.replace("http://localhost:5173/");
+                //window.location.replace("http://localhost:5173/");
             }
 
             if(logged['error_login_expired_otp']){
