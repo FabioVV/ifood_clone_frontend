@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { setCurrentUser } from '../../utils/UserlocalStorage';
-import hero_food from "../../public/img/hero_food.jpg";
 import brflag from '../../public/img/brflag.svg'
 import DefaultPage from '../../components/DefaultPage'
 import RegisterLayout from '../../components/RegisterLayout';
