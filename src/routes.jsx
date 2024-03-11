@@ -9,6 +9,7 @@ import PersonalInfo from './pages/users/edit/PersonalInfo'
 import Publicity from './pages/users/edit/publicity'
 import Credentials from './pages/users/edit/Credentials'
 import ContactData from './pages/users/edit/ContactData'
+import PhoneGoogleRegister from './pages/auth/PhoneGoogleRegister'
 import { RequireAuth } from './components/RequireAuth'
 
 
@@ -19,6 +20,7 @@ function _Routes() {
         <Route path='/' element={<Home/>} />
         <Route path='login' element={<Login/>} />
         <Route path='register' element={<Register/>} />
+        <Route path='phone-google-register' element={<PhoneGoogleRegister/>} />
 
         <Route path='minha-conta'> 
 

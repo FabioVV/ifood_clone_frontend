@@ -99,7 +99,7 @@ function Login() {
                 console.log(res_login_backend.status)
             }
 
-            const USER = await GetUserData(token_result['key'])
+            await GetUserData(token_result['key'])
 
 
         },
@@ -533,7 +533,7 @@ function Login() {
                                 </label>
 
                                 <label className="text-md mb-4"> 
-                                    {EmailLogin ? `Digite o código de 6 digítos que enviamos para ${Email.email}`
+                                    {Email.email ? `Digite o código de 6 digítos que enviamos para ${Email.email}`
                                     : 
                                         `Digite o código de 6 digítos que enviamos para ${Phone.phone}`
                                     }

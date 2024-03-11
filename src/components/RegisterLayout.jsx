@@ -1,6 +1,5 @@
 import React from 'react'
 import hero_food from "../public/img/hero_food.jpg";
-import brflag from '../public/img/brflag.svg'
 
 
 
