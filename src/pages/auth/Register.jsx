@@ -46,7 +46,7 @@ function Register() {
     }
   )
 
-  const [User, SetUser] = useState(
+    const [User, SetUser] = useState(
         {
             cpf:"",
             first_name:"",

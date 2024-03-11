@@ -9,6 +9,8 @@ import { GoogleLoginButton } from "react-social-login-buttons";
 import { useNavigate } from "react-router-dom";
 import LoginLayout from '../../components/LoginLayout';
 
+
+
 function Login() {
 
     const { register, handleSubmit,setError,formState: { errors } } = useForm();
@@ -36,6 +38,9 @@ function Login() {
             otp:"",
         }
     )
+
+    const [User, SetUser] = useState(null)
+    const [UserHiddenEmail, SetUserHiddenEmail] = useState('')
 
 
     const login_google = useGoogleLogin({
@@ -212,8 +217,22 @@ function Login() {
 
             const logged = await res.json()
 
-            if(logged['token']){
-                await GetUserData(logged['token'])
+            if(logged['email']){
+                //await GetUserData(logged['token'])
+                SetUser(logged)
+
+
+                let email_name = logged['email'].substring(0, logged['email'].indexOf('@')).split('')
+                let remainder_of_email = logged['email'].substring(logged['email'].indexOf('@'), logged['email'].length)
+
+                for(let a = 0; a < email_name.length; a++){
+                    if(a !== email_name.length-1 && a !== email_name.length-2){
+                        email_name[a] = '*'
+                    }
+                }
+                SetUserHiddenEmail(email_name.join('')+remainder_of_email)
+                setIsLoading(false)
+
             }
 
             if(logged['error_login_expired_otp']){
@@ -242,6 +261,49 @@ function Login() {
 
     }
 
+    async function onSubmitLogin(form, event){
+        event.preventDefault()
+        setIsLoading(true)
+
+        try{
+            const res = await fetch("http://127.0.0.1:8000/api/v1/users/login-user/",{
+                method:"POST",
+                headers:{"Content-Type":"application/json",},
+    
+                body:JSON.stringify({
+                    "email":User?.email,
+                    "phone":User?.phone
+                })
+            })
+    
+            if (!res.ok) {
+                console.log(res.status)
+
+            }
+
+            const logged = await res.json()
+
+            if(logged['token']){
+                await GetUserData(logged['token'])
+
+            }
+
+            if(logged['error_mail']){
+                setError('email', {
+                    type: 'error_mail',
+                    message:'Email incorreto.'
+                })
+                setIsLoading(false)
+            }
+
+            
+            setIsLoading(false)
+
+        } catch(error){
+            console.log(error)
+
+        }
+    }
 
   return (
         <DefaultPage>
@@ -344,26 +406,75 @@ function Login() {
 
 
                 :
+                    !User ?
+                        <LoginLayout>
+
+                            <form method='post' onSubmit={handleSubmit(onSubmitOTP)} style={{justifyContent:'center'}}id='form' className="card-body gap-4 text-black" >
+                                <label className="text-4xl mb-5"> 
+                                    Código
+                                </label>
+
+                                <label className="text-md mb-4"> 
+                                    {EmailLogin ? `Digite o código de 6 digítos que enviamos para ${Email.email}`
+                                    : 
+                                        `Digite o código de 6 digítos que enviamos para ${Phone.phone}`
+                                    }
+                                </label>
+
+
+                                <input name="otp" id='otp' type="text" className="input input-bordered input-lg w-full max-w" placeholder="000000" 
+                                    {...register("otp", { required: "Campo obrigatório.", maxLength:{value:6, message:'Máximo de 6 caracteres'}, minLength:{value:6, message:'Necessita no minímo 6 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp:e.target.value})}, })}
+                                />
+
+
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="otp"
+                                    render={({ message }) => 
+                                    <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                        <strong className="font-bold">* {message}</strong>
+                                    </div>}
+                                />
+
+
+
+                                <button disabled={isLoading} type='submit' className="btn btn-outline">
+                                    
+                                    {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Confirmar'}
+
+                                </button>
+                                <button disabled={isLoading} onClick={() => {SetCheckOTP(false); SetEmailLogin(false); SetPhoneLogin(false);}} className="btn btn-outline">
+                                    
+                                    {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Retornar'}
+
+                                </button>
+                                
+                            </form>
+
+                        </LoginLayout>
+                    :
+                                
                     <LoginLayout>
 
-                        <form method='post' onSubmit={handleSubmit(onSubmitOTP)} style={{justifyContent:'center'}}id='form' className="card-body gap-4 text-black" >
-                            <label className="text-4xl mb-5"> 
-                                Código
+                        <form method='post' onSubmit={handleSubmit(onSubmitLogin)} style={{justifyContent:'center'}}id='form' className="card-body gap-4 text-black" >
+                            <label className="text-2xl mb-5"> 
+                                Para sua segurança, digite novamente o seu e-mail:<br/>
+                                {UserHiddenEmail}
                             </label>
 
-                            <label className="text-md mb-4"> 
+                            {/* <label className="text-md mb-4"> 
                                 {EmailLogin ? `Digite o código de 6 digítos que enviamos para ${Email.email}`
                                 : 
                                     `Digite o código de 6 digítos que enviamos para ${Phone.phone}`
                                 }
-                            </label>
+                            </label> */}
 
 
-                            <input name="otp" id='otp' type="text" className="input input-bordered input-lg w-full max-w" placeholder="000000" 
+                            {/* <input name="otp" id='otp' type="text" className="input input-bordered input-lg w-full max-w" placeholder="000000" 
                                 {...register("otp", { required: "Campo obrigatório.", maxLength:{value:6, message:'Máximo de 6 caracteres'}, minLength:{value:6, message:'Necessita no minímo 6 caracteres '}, onChange: (e) => {SetOTP({...OTP, otp:e.target.value})}, })}
-                            />
+                            /> */}
 
-
+                            {/* 
                             <ErrorMessage
                                 errors={errors}
                                 name="otp"
@@ -371,7 +482,19 @@ function Login() {
                                 <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                     <strong className="font-bold">* {message}</strong>
                                 </div>}
-                            />
+                            /> */}
+
+                                <input name="email" id='email' type="email" className="input input-bordered input-lg w-full max-w" placeholder="john@doe.com" 
+                                    {...register("email", { required: "Campo obrigatório.", maxLength:{value:40, message:'Máximo de 40 caracteres'}, minLength:{value:5, message:'Necessita no minímo 5 caracteres '}, onChange: (e) => {SetUser({...User, email:e.target.value})}, })}
+                                />
+                                    <ErrorMessage
+                                        errors={errors}
+                                        name="email"
+                                        render={({ message }) => 
+                                        <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                            <strong className="font-bold">* {message}</strong>
+                                        </div>}
+                                    />
 
 
 
@@ -389,7 +512,6 @@ function Login() {
                         </form>
 
                     </LoginLayout>
-
             }
 
         </DefaultPage>
