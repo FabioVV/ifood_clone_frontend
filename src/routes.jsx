@@ -10,6 +10,8 @@ import Publicity from './pages/users/edit/publicity'
 import Credentials from './pages/users/edit/Credentials'
 import ContactData from './pages/users/edit/ContactData'
 import PhoneGoogleRegister from './pages/auth/PhoneGoogleRegister'
+import ChangeEmail from './pages/users/edit/changeEmail'
+import ChangePhone from './pages/users/edit/changePhone'
 import { RequireAuth } from './components/RequireAuth'
 
 
@@ -52,6 +54,18 @@ function _Routes() {
             <Route path='publicidade' element={
                 <RequireAuth redirectTo="/login">
                     <Publicity />
+                </RequireAuth>
+            } />
+
+            <Route path='email-contato' element={
+                <RequireAuth redirectTo="/login">
+                    <ChangeEmail />
+                </RequireAuth>
+            } />
+
+            <Route path='celular-contato' element={
+                <RequireAuth redirectTo="/login">
+                    <ChangePhone />
                 </RequireAuth>
             } />
 

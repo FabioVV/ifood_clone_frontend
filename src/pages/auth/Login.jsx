@@ -442,14 +442,15 @@ function Login() {
                             <input name="email" id='email' type="email" className="input input-bordered input-lg w-full max-w" placeholder="john@doe.com" 
                                 {...register("email", { required: "Campo obrigatório.", maxLength:{value:100, message:'Máximo de 100 caracteres'}, minLength:{value:5, message:'Necessita no minímo 5 caracteres '}, onChange: (e) => {SetEmail({...Email, email:e.target.value})}, })}
                             />
-                                <ErrorMessage
-                                    errors={errors}
-                                    name="email"
-                                    render={({ message }) => 
-                                    <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
-                                        <strong className="font-bold">* {message}</strong>
-                                    </div>}
-                                />
+                            <ErrorMessage
+                                errors={errors}
+                                name="email"
+                                render={({ message }) => 
+                                <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                    <strong className="font-bold">* {message}</strong>
+                                </div>}
+                            />
+                            
                         </>
                     : 
                         <>
@@ -460,7 +461,6 @@ function Login() {
                                 />
                             </label>
 
-
                             <ErrorMessage
                                 errors={errors}
                                 name="phone"
@@ -469,6 +469,7 @@ function Login() {
                                     <strong className="font-bold">* {message}</strong>
                                 </div>}
                             />
+
                         </>
                     }
 
