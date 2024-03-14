@@ -12,6 +12,7 @@ import ContactData from './pages/users/edit/ContactData'
 import PhoneGoogleRegister from './pages/auth/PhoneGoogleRegister'
 import ChangeEmail from './pages/users/edit/changeEmail'
 import ChangePhone from './pages/users/edit/changePhone'
+import CreateRestaurant from './pages/restaurants/create/CreateRestaurant'
 import { RequireAuth } from './components/RequireAuth'
 
 
@@ -70,6 +71,13 @@ function _Routes() {
             } />
 
         </Route>
+
+        <Route path='criar-restaurante' element={
+            <RequireAuth redirectTo="/login">
+                <CreateRestaurant />
+            </RequireAuth>
+        } />
+
 
     </Routes>
   )

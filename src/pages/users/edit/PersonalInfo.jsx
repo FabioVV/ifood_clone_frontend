@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import DefaultPage from '../../../components/DefaultPage'
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser, getCurrentUserToken, updateCurrentUser } from '../../../utils/UserlocalStorage';
 import Alert from '../../../components/Alert';
@@ -103,81 +102,81 @@ function PersonalInfo() {
             
 
             <div className='container-user-info'>
-            <ul className=''>
+                <ul>
 
-                    <li>
-                        <form method='post' onSubmit={handleSubmit(onSubmit)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" >
-                            <label className="text-4xl mb-5"> 
-                                Editar informações pessoais
-                            </label>
+                        <li>
+                            <form method='post' onSubmit={handleSubmit(onSubmit)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" >
+                                <label className="text-4xl mb-5"> 
+                                    Editar informações pessoais
+                                </label>
 
-                            Nome
-                            <input name="first_name" id='first_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="João" 
-                                {...register("first_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, first_name:e.target.value})}, })}
-                            />
-
-                            <ErrorMessage
-                                errors={errors}
-                                name="first_name"
-                                render={({ message }) => 
-                                <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
-                                    <strong className="font-bold">* {message}</strong>
-                                </div>}
-                            />
-                            
-                            Sobrenome
-                            <input name="last_name" id='last_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="Souza" 
-                                {...register("last_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, last_name:e.target.value})}, })}
-                            />
-
-                            <ErrorMessage
-                                errors={errors}
-                                name="last_name"
-                                render={({ message }) => 
-                                <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
-                                    <strong className="font-bold">* {message}</strong>
-                                </div>}
-                            />
-
-                            CPF
-                            {!CurrentUser['cpf'] ?
-                                <input name="cpf" id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
-                                    {...register("cpf", { required: "Campo obrigatório.", maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, onChange: (e) => {SetUser({...User, cpf:e.target.value})}, })}
+                                Nome
+                                <input name="first_name" id='first_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="João" 
+                                    {...register("first_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, first_name:e.target.value})}, })}
                                 />
-                            :
-                                <input id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
-                                    {...register("cpf", {disabled:true,  maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, })}
+
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="first_name"
+                                    render={({ message }) => 
+                                    <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                        <strong className="font-bold">* {message}</strong>
+                                    </div>}
                                 />
-                            }
-
-                            <ErrorMessage
-                                errors={errors}
-                                name="cpf"
-                                render={({ message }) => 
-                                <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
-                                    <strong className="font-bold">* {message}</strong>
-                                </div>}
-                            />
-
-
-                            <button disabled={isLoading} type='submit' className="btn btn-outline">
                                 
-                                {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Salvar'}
+                                Sobrenome
+                                <input name="last_name" id='last_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="Souza" 
+                                    {...register("last_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, last_name:e.target.value})}, })}
+                                />
 
-                            </button>
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="last_name"
+                                    render={({ message }) => 
+                                    <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                        <strong className="font-bold">* {message}</strong>
+                                    </div>}
+                                />
 
-                            <button type='button' disabled={isLoading} onClick={() => {navigate('/minha-conta')}} className="btn btn-outline">
+                                CPF
+                                {!CurrentUser['cpf'] ?
+                                    <input name="cpf" id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
+                                        {...register("cpf", { required: "Campo obrigatório.", maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, onChange: (e) => {SetUser({...User, cpf:e.target.value})}, })}
+                                    />
+                                :
+                                    <input id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
+                                        {...register("cpf", {disabled:true,  maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, })}
+                                    />
+                                }
+
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="cpf"
+                                    render={({ message }) => 
+                                    <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                        <strong className="font-bold">* {message}</strong>
+                                    </div>}
+                                />
+
+
+                                <button disabled={isLoading} type='submit' className="btn btn-outline">
+                                    
+                                    {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Salvar'}
+
+                                </button>
+
+                                <button type='button' disabled={isLoading} onClick={() => {navigate('/minha-conta')}} className="btn btn-outline">
+                                    
+                                    {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Voltar'}
+            
+                                </button>
                                 
-                                {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Voltar'}
-        
-                            </button>
-                            
 
-                        </form>
+                            </form>
 
-                    </li>
+                        </li>
 
-            </ul>
+                </ul>
             </div>
             
         </DefaultPage>  
