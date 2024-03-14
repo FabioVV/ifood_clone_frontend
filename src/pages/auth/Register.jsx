@@ -120,7 +120,7 @@ function Register() {
                 })
 
                 if (!res.ok) {
-                console.log(res.status)
+                    console.log(res.status)
                 }
                 
                 const sent_otp = await res.json()

@@ -114,7 +114,7 @@ function Login() {
 
             if(Phone.phone != ""){
 
-                const res = await fetch("http://127.0.0.1:8000/api/v1/users/login-phone-otp/",{
+                const res = await fetch("http://127.0.0.1:8000/api/v1/users/send-phone-otp/",{
                     method:"POST",
                     headers:{"Content-Type":"application/json",},
         
@@ -152,7 +152,7 @@ function Login() {
 
             } else {
                 
-                const res = await fetch("http://127.0.0.1:8000/api/v1/users/login-email-otp/",{
+                const res = await fetch("http://127.0.0.1:8000/api/v1/users/send-email-otp/",{
                     method:"POST",
                     headers:{"Content-Type":"application/json",},
         
@@ -280,7 +280,7 @@ function Login() {
         setIsLoading(true)
 
             try{
-                const res = await fetch("http://127.0.0.1:8000/api/v1/users/login-phone-otp/",{
+                const res = await fetch("http://127.0.0.1:8000/api/v1/users/send-phone-otp/",{
                     method:"POST",
                     headers:{"Content-Type":"application/json",},
         
@@ -329,7 +329,8 @@ function Login() {
     
                 body:JSON.stringify({
                     "email":User?.email,
-                    "phone":User?.phone
+                    "phone":User?.phone,
+                    "otp": OTP?.otp,
                 })
             })
     

@@ -54,7 +54,6 @@ function PersonalInfo() {
                     "first_name": User.first_name,
                     "last_name": User.last_name,
                     "cpf": User.cpf,
-
                 })
             })
 
