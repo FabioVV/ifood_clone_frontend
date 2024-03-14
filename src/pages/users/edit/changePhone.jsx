@@ -46,7 +46,7 @@ function ChangePhone() {
 
         try{
 
-            const res = await fetch("http://127.0.0.1:8000/api/v1/users/edit-user-email/",{
+            const res = await fetch("http://127.0.0.1:8000/api/v1/users/edit-user-phone/",{
                 method:"PATCH",
                 headers:{
                     "Content-Type":"application/json", 
@@ -91,7 +91,7 @@ function ChangePhone() {
 
         try{
 
-            const res = await fetch("http://127.0.0.1:8000/api/v1/users/edit-user-email-confirm/",{
+            const res = await fetch("http://127.0.0.1:8000/api/v1/users/edit-user-phone-confirm/",{
                 method:"PATCH",
                 headers:{
                     "Content-Type":"application/json", 
@@ -138,7 +138,7 @@ function ChangePhone() {
 
   return (
     <DefaultPage>
-        {ShowAlert ? <Alert message='Celular atualiado com sucesso' type='alert-success'/>: ""}
+        {ShowAlert ? <Alert message='Celular atualizado com sucesso' type='alert-success'/>: ""}
 
         <dialog id="my_modal_1" className="modal">
             <div className="modal-box">
@@ -146,7 +146,7 @@ function ChangePhone() {
                         <br></br>
                         <label className="text-lg mb-4"> 
 
-                            Digite o código de 6 digítos que enviamos para <span className='font-bold'>{User.email}</span>
+                            Digite o código de 6 digítos que enviamos para <span className='font-bold'>{User.phone}</span>
                             
                         </label>
 
@@ -177,7 +177,7 @@ function ChangePhone() {
                 <div className="modal-action">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
-                        <button className="btn" id='mybutton_form_otp_modal_1'>Close</button>
+                        <button className="btn" id='mybutton_form_otp_modal_1'>Fechar</button>
                     </form>
                 </div>
             </div>

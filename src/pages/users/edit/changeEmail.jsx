@@ -176,7 +176,7 @@ function ChangeEmail() {
                 <div className="modal-action">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
-                        <button className="btn" id='mybutton_form_otp_modal_1'>Close</button>
+                        <button className="btn" id='mybutton_form_otp_modal_1'>Fechar</button>
                     </form>
                 </div>
             </div>
@@ -198,7 +198,17 @@ function ChangeEmail() {
                         />
 
                         <label className="text-sm mb-3"> 
-                            <span className='font-bold' style={{color:'green'}}>Confirmado</span> em <span className=''>{CurrentUser?.email_confirmed_in}</span>
+                            <span className='font-bold' style={{color:'green'}}>Confirmado</span> 
+                            &nbsp;
+                            em 
+                            &nbsp;
+                            <span className=''>
+                                {CurrentUser?.email_confirmed_in ? 
+                                    CurrentUser?.email_confirmed_in
+                                :
+                                    CurrentUser?.created_at
+                                }
+                            </span>
                         </label>
 
                         <ErrorMessage

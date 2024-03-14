@@ -56,6 +56,21 @@ function Navbar() {
                         </ul>
                     </div>
                     <div className="navbar-end">
+                        <div className="flex-none">
+                            <ul className="menu menu-horizontal px-1">
+                                <li>
+                                    <details>
+                                        <summary>
+                                            Escolha um endereço
+                                        </summary>
+                                        {/* <ul className="p-2 bg-base-100 rounded-t-none">
+                                            <li><a>Link 1</a></li>
+                                            <li><a>Link 2</a></li>
+                                        </ul> */}
+                                    </details>
+                                </li>
+                            </ul>
+                        </div>
 
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
