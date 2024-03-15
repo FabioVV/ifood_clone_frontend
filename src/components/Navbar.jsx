@@ -80,9 +80,15 @@ function Navbar() {
                             <ul id='ul-dropdown-user' tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-lg dropdown-content bg-base-100 rounded-box w-80">
                                 <h1 className='dropdown-title-navbar-mainmenu'>Olá, {User?.first_name}</h1>
                                 {!User?.is_staff ?
-                                    <li style={{backgroundColor:'salmon'}}>
-                                        <NavLink  to="/criar-restaurante" ><i className="fa-sharp fa-solid fa-gear"></i> Criar restaurante</NavLink>
-                                    </li>
+                                    <>
+                                        <li>
+                                            <NavLink  to="/criar-restaurante" ><i className="fa-sharp fa-solid fa-gear"></i> Criar restaurante</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink  to="/criar-produto" ><i className="fa-sharp fa-solid fa-gear"></i> Criar produto</NavLink>
+                                        </li>
+                                        <hr style={{marginBottom:'8px'}}/>
+                                    </>
                                     :
                                     null
                                 }
