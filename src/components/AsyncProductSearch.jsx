@@ -5,9 +5,7 @@ import { useEffect, useState } from 'react';
 import { getCurrentUserToken } from '../utils/UserlocalStorage';
 
 
-
-
-  export default function Asynchronous() {
+export default function Asynchronous() {
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const loading = open && options.length === 0;
@@ -25,20 +23,26 @@ import { getCurrentUserToken } from '../utils/UserlocalStorage';
       }
   
       (async () => {
-        const response = await fetch(`http://127.0.0.1:8000/api/v3/unbooked-labs/`, {
-            method:'GET',
-  
-            headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
-  
-          })
-  
-          if(response.ok){
-            const data = await response.json()
-  
-            if (active) {
-              setOptions([...data]);
-            }
-          } 
+        try{
+            const response = await fetch(`http://127.0.0.1:8000/api/v3/user-available-restaurants/`, {
+                method:'GET',
+    
+                headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+    
+            })
+    
+            if(response.ok){
+                const data = await response.json()
+
+                if (active) {
+                    setOptions([...data]);
+                }
+            } 
+        } catch(e) {
+            console.log(e)
+            return false
+        }
+        
       })();
   
       return () => {
@@ -89,4 +93,4 @@ import { getCurrentUserToken } from '../utils/UserlocalStorage';
         )}
       />
     );
-  }
+}

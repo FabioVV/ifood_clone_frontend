@@ -78,4 +78,3 @@ export function clearLocalStorage(){
         console.log("Error clearing local storage ->" + error)
     }
 }
-

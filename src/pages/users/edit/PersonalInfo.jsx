@@ -10,7 +10,12 @@ import { show_flash_message } from '../../../utils/FlashMessages';
 function PersonalInfo() {
     const { register, handleSubmit, reset, setError, formState: { errors } } = useForm();
     const [isLoading, setIsLoading] = useState(false)
-    const [ShowAlert, setShowAlert] = useState(false)
+    
+       const [ShowAlert, setShowAlert] = useState({
+        show: false,
+        message:'',
+        type:'',
+    })
 
     const CurrentUser = getCurrentUser()
 
@@ -85,7 +90,8 @@ function PersonalInfo() {
 
             if(user_updated['first_name']){
                 updateCurrentUser(User)
-                show_flash_message(setShowAlert)
+                show_flash_message(setShowAlert, ShowAlert, 'Dados alterados com sucesso', 'alert-success')
+
             }   
 
             setIsLoading(false)
@@ -98,7 +104,7 @@ function PersonalInfo() {
 
     return (
         <DefaultPage>
-            {ShowAlert ? <Alert message='Dados alterados com sucesso' type='alert-success'/>: ""}
+        {ShowAlert?.show ? <Alert message={`${ShowAlert?.message}`} type={`${ShowAlert?.type}`}/>: ""}
             
 
             <div className='container-user-info'>

@@ -15,9 +15,13 @@ function CreateProduct() {
     const { register, handleSubmit, reset, setError, formState: { errors } } = useForm();
 
     const [isLoading, setIsLoading] = useState(false)
-    const [ShowAlert, setShowAlert] = useState(false)
-    const [ShowAlertError, setShowAlertError] = useState(false)
+    const [ShowAlert, setShowAlert] = useState({
+        show: false,
+        message:'',
+        type:'',
+    })
 
+    
     let navigate = useNavigate();
 
     const [Product, setProduct] = useState({
@@ -58,13 +62,13 @@ function CreateProduct() {
             })
 
             if (!res.ok) {
-                show_flash_message(setShowAlertError)
+                show_flash_message(setShowAlert, ShowAlert, 'Oh não. Um erro ocorreu com a sua solicitação', 'alert-error')
             } 
             
             const product_created = await res.json()
 
             if(product_created['id']){
-                show_flash_message(setShowAlert)
+                show_flash_message(setShowAlert, ShowAlert, 'Produto criado com sucesso', 'alert-success')
             }
 
             if(product_created['restaurant_does_not_exist']){
@@ -78,6 +82,9 @@ function CreateProduct() {
             
             setIsLoading(false)
         } catch(error){
+
+            show_flash_message(setShowAlert, ShowAlert, 'Oh não. Um erro ocorreu com a sua solicitação', 'alert-error')
+
             console.log(errors)
             setIsLoading(false)
 
@@ -88,16 +95,14 @@ function CreateProduct() {
 
   return (
     <DefaultPage>
-        {ShowAlert ? <Alert message='Produto registrado com sucesso' type='alert-success'/>: ""}
-        {ShowAlertError ? <Alert message='Oh não. Um erro ocorreu com a sua solicitação' type='alert-error'/>: ""}
-
+        {ShowAlert?.show ? <Alert message={`${ShowAlert?.message}`} type={`${ShowAlert?.type}`}/>: ""}
 
         <div className='container-user-info' style={{margin:'20px auto'}}>
             <ul style={{width:'75ch'}}>
                 <li>
                     <form method='post' onSubmit={handleSubmit(onSubmit)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" encType='multipart/form-data'>
-                        <label className="text-4xl mb-5"> 
-                            Criação de produtos
+                        <label className="text-5xl mb-5"> 
+                            Registre um produto
                         </label>
 
                         Nome
@@ -115,19 +120,20 @@ function CreateProduct() {
                         />
 
                         Restaurante
-                        <Asynchronous/>
-                        {/* <input name="restaurant_id" id='restaurant_id' type="text" className="input input-bordered input-md w-full max-w" placeholder="Coca-cola lata" 
+                        {/* <Asynchronous/>  
+                        UTILIZAR ESSE AQUI PARA MOSTRAR OS RESTAURANTES QUE O USUARIO STAFF PODE UTILIZAR PARA CADASTRAR OS PRODUTOS DO SEU RESTAURANTE*/}
+                        <input name="restaurant_id" id='restaurant_id' type="text" className="input input-bordered input-md w-full max-w" placeholder="Coca-cola lata" 
                             {...register("restaurant_id", { required: "Campo obrigatório.", maxLength:{value:75, message:'Máximo de 75 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {setProduct({...Product, restaurant_id:e.target.value})}, })}
-                        /> */}
+                        /> 
 
-                        {/* <ErrorMessage
+                        <ErrorMessage
                             errors={errors}
                             name="restaurant_id"
                             render={({ message }) => 
                             <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                 <strong className="font-bold">* {message}</strong>
                             </div>}
-                        /> */}
+                        />
 
                         Preço
                         <label className="input input-bordered flex items-center gap-2">
@@ -136,12 +142,13 @@ function CreateProduct() {
                                 intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
                                 id="price"
                                 name="price"
-                                placeholder="Por favor, digite um preço"
-                                defaultValue={1}
+                                placeholder="Digite um preço"
+                                // defaultValue={1}
                                 decimalsLimit={2}
                                 decimalSeparator="," 
                                 groupSeparator="."
                                 onValueChange={(value) => {setProduct({...Product, price:value})}}
+                                {...register("price", { required: "Campo obrigatório."})}
                             />
                         </label>
 

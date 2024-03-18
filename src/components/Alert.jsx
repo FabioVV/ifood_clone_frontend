@@ -1,18 +1,5 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
 
-
-function Alert({message, type}) {
-
-    // const [Show, SetShow] = useState("flex")
-    // const TIME = 5000
-    // useEffect(()=>{
-    //     window.scrollTo({top: 0, behavior: 'smooth'});
-    //     setTimeout(()=>{
-    //         SetShow("none")
-    //     }, TIME)
-    // }, [])
-
+export default function Alert({message, type}) {
 
     return (
         <>
@@ -38,7 +25,3 @@ function Alert({message, type}) {
         </>
     )
 }
-
-
-
-export default Alert

@@ -13,7 +13,11 @@ function ChangeEmail() {
 
     const { register, handleSubmit, reset, setError, formState: { errors } } = useForm();
     const [isLoading, setIsLoading] = useState(false)
-    const [ShowAlert, setShowAlert] = useState(false)
+    const [ShowAlert, setShowAlert] = useState({
+        show: false,
+        message:'',
+        type:'',
+    })
 
 
     const [User, SetUser] = useState({
@@ -114,7 +118,7 @@ function ChangeEmail() {
 
                 updateCurrentUser(User)
                 document.getElementById('mybutton_form_otp_modal_1').click()
-                show_flash_message(setShowAlert)
+                show_flash_message(setShowAlert, ShowAlert, 'Email atualiado com sucesso', 'alert-success')
 
             }
 
@@ -137,7 +141,7 @@ function ChangeEmail() {
 
   return (
     <DefaultPage>
-        {ShowAlert ? <Alert message='Email atualiado com sucesso' type='alert-success'/>: ""}
+        {ShowAlert?.show ? <Alert message={`${ShowAlert?.message}`} type={`${ShowAlert?.type}`}/>: ""}
 
         <dialog id="my_modal_1" className="modal">
             <div className="modal-box">

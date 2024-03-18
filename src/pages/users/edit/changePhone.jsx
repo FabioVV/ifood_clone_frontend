@@ -15,7 +15,11 @@ function ChangePhone() {
 
     const {register, handleSubmit, reset, setError, formState: { errors } } = useForm();
     const [isLoading, setIsLoading] = useState(false)
-    const [ShowAlert, setShowAlert] = useState(false)
+    const [ShowAlert, setShowAlert] = useState({
+        show: false,
+        message:'',
+        type:'',
+    })  
 
     const [User, SetUser] = useState({
         phone:'',
@@ -115,7 +119,7 @@ function ChangePhone() {
 
                 updateCurrentUser(User)
                 document.getElementById('mybutton_form_otp_modal_1').click()
-                show_flash_message(setShowAlert)
+                show_flash_message(setShowAlert, ShowAlert, 'Celular atualizado com sucesso', 'alert-success')
 
             }
 
@@ -138,7 +142,7 @@ function ChangePhone() {
 
   return (
     <DefaultPage>
-        {ShowAlert ? <Alert message='Celular atualizado com sucesso' type='alert-success'/>: ""}
+        {ShowAlert?.show ? <Alert message={`${ShowAlert?.message}`} type={`${ShowAlert?.type}`}/>: ""}
 
         <dialog id="my_modal_1" className="modal">
             <div className="modal-box">

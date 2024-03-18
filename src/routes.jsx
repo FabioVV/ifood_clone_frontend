@@ -73,6 +73,7 @@ function _Routes() {
 
         </Route>
 
+
         <Route path='criar-restaurante' element={
             <RequireAuth redirectTo="/login">
                 <CreateRestaurant />
