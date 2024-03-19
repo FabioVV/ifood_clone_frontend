@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
 import CurrencyInput from 'react-currency-input-field';
-import AsynchronousRestaurants from '../../../components/AsyncProductSearch';
+import AsynchronousRestaurants from '../../../components/AsyncProductRestaurant';
+import AsynchronousProductCategories from '../../../components/AsyncProductCategory';
 
 import { getCurrentUserToken, getCurrentUser } from '../../../utils/UserlocalStorage';
 import DefaultPage from '../../../components/DefaultPage'
@@ -30,8 +31,12 @@ function CreateProduct() {
         price:'',
         qtd:'',
         image:'',
-        restaurant_id:''
+        restaurant_id:'',
+        categories: []
     })
+
+
+
 
     async function onSubmit(form, event){
 
@@ -49,7 +54,15 @@ function CreateProduct() {
         form_data_product.append("price", Product.price);
         form_data_product.append("qtd", Product.qtd);
         form_data_product.append("restaurant_id", Product.restaurant_id);
+        form_data_product.append("categories", JSON.stringify(Product.categories));
 
+        // for ( var key in Product.categories[0] ) {
+        //     if(key == 'name'){
+        //         form_data_product.append(`product_${key}`, Product.categories[0][key]);
+        //     } 
+
+        // }
+        
         try{
 
             const res = await fetch("http://127.0.0.1:8000/api/v1/products/register-product/",{
@@ -81,7 +94,7 @@ function CreateProduct() {
 
             
             setIsLoading(false)
-        } catch(error){
+        } catch(e){
 
             show_flash_message(setShowAlert, ShowAlert, 'Oh não. Um erro ocorreu com a sua solicitação', 'alert-error')
 
@@ -121,14 +134,16 @@ function CreateProduct() {
 
                         Restaurante
                         <AsynchronousRestaurants
-                            // {...register("restaurant_id", { required: "Campo obrigatório.", minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {setProduct({...Product, restaurant_id:e.target.value})}, })}
                             fn_set_id={setProduct}
                             fn_object={Product}
                         />  
-                        {/* UTILIZAR ESSE AQUI PARA MOSTRAR OS RESTAURANTES QUE O USUARIO STAFF PODE UTILIZAR PARA CADASTRAR OS PRODUTOS DO SEU RESTAURANTE */}
-                        {/* <input name="restaurant_id" id='restaurant_id' type="text" className="input input-bordered input-md w-full max-w" placeholder="Coca-cola lata" 
-                            {...register("restaurant_id", { required: "Campo obrigatório.", maxLength:{value:75, message:'Máximo de 75 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {setProduct({...Product, restaurant_id:e.target.value})}, })}
-                        />  */}
+
+                        Categorias
+                        <AsynchronousProductCategories
+                            fn_set_id={setProduct}
+                            fn_object={Product}
+                        />
+
 
                         <ErrorMessage
                             errors={errors}
@@ -192,6 +207,7 @@ function CreateProduct() {
                                 <strong className="font-bold">* {message}</strong>
                             </div>}
                         />
+
 
                         Imagem
                         <input name="image" id='image' type="file" className="file-input w-full max-w-xs"  accept="image/jpeg,image/png,image/gif"

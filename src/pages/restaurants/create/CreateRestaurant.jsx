@@ -88,7 +88,7 @@ function CreateRestaurant() {
             });
             
 
-            if(blank_fields > 0){setIsLoading(false); window.scrollTo({top: 0, behavior: 'smooth'});;return false; }
+            if(blank_fields > 0){setIsLoading(false); window.scrollTo({top: 0, behavior: 'smooth'}); return false; }
 
             const res = await fetch("http://127.0.0.1:8000/api/v1/restaurants/register-restaurant/",{
                 method:"POST",
@@ -285,7 +285,7 @@ function CreateRestaurant() {
 
                         Logo
                         <input name="logo" id='logo' type="file" className="file-input w-full max-w-xs"  accept="image/jpeg,image/png,image/gif"
-                            {...register("logo", { required: "Campo obrigatório.", onChange: (e) => {setRestaurant({...Restaurant, logo:e.target.files[0]})}, })}
+                            {...register("logo", { onChange: (e) => {setRestaurant({...Restaurant, logo:e.target.files[0]})}, })}
                         />
 
                         <ErrorMessage

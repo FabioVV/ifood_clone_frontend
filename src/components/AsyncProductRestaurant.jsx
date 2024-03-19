@@ -46,19 +46,19 @@ export default function AsynchronousRestaurants({fn_set_id, fn_object}) {
       };
     }, [loading]);
 
-  
-    useEffect(() => {
-      if (!open) {
-        setOptions([]);
-      }
-    }, [open]);
+    // CASO QUERIA FAZER A REQUISIÇÃO DE GET RESTAURANTES A CADA VEZ QUE ABRE O INPUT, DESCOMENTAR ISSO AQUI
+
+    // useEffect(() => {
+    //   if (!open) {
+    //     setOptions([]);
+    //   }
+    // }, [open]);
 
 
   
     return (
       <Autocomplete
-      
-        // filterOptions={(x) => x}
+    
         id="restaurant_id"
         sx={{ width: '100%' }}
         onChange={(event, value) => {fn_set_id({...fn_object, restaurant_id:value.id})}}
