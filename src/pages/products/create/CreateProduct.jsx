@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
 import CurrencyInput from 'react-currency-input-field';
-import Asynchronous from '../../../components/AsyncProductSearch';
+import AsynchronousRestaurants from '../../../components/AsyncProductSearch';
 
 import { getCurrentUserToken, getCurrentUser } from '../../../utils/UserlocalStorage';
 import DefaultPage from '../../../components/DefaultPage'
@@ -120,11 +120,15 @@ function CreateProduct() {
                         />
 
                         Restaurante
-                        {/* <Asynchronous/>  
-                        UTILIZAR ESSE AQUI PARA MOSTRAR OS RESTAURANTES QUE O USUARIO STAFF PODE UTILIZAR PARA CADASTRAR OS PRODUTOS DO SEU RESTAURANTE*/}
-                        <input name="restaurant_id" id='restaurant_id' type="text" className="input input-bordered input-md w-full max-w" placeholder="Coca-cola lata" 
+                        <AsynchronousRestaurants
+                            // {...register("restaurant_id", { required: "Campo obrigatório.", minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {setProduct({...Product, restaurant_id:e.target.value})}, })}
+                            fn_set_id={setProduct}
+                            fn_object={Product}
+                        />  
+                        {/* UTILIZAR ESSE AQUI PARA MOSTRAR OS RESTAURANTES QUE O USUARIO STAFF PODE UTILIZAR PARA CADASTRAR OS PRODUTOS DO SEU RESTAURANTE */}
+                        {/* <input name="restaurant_id" id='restaurant_id' type="text" className="input input-bordered input-md w-full max-w" placeholder="Coca-cola lata" 
                             {...register("restaurant_id", { required: "Campo obrigatório.", maxLength:{value:75, message:'Máximo de 75 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracteres '}, onChange: (e) => {setProduct({...Product, restaurant_id:e.target.value})}, })}
-                        /> 
+                        />  */}
 
                         <ErrorMessage
                             errors={errors}

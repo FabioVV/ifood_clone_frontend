@@ -5,14 +5,10 @@ import { useEffect, useState } from 'react';
 import { getCurrentUserToken } from '../utils/UserlocalStorage';
 
 
-export default function Asynchronous() {
+export default function AsynchronousRestaurants({fn_set_id, fn_object}) {
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const loading = open && options.length === 0;
-
-    const [Restaurant, setRestaurant] = useState({
-        id:'',
-    })
 
   
     useEffect(() => {
@@ -24,7 +20,7 @@ export default function Asynchronous() {
   
       (async () => {
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/v3/user-available-restaurants/`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/v1/restaurants/user-available-restaurants/`, {
                 method:'GET',
     
                 headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
@@ -57,14 +53,15 @@ export default function Asynchronous() {
       }
     }, [open]);
 
+
   
     return (
       <Autocomplete
       
-        filterOptions={(x) => x}
+        // filterOptions={(x) => x}
         id="restaurant_id"
         sx={{ width: '100%' }}
-        onChange={(event, value) => {setRestaurant({...Restaurant, id:value.id})}}
+        onChange={(event, value) => {fn_set_id({...fn_object, restaurant_id:value.id})}}
         open={open}
         onOpen={() => {
           setOpen(true);
