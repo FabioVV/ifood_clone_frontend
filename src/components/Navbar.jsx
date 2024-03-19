@@ -74,11 +74,18 @@ function Navbar() {
                             </ul>
                         </div>
 
-                        <div style={{maxWidth:'85px', marginLeft:'2.2rem'}}>
+                        <div style={{maxWidth:'85px', marginLeft:'2.2rem', marginRight:'2.2rem'}}>
                             
                             <NavLink  to="/"><img width={65} height={50} src={logo}/></NavLink>
                        
                         </div>
+                        <ul className="menu menu-horizontal px-1">
+                            <li><NavLink style={{marginRight:'1.5rem'}} to="/">Inicio</NavLink></li>
+                            <li><NavLink  to="/">Restaurantes</NavLink></li>
+                        </ul>
+                        
+                        
+
                     </div>
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal px-1">
