@@ -31,7 +31,18 @@ function Home() {
           </div>
         :
           <>
-          
+              <div id='main-stores'> 
+                <div id='filters'>
+
+                </div>
+
+                <h1 className='text-justify'>Lojas</h1>
+
+                <div id='stores'>
+                  
+                </div>
+
+              </div>
 
           </>
         }
