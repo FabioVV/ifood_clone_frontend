@@ -81,7 +81,7 @@ function Navbar() {
                         </div>
                         <ul className="menu menu-horizontal px-1">
                             <li><NavLink style={{marginRight:'1.5rem'}} to="/">Inicio</NavLink></li>
-                            <li><NavLink  to="/">Restaurantes</NavLink></li>
+                            <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
                         </ul>
                         
                         

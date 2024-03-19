@@ -56,12 +56,6 @@ function CreateProduct() {
         form_data_product.append("restaurant_id", Product.restaurant_id);
         form_data_product.append("categories", JSON.stringify(Product.categories));
 
-        // for ( var key in Product.categories[0] ) {
-        //     if(key == 'name'){
-        //         form_data_product.append(`product_${key}`, Product.categories[0][key]);
-        //     } 
-
-        // }
         
         try{
 
@@ -82,6 +76,7 @@ function CreateProduct() {
 
             if(product_created['id']){
                 show_flash_message(setShowAlert, ShowAlert, 'Produto criado com sucesso', 'alert-success')
+
             }
 
             if(product_created['restaurant_does_not_exist']){

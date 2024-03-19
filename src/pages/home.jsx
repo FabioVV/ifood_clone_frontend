@@ -30,7 +30,10 @@ function Home() {
               </div>
           </div>
         :
-        "Logado, Fazer no estilo ifood"
+          <>
+          
+
+          </>
         }
 
 
