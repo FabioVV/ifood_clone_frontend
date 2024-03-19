@@ -61,11 +61,34 @@ function CreateRestaurant() {
         }
         form_data_restaurant.append("name", Restaurant.name);
         form_data_restaurant.append("description", Restaurant.description);
-        form_data_restaurant.append("price", Restaurant.price);
-        form_data_restaurant.append("qtd", Restaurant.qtd);
-        form_data_restaurant.append("restaurant_id", Restaurant.restaurant_id);
+        form_data_restaurant.append("street", Restaurant.street);
+        form_data_restaurant.append("neighborhood", Restaurant.neighborhood);
+        form_data_restaurant.append("complement", Restaurant.complement);
+        form_data_restaurant.append("city", Restaurant.city);
+        form_data_restaurant.append("state", Restaurant.state);
+        form_data_restaurant.append("number", Restaurant.number);
+        form_data_restaurant.append("zip_code", Restaurant.zip_code);
+
+
 
         try{
+
+            let blank_fields = 0
+            Object.entries(Restaurant).forEach(([key, val]) => {
+                if(val == '' || val == undefined || val == null){
+                    setError(key, {
+                        type: 'blank_filed',
+                        message:'Campo obrigatório'
+                    })
+                    setIsLoading(false)
+                    blank_fields++
+                } else {
+                    blank_fields--
+                }   
+            });
+            
+
+            if(blank_fields > 0){setIsLoading(false); window.scrollTo({top: 0, behavior: 'smooth'});;return false; }
 
             const res = await fetch("http://127.0.0.1:8000/api/v1/restaurants/register-restaurant/",{
                 method:"POST",
@@ -87,6 +110,7 @@ function CreateRestaurant() {
             }
 
             // ERROS DO IF AQUI (SOBRE O PROBLEMA FALADO ACIMA)
+            
 
 
             
@@ -95,7 +119,7 @@ function CreateRestaurant() {
 
             show_flash_message(setShowAlert, ShowAlert, 'Oh não. Um erro ocorreu com a sua solicitação', 'alert-error')
 
-            console.log(errors)
+            console.log(error)
             setIsLoading(false)
 
         }
@@ -111,7 +135,7 @@ function CreateRestaurant() {
         <div className='container-user-info' style={{margin:'20px auto'}}>
             <ul style={{width:'75ch'}}>
                 <li>
-                    <form method='post' onSubmit={handleSubmit(()=>{alert('Restaurante criado')})} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" encType='multipart/form-data'>
+                    <form method='post' onSubmit={handleSubmit(onSubmit)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" encType='multipart/form-data'>
                         <label className="text-5xl mb-5"> 
                             Registre um restaurante
                         </label>
@@ -204,13 +228,27 @@ function CreateRestaurant() {
                         />
 
                         Complemento
-                        <input name="complement" id='complement' type="text" className="input input-bordered input-md w-full max-w" placeholder="Parque imperial" 
+                        <input name="complement" id='complement' type="text" className="input input-bordered input-md w-full max-w" placeholder="Ao lado do mercado fulano" 
                             {...register("complement", { maxLength:{value:75, message:'Máximo de 75 caracteres'}, minLength:{value:3, message:'Necessita no minímo 3 caracteres '}, onChange: (e) => {setRestaurant({...Restaurant, complement:e.target.value})}, })}
                         />
 
                         <ErrorMessage
                             errors={errors}
                             name="neighborhood"
+                            render={({ message }) => 
+                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                <strong className="font-bold">* {message}</strong>
+                            </div>}
+                        />
+
+                        Número
+                        <input name="number" id='number' type="text" className="input input-bordered input-md w-full max-w" placeholder="133" 
+                            {...register("number", { maxLength:{value:75, message:'Máximo de 75 caracteres'}, minLength:{value:1, message:'Necessita no minímo 3 caracteres '}, onChange: (e) => {setRestaurant({...Restaurant, number:e.target.value})}, })}
+                        />
+
+                        <ErrorMessage
+                            errors={errors}
+                            name="number"
                             render={({ message }) => 
                             <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                 <strong className="font-bold">* {message}</strong>
