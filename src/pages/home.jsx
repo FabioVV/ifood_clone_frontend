@@ -21,8 +21,6 @@ function RestaurantsList({data, HandleFetch}){
 
 
 
-
-
 function Home() {
 
   const [user, SetUser] = useState(getCurrentUser)
@@ -45,7 +43,7 @@ function Home() {
   }
 
 
-  useEffect(()=>{fetchRestaurants()},[getCurrentUserToken])
+  useEffect(()=>{fetchRestaurants()},[user])
 
 
   return (
@@ -73,32 +71,25 @@ function Home() {
         :
           <>
               <div id='filters'>
-                  <ul>
-
-                  </ul>
+                <ul>
+                  <li>Ordernar</li>
+                  <li>Entrega grátis</li>
+                  <li>Entrega parceira</li>
+                  <li>Super restaurantes</li>
+                  <li>Limpar</li>
+                </ul>
               </div>
   
               <div id='main-stores'> 
-                <h1 className='text-left'>
-                  Lojas
+                <h1 id='title-stores' className='text-left'>
+                  <span></span>
+                  <span>Lojas</span>
+                  <span></span>
+                  
                 </h1>
 
                 <div id='stores'>
 
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
                   <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
 
                 </div>

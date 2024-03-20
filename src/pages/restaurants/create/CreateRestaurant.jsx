@@ -7,6 +7,7 @@ import { getCurrentUserToken } from '../../../utils/UserlocalStorage';
 import Alert from '../../../components/Alert';
 import { show_flash_message } from '../../../utils/FlashMessages';
 import searchCEP from '../../../utils/CepApi';
+import CurrencyInput from 'react-currency-input-field';
 
 
 function CreateRestaurant() {
@@ -35,6 +36,7 @@ function CreateRestaurant() {
         zip_code:'',
         logo:'',
         cnpj:'',
+        delivery_fee:'',
     })
 
 
@@ -59,6 +61,7 @@ function CreateRestaurant() {
         form_data_restaurant.append("number", Restaurant.number);
         form_data_restaurant.append("zip_code", Restaurant.zip_code);
         form_data_restaurant.append("cnpj", Restaurant.cnpj);
+        form_data_restaurant.append("delivery_fee", Restaurant.delivery_fee);
 
         try{
 
@@ -66,7 +69,7 @@ function CreateRestaurant() {
             Object.entries(Restaurant).forEach(([key, val]) => {
                 if(val == '' || val == undefined || val == null){
                     setError(key, {
-                        type: 'blank_filed',
+                        type: 'blank_field',
                         message:'Campo obrigatório'
                     })
                     setIsLoading(false)
@@ -103,12 +106,13 @@ function CreateRestaurant() {
 
 
             
-            setIsLoading(false)
         } catch(error){
 
             show_flash_message(setShowAlert, ShowAlert, 'Oh não. Um erro ocorreu com a sua solicitação', 'alert-error')
 
             console.log(error)
+
+        } finally {
             setIsLoading(false)
 
         }
@@ -118,7 +122,6 @@ function CreateRestaurant() {
 
   return (
     <DefaultPage>
-        {/* {ShowAlert ? <Alert message='Restaurante registrado com sucesso' type='alert-success'/>: ""} */}
         {ShowAlert?.show ? <Alert message={`${ShowAlert?.message}`} type={`${ShowAlert?.type}`}/>: ""}
 
         <div className='container-user-info' style={{margin:'20px auto'}}>
@@ -146,12 +149,38 @@ function CreateRestaurant() {
 
                         CNPJ
                         <input name="cnpj" id='cnpj' type="text" className="input input-bordered input-md w-full max-w" placeholder="17584937560004" 
-                            {...register("cnpj", { maxLength:{value:14, message:'Máximo de 14 caracteres'}, minLength:{value:14, message:'Necessita no minímo 14 caracteres '}, onChange: (e) => {setRestaurant({...Restaurant, name:e.target.value})}, })}
+                            {...register("cnpj", { maxLength:{value:14, message:'Máximo de 14 caracteres'}, minLength:{value:14, message:'Necessita no minímo 14 caracteres '}, onChange: (e) => {setRestaurant({...Restaurant, cnpj:e.target.value})}, })}
                         />
 
                         <ErrorMessage
                             errors={errors}
                             name="cnpj"
+                            render={({ message }) => 
+                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                <strong className="font-bold">* {message}</strong>
+                            </div>}
+                        />
+
+                        Taxa de entrega
+                        <label className="input input-bordered flex items-center gap-2">
+                            
+                            <CurrencyInput
+                                intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
+                                id="price"
+                                name="price"
+                                placeholder="Digite um preço"
+                                // defaultValue={1}
+                                decimalsLimit={2}
+                                decimalSeparator="," 
+                                groupSeparator="."
+                                onValueChange={(value) => {setRestaurant({...Restaurant, delivery_fee:value})}}
+                                {...register("price", { required: "Campo obrigatório."})}
+                            />
+                        </label>
+
+                        <ErrorMessage
+                            errors={errors}
+                            name="delivery_fee"
                             render={({ message }) => 
                             <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                 <strong className="font-bold">* {message}</strong>

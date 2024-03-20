@@ -1,6 +1,9 @@
 import React from 'react'
 import { getCurrentUser } from '../utils/UserlocalStorage'
 import DeleteRestaurant from './DeleteRestaurantModal'
+import EditRestaurant from '../pages/restaurants/edit/EditRestaurant'
+import { NavLink } from 'react-router-dom'
+
 
 
 function Restaurant({restaurant, HandleFetch}) {
@@ -53,7 +56,8 @@ function Restaurant({restaurant, HandleFetch}) {
         {restaurant?.manager_id == getCurrentUser()['id'] ? 
 
           <div id='actions'>
-            <button className="btn btn-outline btn-info">Editar</button>
+            <NavLink to={`editar-restaurante/${restaurant?.id}`} className="btn btn-outline btn-info">Editar</NavLink>
+            <button></button>
             <button  onClick={() => {document.getElementById(`my_modal_delete_restaurant_${restaurant?.id}`)?.showModal()}} className="btn btn-outline btn-error">Excluir</button>
             <DeleteRestaurant HandleFetch={HandleFetch} restaurant_id={restaurant?.id}/>
           </div>
