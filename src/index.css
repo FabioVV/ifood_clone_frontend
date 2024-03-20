@@ -71,3 +71,112 @@ div.navbar{
     color: #414143;
     font-weight: 500;
 }
+
+
+
+/* <div id='main-stores'> 
+<div id='filters'>
+
+</div>
+
+<h1 className='text-left'>Lojas</h1>
+
+<div id='stores'>
+  
+</div>
+
+</div> */
+
+
+
+
+#main-stores{
+    display: flex;
+    flex-direction: column;
+    margin-left: 14em;
+    margin-right: 8em;
+}
+
+#main-stores > h1{
+    font-size: 1.30rem;
+    font-weight: 500;
+}
+
+
+#stores{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-left: 0.5rem;
+}
+
+
+#merchant{
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+
+    transition: 0.4s ease-in-out;
+    width: max-content;
+    padding: 2rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#merchant:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transform: scale(1.03);
+}
+
+#image-container{
+}
+
+#title-name{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    font-weight: 500;
+}
+
+#title-info{
+    font-size: .935rem;
+    line-height: 1.0625rem;
+    color: #717171;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-weight: 400;
+}
+
+
+div#footer{
+    color: #717171;
+    font-size: .935rem;
+    line-height: 1.0625rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-weight: 400;
+}
+
+
+span#separator{
+    margin-left: 0.4em;
+    margin-right: 0.4em;
+}
+
+div#content{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
+#actions{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

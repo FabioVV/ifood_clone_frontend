@@ -14,6 +14,7 @@ import ChangeEmail from './pages/users/edit/changeEmail'
 import ChangePhone from './pages/users/edit/changePhone'
 import CreateRestaurant from './pages/restaurants/create/CreateRestaurant'
 import CreateProduct from './pages/products/create/CreateProduct'
+import RestaurantsHome from './pages/restaurants/Home'
 import { RequireAuth } from './components/RequireAuth'
 
 
@@ -83,6 +84,13 @@ function _Routes() {
         <Route path='criar-produto' element={
             <RequireAuth redirectTo="/login">
                 <CreateProduct />
+            </RequireAuth>
+        } />
+
+
+<       Route path='restaurantes' element={
+            <RequireAuth redirectTo="/login">
+                <RestaurantsHome />
             </RequireAuth>
         } />
 

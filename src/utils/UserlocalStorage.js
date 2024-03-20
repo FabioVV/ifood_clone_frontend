@@ -1,3 +1,27 @@
+function ExpiredLocalStorage(){
+
+    let expiration_date = undefined
+
+    if (localStorage.getItem("userBytefood") != null) {
+        expiration_date = JSON.parse(localStorage.getItem('userBytefood'))['expiration']
+    } else {
+        console.log('EXP_Error')
+    }
+
+
+    let now = new Date()
+    if (expiration_date != undefined && now.getTime() > expiration_date){
+        // Problably overkill
+        removeCurrentUser()
+        
+        // Removes user and all of his data (cart etc) from localstorage
+        clearLocalStorage()
+
+    }
+
+}
+
+
 export function getCurrentUser(){
     try{
 
@@ -29,6 +53,10 @@ export function setCurrentUser(user, token){
     try{
 
         Object.assign(user, {token:token})
+
+        //EXPIRATION TIME FOR LOCALSTORAGEDATA
+        Object.assign(user, {expiration:new Date().getTime()+ (60000 * 30)})
+
         localStorage.setItem('userBytefood', JSON.stringify(user))
 
 
@@ -48,6 +76,9 @@ export function updateCurrentUser(user_new_data){
             }
         });
         removeCurrentUser()
+
+        //EXPIRATION TIME FOR LOCALSTORAGEDATA
+        Object.assign(user, {expiration:new Date().getTime()+ (60000 * 30)})
         localStorage.setItem('userBytefood', JSON.stringify(user))
 
 

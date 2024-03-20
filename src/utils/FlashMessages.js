@@ -17,4 +17,6 @@ export function show_flash_message(fn_state, Object, message, type){
 
     }, TIME)
 
+    document.getElementsByTagName('nav')
+
 }

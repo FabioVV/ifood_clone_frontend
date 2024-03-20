@@ -34,18 +34,8 @@ function CreateRestaurant() {
         state:'',
         zip_code:'',
         logo:'',
+        cnpj:'',
     })
-
-
-    
-    // TODO:
-
-    /*
-     CHECKAR CADA CAMPO DO FORM NA VOLTA DA REQUISIÇÃO
-     NÃO VAMOS PODER CONTINUAR USANDO O HOOK FORM PRA FAZER A CHECKAGEM, ESTÁ DANDO CONFLITO COM O PREENCHIMENTO DE VALORES DA VIACEP
-     OS CAMPOS RETORNARÃO ERROS DE 'VAZIO', FAZER UM IF PARA PEGAR TODOS E RETORNAR UM ERRO PARA O USUARIO PREENCHER OS CAMPOS
-    
-    */
 
 
     async function onSubmit(form, event){
@@ -68,8 +58,7 @@ function CreateRestaurant() {
         form_data_restaurant.append("state", Restaurant.state);
         form_data_restaurant.append("number", Restaurant.number);
         form_data_restaurant.append("zip_code", Restaurant.zip_code);
-
-
+        form_data_restaurant.append("cnpj", Restaurant.cnpj);
 
         try{
 
@@ -149,6 +138,20 @@ function CreateRestaurant() {
                         <ErrorMessage
                             errors={errors}
                             name="name"
+                            render={({ message }) => 
+                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                <strong className="font-bold">* {message}</strong>
+                            </div>}
+                        />
+
+                        CNPJ
+                        <input name="cnpj" id='cnpj' type="text" className="input input-bordered input-md w-full max-w" placeholder="17584937560004" 
+                            {...register("cnpj", { maxLength:{value:14, message:'Máximo de 14 caracteres'}, minLength:{value:14, message:'Necessita no minímo 14 caracteres '}, onChange: (e) => {setRestaurant({...Restaurant, name:e.target.value})}, })}
+                        />
+
+                        <ErrorMessage
+                            errors={errors}
+                            name="cnpj"
                             render={({ message }) => 
                             <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                 <strong className="font-bold">* {message}</strong>

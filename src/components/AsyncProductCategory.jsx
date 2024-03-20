@@ -28,7 +28,7 @@ export default function AsynchronousProductCategories({fn_set_id, fn_object}) {
     
         (async () => {
           try{
-              const response = await fetch(`http://127.0.0.1:8000/api/v1/products/available-categories/`, {
+              const response = await fetch(`http://127.0.0.1:8000/api/v1/categories/available-categories/`, {
                   method:'GET',
       
                   headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},

@@ -1,11 +1,52 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import DefaultPage from '../components/DefaultPage'
 import hero_food from '../public/img/hero_food.jpg'
-import { getCurrentUser } from '../utils/UserlocalStorage'
+import { getCurrentUser, getCurrentUserToken } from '../utils/UserlocalStorage'
+import Restaurant from '../components/Restaurant'
+
+
+function RestaurantsList({data, HandleFetch}){
+  return (
+    <div id="merchant">
+      {data?.map((restaurant) => (
+          <Restaurant
+            key={restaurant.id}
+            restaurant={restaurant}
+            HandleFetch={HandleFetch}
+          />
+      ))}
+    </div>
+  )
+}
+
+
+
+
 
 function Home() {
 
   const [user, SetUser] = useState(getCurrentUser)
+  const [Restaurants, SetRestaurants] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
+
+  const fetchRestaurants = async (url = 'http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/') => {
+    setIsLoading(true)
+    const response = await fetch(url, {
+      method:'GET',
+      headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+    })
+
+    if(response.ok){
+        const data = await response.json()
+        SetRestaurants(data)
+    } 
+    setIsLoading(false)
+  }
+
+
+  useEffect(()=>{fetchRestaurants()},[getCurrentUserToken])
+
 
   return (
     <DefaultPage>
@@ -31,18 +72,39 @@ function Home() {
           </div>
         :
           <>
+              <div id='filters'>
+                  <ul>
+
+                  </ul>
+              </div>
+  
               <div id='main-stores'> 
-                <div id='filters'>
-
-                </div>
-
-                <h1 className='text-justify'>Lojas</h1>
+                <h1 className='text-left'>
+                  Lojas
+                </h1>
 
                 <div id='stores'>
-                  
-                </div>
 
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+
+                </div>
               </div>
+
+              
 
           </>
         }
