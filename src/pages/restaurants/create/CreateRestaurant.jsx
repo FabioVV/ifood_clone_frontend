@@ -101,6 +101,14 @@ function CreateRestaurant() {
                 show_flash_message(setShowAlert, ShowAlert, 'Restaurante criado com sucesso', 'alert-success')
             }
 
+            if(restaurant_result['cnpj'] && res.status != 201){
+                setError('cnpj', {
+                    type: 'cnpj_already_exists',
+                    message:'Este número de CNPJ já está cadastrado.'
+                })
+                setIsLoading(false)
+            }
+
             // ERROS DO IF AQUI (SOBRE O PROBLEMA FALADO ACIMA)
             
 

@@ -3,11 +3,11 @@ import DefaultPage from '../components/DefaultPage'
 import hero_food from '../public/img/hero_food.jpg'
 import { getCurrentUser, getCurrentUserToken } from '../utils/UserlocalStorage'
 import Restaurant from '../components/Restaurant'
-
+import Product from '../components/Product'
 
 function RestaurantsList({data, HandleFetch}){
   return (
-    <div id="merchant">
+    <>
       {data?.map((restaurant) => (
           <Restaurant
             key={restaurant.id}
@@ -15,9 +15,10 @@ function RestaurantsList({data, HandleFetch}){
             HandleFetch={HandleFetch}
           />
       ))}
-    </div>
+    </>
   )
 }
+
 
 
 

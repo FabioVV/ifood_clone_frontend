@@ -134,6 +134,9 @@ function Navbar() {
                                         <li>
                                             <NavLink  to="/criar-produto" ><i className="fa-sharp fa-solid fa-gear"></i> Criar produto</NavLink>
                                         </li>
+                                        <li>
+                                            <NavLink  to="/produtos" ><i className="fa-sharp fa-solid fa-gear"></i> Listar produtos</NavLink>
+                                        </li>
                                         <hr style={{marginBottom:'8px'}}/>
                                     </>
                                     :

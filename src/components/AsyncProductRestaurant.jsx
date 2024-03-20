@@ -53,9 +53,6 @@ export default function AsynchronousRestaurants({fn_set_id, fn_object}) {
     //     setOptions([]);
     //   }
     // }, [open]);
-
-
-  
     return (
       <Autocomplete
     
@@ -73,6 +70,10 @@ export default function AsynchronousRestaurants({fn_set_id, fn_object}) {
         getOptionLabel={(option) => option.name}
         options={options}
         loading={loading}
+        // defaultValue={{name:restaurant_name}}
+        // value={{name:fn_object.restaurant_name}}
+        // inputValue=fn_object.restaurant_name}
+        
         renderInput={(params) => (
           <TextField
             {...params}

@@ -1,23 +1,20 @@
 import React from 'react'
 import { getCurrentUser } from '../utils/UserlocalStorage'
-import DeleteRestaurant from './DeleteRestaurantModal'
 import { NavLink } from 'react-router-dom'
 
-
-
-function Restaurant({restaurant, HandleFetch}) {
+function Product({product, HandleFetch}) {
 
   return (
-    <div id='merchant'>
+    <div id="merchant">
       <div id='image-container' className='rounded-lg  overflow-hidden'>
-        <img width={135} height={135} src={`http://localhost:8000${restaurant?.logo}`} alt={`Imagem do restaurante ${restaurant?.name}`} className='rounded-lg overflow-hidden'/>
+        <img width={135} height={135} src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name}`} className='rounded-lg overflow-hidden'/>
       </div>
 
       <div id="content">
         <h3 id='title'>
 
           <div id='title-header'>
-            <span id='title-name'>{restaurant?.name}</span>
+            <span id='title-name'>{product?.name}</span>
           </div>
           
         </h3>
@@ -33,7 +30,7 @@ function Restaurant({restaurant, HandleFetch}) {
               </span> 
             */}
             <span id='separator'>•</span>
-            <span>{restaurant?.category_name}</span>
+            <span>{product?.restaurant_name}</span>
             <span id='separator'>•</span>
 
 
@@ -42,9 +39,9 @@ function Restaurant({restaurant, HandleFetch}) {
           </div>
 
         <div id='footer'>
-            <span>49-59 min</span>
+            <span>Quantidade: {product?.qtd}</span>
             <span id='separator'>•</span>
-            <span>R$ {restaurant?.delivery_fee}</span>
+            <span>R$ {product?.price}</span>
         </div>
 
         {/* <div id='context'>
@@ -52,13 +49,12 @@ function Restaurant({restaurant, HandleFetch}) {
         </div> */}
 
       </div>
-        {restaurant?.manager_id == getCurrentUser()['id'] ? 
+        {!getCurrentUser()['is_staff'] ? 
 
           <div id='actions'>
-            <NavLink to={`editar-restaurante/${restaurant?.id}`} className="btn btn-outline btn-info">Editar</NavLink>
+            <NavLink to={`/editar-produto/${product?.id}`} className="btn btn-outline btn-info">Editar</NavLink>
             <button></button>
-            <button  onClick={() => {document.getElementById(`my_modal_delete_restaurant_${restaurant?.id}`)?.showModal()}} className="btn btn-outline btn-error">Excluir</button>
-            <DeleteRestaurant HandleFetch={HandleFetch} restaurant_id={restaurant?.id}/>
+            <button  onClick={() => {document.getElementById(`my_modal_delete_product_${product?.id}`)?.showModal()}} className="btn btn-outline btn-error">Excluir</button>
           </div>
         :
           null
@@ -69,4 +65,4 @@ function Restaurant({restaurant, HandleFetch}) {
 } 
 
 
-export default Restaurant
+export default Product
