@@ -279,7 +279,7 @@ div#content{
     left: 0; /* Initial position */
     top: 0; /* Initial position */
     width: auto; /* Adjust width as needed */
-    transform: translateX(50%); /* Center the div horizontally */
+    /* transform: translateX(50%); */
 
 }
 
