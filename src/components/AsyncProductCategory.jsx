@@ -11,7 +11,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 
 
-export default function AsynchronousProductCategories({fn_set_id, fn_object}) {
+export default function AsynchronousProductCategories({fn_set_id, fn_object, is_update = false}) {
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const loading = open && options.length === 0;
@@ -71,40 +71,78 @@ export default function AsynchronousProductCategories({fn_set_id, fn_object}) {
     //   }, [open]);
 
     return (
+        is_update ?
         <Autocomplete
-        multiple
+            multiple
 
-        sx={{ width: '100%' }}
-        id="categories"
-        open={open}
-        onOpen={() => {
-            setOpen(true);
-        }}
-        onClose={() => {
-            setOpen(false);
-        }}
-        options={options}
-        loading={loading}
-        disableCloseOnSelect
-        getOptionLabel={(option) => option.name}
-        onChange={(e, v) => {setCategoriesList([...v])}}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
+            sx={{ width: '100%' }}
+            id="categories"
+            open={open}
+            onOpen={() => {
+                setOpen(true);
+            }}
+            onClose={() => {
+                setOpen(false);
+            }}
+            options={options}
+            loading={loading}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.name}
+            onChange={(e, v) => {setCategoriesList([...v])}}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            value={[...fn_object.categories]}
 
-        renderOption={(props, option, { selected }) => (
-            <li {...props}>
-            <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-                value={option.id}
-            />
-            {option.name}
-            </li>
-        )}
-        renderInput={(params) => (
-            <TextField {...params} label="Selecione as categorias do produto" placeholder="Categorias" />
-        )}
+            renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                    value={option.id}
+                />
+                {option.name}
+                </li>
+            )}
+            renderInput={(params) => (
+                <TextField {...params} label="Selecione as categorias do produto" placeholder="Categorias" />
+            )}
+        />
+        :
+        <Autocomplete
+            multiple
+
+            sx={{ width: '100%' }}
+            id="categories"
+            open={open}
+            onOpen={() => {
+                setOpen(true);
+            }}
+            onClose={() => {
+                setOpen(false);
+            }}
+            options={options}
+            loading={loading}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.name}
+            onChange={(e, v) => {setCategoriesList([...v])}}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+
+            renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                    value={option.id}
+                />
+                {option.name}
+                </li>
+            )}
+            renderInput={(params) => (
+                <TextField {...params} label="Selecione as categorias do produto" placeholder="Categorias" />
+            )}
         />
     );
 }

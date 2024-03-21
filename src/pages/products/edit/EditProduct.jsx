@@ -28,6 +28,7 @@ function EditProduct() {
     let navigate = useNavigate();
 
     const [Product, setProduct] = useState({
+        id:'',
         name:'',
         description:'',
         price:'',
@@ -35,7 +36,6 @@ function EditProduct() {
         image:'',
         restaurant_id:'',
         restaurant_name:'',
-
         categories: []
     })
 
@@ -105,63 +105,40 @@ function EditProduct() {
         event.preventDefault()
         setIsLoading(true)
 
-        let form_data_restaurant = new FormData();
+        let form_data_product = new FormData();
 
+        form_data_product.append("id", Product.id);
 
-
-        form_data_restaurant.append("restaurant_id", Restaurant.id);
-
-        if (Restaurant?.logo){
-            form_data_restaurant.append("logo", Restaurant.logo, Restaurant.logo.name);
+        if (Product.image){
+            form_data_product.append("image", Product.image, Product.image.name);
         }
-        form_data_restaurant.append("name", Restaurant.name);
-        form_data_restaurant.append("description", Restaurant.description);
-        form_data_restaurant.append("street", Restaurant.street);
-        form_data_restaurant.append("neighborhood", Restaurant.neighborhood);
-        form_data_restaurant.append("complement", Restaurant.complement);
-        form_data_restaurant.append("city", Restaurant.city);
-        form_data_restaurant.append("state", Restaurant.state);
-        form_data_restaurant.append("number", Restaurant.number);
-        form_data_restaurant.append("zip_code", Restaurant.zip_code);
-        form_data_restaurant.append("cnpj", Restaurant.cnpj);
-        form_data_restaurant.append("delivery_fee", Restaurant.delivery_fee);
+        form_data_product.append("name", Product.name);
+        form_data_product.append("description", Product.description);
+        form_data_product.append("price", Product.price);
+        form_data_product.append("qtd", Product.qtd);
+        form_data_product.append("restaurant_id", Product.restaurant_id);
+        form_data_product.append("categories", JSON.stringify(Product.categories));
 
         try{
 
-            let blank_fields = 0
-            Object.entries(Restaurant).forEach(([key, val]) => {
-                if(val == '' || val == undefined || val == null){
-                    setError(key, {
-                        type: 'blank_field',
-                        message:'Campo obrigatório'
-                    })
-                    setIsLoading(false)
-                    blank_fields++
-                } else {
-                    blank_fields--
-                }   
-            });
             
-
-            if(blank_fields > 0){setIsLoading(false); window.scrollTo({top: 0, behavior: 'smooth'}); return false; }
-
-            const res = await fetch("http://127.0.0.1:8000/api/v1/restaurants/update-restaurant/",{
+            const res = await fetch("http://127.0.0.1:8000/api/v1/products/update-product/",{
                 method:"PATCH",
                 headers:{
                     Authorization:` Token ${getCurrentUserToken()}`,
                 },
     
-                body:form_data_restaurant,
+                body:form_data_product,
             })
 
             if (!res.ok) {
                 show_flash_message(setShowAlert, ShowAlert, 'Oh não. Um erro ocorreu com a sua solicitação', 'alert-error')
             } 
             
-            const restaurant_result = await res.json()
+            const product_result = await res.json()
 
-            if(restaurant_result['id']){
-                show_flash_message(setShowAlert, ShowAlert, 'Restaurante atualizado com sucesso', 'alert-success')
+            if(product_result['id']){
+                show_flash_message(setShowAlert, ShowAlert, 'Produto atualizado com sucesso', 'alert-success')
             }            
 
             
@@ -188,7 +165,7 @@ function EditProduct() {
             <ul style={{width:'75ch'}}>
                 <li>
                     <form method='post' onSubmit={handleSubmit(onSubmit)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" encType='multipart/form-data'>
-                        <label className="text-5xl mb-5"> 
+                        <label style={{width:'20ch'}} className="text-5xl mb-5"> 
                             Alteração do produto <span style={{fontWeight:'500'}}>{Product?.name} </span>
                         </label>
 
@@ -210,12 +187,15 @@ function EditProduct() {
                         <AsynchronousRestaurants
                             fn_set_id={setProduct}
                             fn_object={Product}
+                            is_update={true}
                         />  
 
                         Categorias
                         <AsynchronousProductCategories
                             fn_set_id={setProduct}
                             fn_object={Product}
+                            is_update={true}
+
                         />
 
 
@@ -235,6 +215,7 @@ function EditProduct() {
                                 intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
                                 id="price"
                                 name="price"
+                                value={Product?.price}
                                 placeholder="Digite um preço"
                                 //defaultValue={1}
                                 decimalsLimit={2}
@@ -285,7 +266,7 @@ function EditProduct() {
 
                         Imagem
                         <input name="image" id='image' type="file" className="file-input w-full max-w-xs"  accept="image/jpeg,image/png,image/gif"
-                            {...register("image", { required: "Campo obrigatório.", onChange: (e) => {setProduct({...Product, image:e.target.files[0]})}, })}
+                            {...register("image", { onChange: (e) => {setProduct({...Product, image:e.target.files[0]})}, })}
                         />
 
                         <ErrorMessage

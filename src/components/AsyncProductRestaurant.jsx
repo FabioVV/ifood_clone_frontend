@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { getCurrentUserToken } from '../utils/UserlocalStorage';
 
 
-export default function AsynchronousRestaurants({fn_set_id, fn_object}) {
+export default function AsynchronousRestaurants({fn_set_id, fn_object, is_update = false}) {
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const loading = open && options.length === 0;
@@ -44,6 +44,7 @@ export default function AsynchronousRestaurants({fn_set_id, fn_object}) {
       return () => {
         active = false;
       };
+
     }, [loading]);
 
     // CASO QUERIA FAZER A REQUISIÇÃO DE GET RESTAURANTES A CADA VEZ QUE ABRE O INPUT, DESCOMENTAR ISSO AQUI
@@ -53,42 +54,75 @@ export default function AsynchronousRestaurants({fn_set_id, fn_object}) {
     //     setOptions([]);
     //   }
     // }, [open]);
+
     return (
-      <Autocomplete
-    
-        id="restaurant_id"
-        sx={{ width: '100%' }}
-        onChange={(event, value) => {fn_set_id({...fn_object, restaurant_id:value.id})}}
-        open={open}
-        onOpen={() => {
-          setOpen(true);
-        }}
-        onClose={() => {
-          setOpen(false);
-        }}
-        isOptionEqualToValue={(option, value) => option.name === value.name}
-        getOptionLabel={(option) => option.name}
-        options={options}
-        loading={loading}
-        // defaultValue={{name:restaurant_name}}
-        // value={{name:fn_object.restaurant_name}}
-        // inputValue=fn_object.restaurant_name}
-        
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Nome do restaurante"
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <>
-                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </>
-              ),
-            }}
-          />
+      is_update ? 
+        <Autocomplete
+          id="restaurant_id"
+          sx={{ width: '100%' }}
+          onChange={(event, value) => {fn_set_id({...fn_object, restaurant_id:value.id, restaurant_name:value.name})}}
+          open={open}
+          onOpen={() => {
+            setOpen(true);
+          }}
+          onClose={() => {
+            setOpen(false);
+          }}
+          isOptionEqualToValue={(option, value) => option.name === value.name}
+          getOptionLabel={(option) => option.name}
+          options={options}
+          loading={loading}
+
+          value={{name:fn_object.restaurant_name}}
+
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Nome do restaurante"
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+              }}
+            />
         )}
       />
+      :
+        <Autocomplete
+          id="restaurant_id"
+          sx={{ width: '100%' }}
+          onChange={(event, value) => {fn_set_id({...fn_object, restaurant_id:value.id})}}
+          open={open}
+          onOpen={() => {
+            setOpen(true);
+          }}
+          onClose={() => {
+            setOpen(false);
+          }}
+          isOptionEqualToValue={(option, value) => option.name === value.name}
+          getOptionLabel={(option) => option.name}
+          options={options}
+          loading={loading}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Nome do restaurante"
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+              }}
+            />
+        )}
+      />
+     
     );
 }
