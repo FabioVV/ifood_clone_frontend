@@ -36,6 +36,9 @@ function CategoriesList({data, HandleFetch}){
 
 
 
+
+
+
 function Home() {
 
   const [user, SetUser] = useState(getCurrentUser)
@@ -44,8 +47,14 @@ function Home() {
   const [Categories, SetCategories] = useState([])
 
   const [isLoading, setIsLoading] = useState(false)
+
   const [leftPosition, setLeftPosition] = useState(0); 
+
   const [PageNumber, setPageNumber] = useState(1)
+
+  const [FreeDelivery, setFreeDelivery] = useState(false)
+  const [PartnerDelivery, setPartnerDelivery] = useState(false)
+  const [SuperRestaurant, setSuperRestaurant] = useState(false)
 
 
   function moveLeft() {
@@ -56,7 +65,11 @@ function Home() {
     setLeftPosition(prevPosition => prevPosition + 90); 
   }
 
-
+  function cleanSearchFields(){
+    setFreeDelivery(false)
+    setPartnerDelivery(false)
+    setSuperRestaurant(false)
+  }
 
   const fetchRestaurants = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/?page=${PageNumber}`) => {
     setIsLoading(true)
@@ -68,7 +81,20 @@ function Home() {
     if(response.ok){
         const data = await response.json()
         SetRestaurants([...Restaurants, ...data?.results])
-        console.log(Restaurants)
+    } 
+    setIsLoading(false)
+  }
+
+  const fetchRestaurantsSearch = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants-search/?page=${PageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}`) => {
+    setIsLoading(true)
+    const response = await fetch(url, {
+      method:'GET',
+      headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+    })
+
+    if(response.ok){
+        const data = await response.json()
+        SetRestaurants(data?.results)
     } 
     setIsLoading(false)
   }
@@ -97,7 +123,9 @@ function Home() {
   },[PageNumber])
 
 
-  
+  useEffect(()=>{
+    fetchRestaurantsSearch()
+  },[SuperRestaurant,PartnerDelivery,FreeDelivery])
 
 
   return (
@@ -138,12 +166,12 @@ function Home() {
             
               <div id='filters' className='sticky top-0 z-10'  style={{top:'6rem'}}>
                 <ul>
-
+                
                   <button onClick={()=>document.getElementById('sort-modal').showModal()} className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Ordernar<i className="fa-solid fa-chevron-down"></i></button>
-                  <input type="checkbox" aria-label="Entrega grátis" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
-                  <input type="checkbox" aria-label="Entrega parceira" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
-                  <input type="checkbox" aria-label="Super restaurantes" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
-                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Limpar</button>
+                  <input checked={FreeDelivery} onChange={()=>{setFreeDelivery(!FreeDelivery)}} type="checkbox" aria-label="Entrega grátis" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
+                  <input checked={PartnerDelivery} onChange={()=>{setPartnerDelivery(!PartnerDelivery)}} type="checkbox" aria-label="Entrega parceira" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
+                  <input checked={SuperRestaurant} onChange={()=>{setSuperRestaurant(!SuperRestaurant)}} type="checkbox" aria-label="Super restaurantes" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
+                  <button onClick={cleanSearchFields} className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Limpar</button>
 
                 </ul>
               </div>
