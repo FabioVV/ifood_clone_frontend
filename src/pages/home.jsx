@@ -83,10 +83,7 @@ function Home() {
   
               <div id='main-stores'> 
                 <h1 id='title-stores' className='text-left'>
-                  <span></span>
-                  <span>Lojas</span>
-                  <span></span>
-                  
+                  Lojas
                 </h1>
 
                 <div id='stores'>

@@ -74,13 +74,16 @@ div.navbar{
 
 
 #title-stores{
-    display: flex;
-    justify-content: center;
+    text-align: left;
+    width: 56rem;
+  margin: 0 auto;
 }
 
 #main-stores{
     display: flex;
     flex-direction: column;
+    width: 75rem;
+    margin: 0 auto;
 }
 
 #main-stores > h1{
