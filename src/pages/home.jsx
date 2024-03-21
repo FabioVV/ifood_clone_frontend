@@ -44,12 +44,10 @@ function Home() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [leftPosition, setLeftPosition] = useState(0); 
+  const [PageNumber, setPageNumber] = useState(1)
 
 
   function moveLeft() {
-    let d = document.getElementById('categories')
-    console.log(d.offsetWidth)
-
     setLeftPosition(prevPosition => prevPosition - 90); 
   }
 
@@ -59,9 +57,7 @@ function Home() {
 
 
 
-
-
-  const fetchRestaurants = async (url = 'http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/') => {
+  const fetchRestaurants = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/?page=${PageNumber}`) => {
     setIsLoading(true)
     const response = await fetch(url, {
       method:'GET',
@@ -70,10 +66,12 @@ function Home() {
 
     if(response.ok){
         const data = await response.json()
-        SetRestaurants(data)
+        SetRestaurants([...Restaurants, ...data?.results])
+        console.log(Restaurants)
     } 
     setIsLoading(false)
   }
+
 
   const fetchCategories = async (url = 'http://127.0.0.1:8000/api/v1/categories/available-categories/') => {
     setIsLoading(true)
@@ -92,6 +90,10 @@ function Home() {
 
 
   useEffect(()=>{fetchRestaurants();fetchCategories();},[user])
+
+  useEffect(()=>{
+    fetchRestaurants();
+  },[PageNumber])
 
 
   
@@ -157,8 +159,11 @@ function Home() {
                 </div>
               </div>
 
-              
-
+              <div style={{margin:'0 auto', display:'flex', marginTop:'4rem', justifyContent:'center'}}>
+                <button onClick={()=>{setPageNumber(PageNumber+1)}} style={{width:'75%'}} className="btn btn-block">
+                  {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Mais'}
+                </button>
+              </div>
           </>
         }
 
