@@ -294,3 +294,26 @@ div#content{
 #categories {
     scrollbar-width: none;
 }   
+
+
+
+
+
+
+
+
+#sort-container{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+
+#sort-container > div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

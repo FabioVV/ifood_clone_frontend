@@ -5,6 +5,7 @@ import { getCurrentUser, getCurrentUserToken } from '../utils/UserlocalStorage'
 import Restaurant from '../components/Restaurant'
 import Category from '../components/Category'
 
+
 function RestaurantsList({data, HandleFetch}){
   return (
     <>
@@ -138,10 +139,10 @@ function Home() {
               <div id='filters' className='sticky top-0 z-10'  style={{top:'6rem'}}>
                 <ul>
 
-                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Ordernar<i className="fa-solid fa-chevron-down"></i></button>
-                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Entrega grátis</button>
-                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Entrega parceira</button>
-                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Super restaurantes</button>
+                  <button onClick={()=>document.getElementById('sort-modal').showModal()} className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Ordernar<i className="fa-solid fa-chevron-down"></i></button>
+                  <input type="checkbox" aria-label="Entrega grátis" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
+                  <input type="checkbox" aria-label="Entrega parceira" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
+                  <input type="checkbox" aria-label="Super restaurantes" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
                   <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Limpar</button>
 
                 </ul>
@@ -164,6 +165,34 @@ function Home() {
                   {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Mais'}
                 </button>
               </div>
+
+
+
+              <dialog id="sort-modal" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg text-center">Ordernar por</h3>
+          
+                    <div id='sort-container'>
+                      <div>
+                        <div>a</div>
+                        <div>b</div>
+                        <div>c</div>
+                      </div>
+
+                      <div>
+                        <div>a</div>
+                        <div>b</div>
+                        <div>c</div>
+                      </div>
+                    </div>
+
+                    <div className="modal-action">
+                      <form method="dialog">
+                          <button className="btn">Fechar</button>
+                      </form>
+                    </div>
+                </div>
+              </dialog>
           </>
         }
 
