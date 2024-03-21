@@ -23,7 +23,7 @@ function Navbar() {
     }
     
     return (
-        <div style={{padding:''}} className="navbar bg-base-100 sticky top-0 z-10">
+        <div style={{padding:'', zIndex:'10000'}} className="navbar bg-base-100 sticky top-0">
 
             { User?.token ? (
                 <>
@@ -53,7 +53,6 @@ function Navbar() {
                             </div>
                         </div>
                     </dialog>
-
 
 
                     <div className="navbar-start">

@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef } from 'react'
 import DefaultPage from '../components/DefaultPage'
 import hero_food from '../public/img/hero_food.jpg'
 import { getCurrentUser, getCurrentUserToken } from '../utils/UserlocalStorage'
 import Restaurant from '../components/Restaurant'
-import Product from '../components/Product'
+import Category from '../components/Category'
 
 function RestaurantsList({data, HandleFetch}){
   return (
@@ -19,14 +19,46 @@ function RestaurantsList({data, HandleFetch}){
   )
 }
 
+function CategoriesList({data, HandleFetch}){
+  return (
+    <>
+      {data?.map((category) => (
+          <Category
+            key={category.id}
+            category={category}
+            HandleFetch={HandleFetch}
+          />
+      ))}
+    </>
+  )
+}
 
 
 
 function Home() {
 
   const [user, SetUser] = useState(getCurrentUser)
+
   const [Restaurants, SetRestaurants] = useState([])
+  const [Categories, SetCategories] = useState([])
+
   const [isLoading, setIsLoading] = useState(false)
+  const [leftPosition, setLeftPosition] = useState(0); 
+
+
+  function moveLeft() {
+    let d = document.getElementById('categories')
+    console.log(d.offsetWidth)
+
+    setLeftPosition(prevPosition => prevPosition - 90); 
+  }
+
+  function moveRight() {
+    setLeftPosition(prevPosition => prevPosition + 90); 
+  }
+
+
+
 
 
   const fetchRestaurants = async (url = 'http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/') => {
@@ -43,8 +75,26 @@ function Home() {
     setIsLoading(false)
   }
 
+  const fetchCategories = async (url = 'http://127.0.0.1:8000/api/v1/categories/available-categories/') => {
+    setIsLoading(true)
+    const response = await fetch(url, {
+      method:'GET',
+      headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+    })
 
-  useEffect(()=>{fetchRestaurants()},[user])
+
+    if(response.ok){
+        const data = await response.json()
+        SetCategories(data)
+    } 
+    setIsLoading(false)
+  }
+
+
+  useEffect(()=>{fetchRestaurants();fetchCategories();},[user])
+
+
+  
 
 
   return (
@@ -71,17 +121,31 @@ function Home() {
           </div>
         :
           <>
-              <div id='filters'>
+
+              <div id='main-categories'>
+                <i onClick={moveLeft} id='moveLeft'  style={{display:'flex', alignItems:'center'}} className="fa-solid fa-chevron-left arrow hv"></i>
+
+                  <div id='categories' style={{ left: `${leftPosition}px`}}>
+                    <CategoriesList data={Categories} HandleFetch={fetchCategories} />
+                  </div>
+
+                <i onClick={moveRight} id='moveRight'  style={{display:'flex', alignItems:'center'}} className="fa-solid fa-chevron-right arrow hv"></i>
+              </div>
+
+            
+              <div id='filters' className='sticky top-0 z-10'  style={{top:'6rem'}}>
                 <ul>
-                  <li>Ordernar</li>
-                  <li>Entrega grátis</li>
-                  <li>Entrega parceira</li>
-                  <li>Super restaurantes</li>
-                  <li>Limpar</li>
+
+                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Ordernar<i className="fa-solid fa-chevron-down"></i></button>
+                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Entrega grátis</button>
+                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Entrega parceira</button>
+                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Super restaurantes</button>
+                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Limpar</button>
+
                 </ul>
               </div>
   
-              <div id='main-stores'> 
+              <div id='main-stores' > 
                 <h1 id='title-stores' className='text-left'>
                   Lojas
                 </h1>
