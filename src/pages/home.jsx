@@ -51,11 +51,25 @@ function Home() {
   const [leftPosition, setLeftPosition] = useState(0); 
 
   const [PageNumber, setPageNumber] = useState(1)
+  const [TotalPages, setTotalPages] = useState(0)
+
 
   const [FreeDelivery, setFreeDelivery] = useState(false)
   const [PartnerDelivery, setPartnerDelivery] = useState(false)
   const [SuperRestaurant, setSuperRestaurant] = useState(false)
 
+
+  function HandlePageNumber(){
+
+    let next_page = PageNumber + 1
+
+    if(next_page <= TotalPages){
+      setPageNumber(next_page)
+    } else {
+      setPageNumber(PageNumber)
+    }
+     
+  }
 
   function moveLeft() {
     setLeftPosition(prevPosition => prevPosition - 90); 
@@ -73,15 +87,21 @@ function Home() {
 
   const fetchRestaurants = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/?page=${PageNumber}`) => {
     setIsLoading(true)
+
+
     const response = await fetch(url, {
       method:'GET',
       headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
     })
 
-    if(response.ok){
-        const data = await response.json()
-        SetRestaurants([...Restaurants, ...data?.results])
+    const data = await response.json()
+
+    if(data['total_pages']){
+      setTotalPages(parseInt(data['total_pages']))
+      SetRestaurants([...Restaurants, ...data?.results])
     } 
+
+
     setIsLoading(false)
   }
 
@@ -92,10 +112,14 @@ function Home() {
       headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
     })
 
-    if(response.ok){
-        const data = await response.json()
-        SetRestaurants(data?.results)
+    const data = await response.json()
+
+    if(data['total_pages']){
+      setTotalPages(parseInt(data['total_pages']))
+      SetRestaurants(data?.results)
     } 
+
+
     setIsLoading(false)
   }
 
@@ -118,9 +142,11 @@ function Home() {
 
   useEffect(()=>{fetchRestaurants();fetchCategories();},[user])
 
+
   useEffect(()=>{
-    
+
     fetchRestaurants();
+
   },[PageNumber])
 
 
@@ -190,7 +216,7 @@ function Home() {
               </div>
 
               <div style={{margin:'0 auto', display:'flex', marginTop:'4rem', justifyContent:'center'}}>
-                <button onClick={()=>{setPageNumber(PageNumber+1)}} style={{width:'75%'}} className="btn btn-block">
+                <button onClick={()=>{ setPageNumber(HandlePageNumber);}} style={{width:'75%'}} className="btn btn-block">
                   {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Mais'}
                 </button>
               </div>
