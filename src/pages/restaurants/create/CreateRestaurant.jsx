@@ -37,6 +37,7 @@ function CreateRestaurant() {
         logo:'',
         cnpj:'',
         delivery_fee:'',
+        partner_delivery:'',
     })
 
 
@@ -62,6 +63,8 @@ function CreateRestaurant() {
         form_data_restaurant.append("zip_code", Restaurant.zip_code);
         form_data_restaurant.append("cnpj", Restaurant.cnpj);
         form_data_restaurant.append("delivery_fee", Restaurant.delivery_fee);
+        form_data_restaurant.append("partner_delivery", Restaurant.partner_delivery);
+
 
         try{
 
@@ -107,10 +110,7 @@ function CreateRestaurant() {
                     message:'Este número de CNPJ já está cadastrado.'
                 })
                 setIsLoading(false)
-            }
-
-            // ERROS DO IF AQUI (SOBRE O PROBLEMA FALADO ACIMA)
-            
+            }            
 
 
             
@@ -189,6 +189,21 @@ function CreateRestaurant() {
                         <ErrorMessage
                             errors={errors}
                             name="delivery_fee"
+                            render={({ message }) => 
+                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                <strong className="font-bold">* {message}</strong>
+                            </div>}
+                        />
+
+                        Entrega parceira byteFood?
+                        <select className="select select-bordered w-full max-w-xs" {...register("partner_delivery", {  required: "Campo obrigatório.", onChange: (e) => {setRestaurant({...Restaurant, partner_delivery:e.target.value})}, })}>
+                            <option value={'True'} selected>Sim</option>
+                            <option value={'False'}>Não</option>
+                        </select>
+
+                        <ErrorMessage
+                            errors={errors}
+                            name="partner_delivery"
                             render={({ message }) => 
                             <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                 <strong className="font-bold">* {message}</strong>

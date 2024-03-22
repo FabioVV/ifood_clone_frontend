@@ -42,6 +42,7 @@ function EditRestaurant() {
         logo:'',
         cnpj:'',
         delivery_fee:'',
+        partner_delivery:'',
     })
 
     const[RestaurantCurrentImage, setRestaurantCurrentImage] = useState('')
@@ -82,8 +83,11 @@ function EditRestaurant() {
                             zip_code:restaurant.zip_code,
                             cnpj:restaurant.cnpj,
                             delivery_fee:restaurant.delivery_fee,
+                            partner_delivery:restaurant.partner_delivery,
+                            
                         }
                     )
+                        console.log(Restaurant.partner_delivery)
                         setRestaurantCurrentImage(restaurant.logo)
                     
 
@@ -133,6 +137,7 @@ function EditRestaurant() {
         form_data_restaurant.append("zip_code", Restaurant.zip_code);
         form_data_restaurant.append("cnpj", Restaurant.cnpj);
         form_data_restaurant.append("delivery_fee", Restaurant.delivery_fee);
+        form_data_restaurant.append("partner_delivery", Restaurant.partner_delivery);
 
         try{
 
@@ -254,6 +259,21 @@ function EditRestaurant() {
                                 <strong className="font-bold">* {message}</strong>
                             </div>}
                         />
+
+                        Entrega parceira byteFood?
+                        <select className="select select-bordered w-full max-w-xs" {...register("partner_delivery", {  required: "Campo obrigatório.", onChange: (e) => {setRestaurant({...Restaurant, partner_delivery:e.target.value})}, })}>
+                            <option value={true}>Sim</option>
+                            <option value={false}>Não</option>
+                        </select>
+
+                        <ErrorMessage
+                            errors={errors}
+                            name="partner_delivery"
+                            render={({ message }) => 
+                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                <strong className="font-bold">* {message}</strong>
+                            </div>}
+                        />              
 
 
                         CEP

@@ -175,8 +175,8 @@ function Navbar() {
                                     <h1 className='text-center'>Seu carrinho está vazio ); </h1>
                                     
 
-                                    {/* <li><a>Sidebar Item 1</a></li>
-                                    <li><a>Sidebar Item 2</a></li> */}
+                                    <li><a>Sidebar Item 1</a></li>
+                                    <li><a>Sidebar Item 2</a></li>
                                 </ul>
                             </div>
                         </div>
