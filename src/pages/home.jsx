@@ -119,6 +119,7 @@ function Home() {
   useEffect(()=>{fetchRestaurants();fetchCategories();},[user])
 
   useEffect(()=>{
+    
     fetchRestaurants();
   },[PageNumber])
 
