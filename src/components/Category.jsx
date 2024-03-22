@@ -10,7 +10,7 @@ function Category({category, HandleFetch}) {
     <div id='category' >
 
       <div id='image-container' className='rounded-lg  overflow-hidden'>
-        <img width={95} height={95} src={`http://localhost:8000${category.image}`} alt={`Imagem da categoria ${category.name}`} className='rounded-lg overflow-hidden'/>
+        <img width={95} height={95} src={`http://localhost:8000${category?.image ? category?.image :'/media/_default/default.jpeg'}`} alt={`Imagem da categoria ${category?.name}`} className='rounded-lg overflow-hidden'/>
       </div>
 
       <div id="content">
