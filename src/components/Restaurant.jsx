@@ -47,7 +47,7 @@ function Restaurant({restaurant, HandleFetch}) {
         <div id='footer'>
             <span>49-59 min</span>
             <span id='separator'>•</span>
-            <span>R$ {restaurant?.delivery_fee}</span>
+            <span>{restaurant?.delivery_fee > 0.00 ? 'R$ ' + restaurant?.delivery_fee : <span style={{color:'green'}}>Grátis</span>}</span>
         </div>
 
         {/* <div id='context'>

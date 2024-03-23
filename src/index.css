@@ -317,3 +317,14 @@ div#content{
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
+
+#menu-cart-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+#cart-items{
+
+}
