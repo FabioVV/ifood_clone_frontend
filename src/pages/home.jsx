@@ -85,28 +85,11 @@ function Home() {
     setSuperRestaurant(false)
   }
 
-  const fetchRestaurants = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/?page=${PageNumber}`) => {
+  
+  const fetchRestaurants = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/?page=${PageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}`) => {
     setIsLoading(true)
 
 
-    const response = await fetch(url, {
-      method:'GET',
-      headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
-    })
-
-    const data = await response.json()
-
-    if(data['total_pages']){
-      setTotalPages(parseInt(data['total_pages']))
-      SetRestaurants([...Restaurants, ...data?.results])
-    } 
-
-
-    setIsLoading(false)
-  }
-
-  const fetchRestaurantsSearch = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants-search/?page=${PageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}`) => {
-    setIsLoading(true)
     const response = await fetch(url, {
       method:'GET',
       headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
@@ -147,12 +130,8 @@ function Home() {
 
     fetchRestaurants();
 
-  },[PageNumber])
+  },[PageNumber, SuperRestaurant,PartnerDelivery,FreeDelivery])
 
-
-  useEffect(()=>{
-    fetchRestaurantsSearch()
-  },[SuperRestaurant,PartnerDelivery,FreeDelivery])
 
 
   return (
