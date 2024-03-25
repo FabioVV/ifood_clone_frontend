@@ -61,15 +61,21 @@ function Navbar() {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                             </div>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a>Item 1</a></li>
+                                <li><NavLink to="/">Inicio</NavLink></li>
+                                <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
+                                <li><a>Escolha um endereço</a></li>
+                                <hr />
                                 <li>
-                                <a>Parent</a>
-                                <ul className="p-2">
-                                    <li><a>Submenu 1</a></li>
-                                    <li><a>Submenu 2</a></li>
-                                </ul>
+                                <a>Minha conta</a>
+                                    <ul className="p-2">
+                                        <li><NavLink  to="/criar-restaurante" ><i className="fa-sharp fa-solid fa-gear"></i> Criar restaurante</NavLink></li>
+                                        <li><NavLink  to="/criar-produto" ><i className="fa-sharp fa-solid fa-gear"></i> Criar produto</NavLink></li>
+                                        <li><NavLink  to="/produtos" ><i className="fa-sharp fa-solid fa-gear"></i> Listar produtos</NavLink></li>
+                                        <hr />
+                                        <li><NavLink  to="/minha-conta" ><i className="fa-sharp fa-solid fa-gear"></i> Seus dados</NavLink></li>
+                                        <li><a onClick={() => SignOut()}><i className="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Sair</a></li>
+                                    </ul>
                                 </li>
-                                <li><a>Item 3</a></li>
                             </ul>
                         </div>
 
@@ -78,11 +84,10 @@ function Navbar() {
                             <NavLink  to="/"><img width={65} height={50} src={logo}/></NavLink>
                        
                         </div>
-                        <ul className="menu menu-horizontal px-1">
+                        <ul id='menu-1' className="menu menu-horizontal px-1">
                             <li><NavLink style={{marginRight:'1.5rem'}} to="/">Inicio</NavLink></li>
                             <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
                         </ul>
-                        
                         
 
                     </div>
@@ -101,23 +106,19 @@ function Navbar() {
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
                         </label>
 
-                        <div className="flex-none">
+                        <div className="flex-none" id='menu-3'>
                             <ul className="menu menu-horizontal px-1">
                                 <li onClick={()=>document.getElementById('google_modal').showModal()}>
                                     <details>
                                         <summary>
                                             Escolha um endereço
                                         </summary>
-                                        {/* <ul className="p-2 bg-base-100 rounded-t-none">
-                                            <li><a>Link 1</a></li>
-                                            <li><a>Link 2</a></li>
-                                        </ul> */}
                                     </details>
                                 </li>
                             </ul>
                         </div>
 
-                        <div className="dropdown dropdown-end">
+                        <div className="dropdown dropdown-end" id='menu-2'>
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div style={{width:'1.5rem'}} className="rounded-full">
                                     <img width={1} height={1} src={user_icon}/>

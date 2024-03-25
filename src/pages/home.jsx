@@ -36,39 +36,54 @@ function CategoriesList({data, HandleFetch}){
 
 
 
-
-
-
 function Home() {
 
   const [user, SetUser] = useState(getCurrentUser)
 
   const [Restaurants, SetRestaurants] = useState([])
+  const [RestaurantsSearched, SetRestaurantsSearched] = useState([])
   const [Categories, SetCategories] = useState([])
 
-  const [isLoading, setIsLoading] = useState(false)
-
-  const [leftPosition, setLeftPosition] = useState(0); 
-
   const [PageNumber, setPageNumber] = useState(1)
-  const [TotalPages, setTotalPages] = useState(0)
+  const [SearchPageNumber, setSearchPageNumber] = useState(1)
 
+  const [TotalPages, setTotalPages] = useState(0)
+  const [TotalSearchPages, setTotalSearchPages] = useState(0)
 
   const [FreeDelivery, setFreeDelivery] = useState(false)
   const [PartnerDelivery, setPartnerDelivery] = useState(false)
   const [SuperRestaurant, setSuperRestaurant] = useState(false)
 
 
-  function HandlePageNumber(){
 
-    let next_page = PageNumber + 1
+  const [isLoading, setIsLoading] = useState(false)
 
-    if(next_page <= TotalPages){
-      setPageNumber(next_page)
-    } else {
-      setPageNumber(PageNumber)
+  const [leftPosition, setLeftPosition] = useState(0); 
+
+
+
+  function handlePaginationClick(){
+    if(!SuperRestaurant && !PartnerDelivery && !FreeDelivery){
+
+      let next_page = PageNumber + 1
+
+      if(next_page <= TotalPages){
+        setPageNumber(next_page)
+      } else {
+        setPageNumber(PageNumber)
+      }      
+
+    } else if(SuperRestaurant || PartnerDelivery || FreeDelivery) {
+
+      let next_page = SearchPageNumber + 1
+
+      if(next_page <= TotalSearchPages){
+        setSearchPageNumber(next_page)
+      } else {
+        setSearchPageNumber(SearchPageNumber)
+      }
+
     }
-     
   }
 
   function moveLeft() {
@@ -86,7 +101,7 @@ function Home() {
   }
 
   
-  const fetchRestaurants = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/?page=${PageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}`) => {
+  const fetchRestaurants = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants/?page=${PageNumber}`) => {
     setIsLoading(true)
 
 
@@ -98,22 +113,49 @@ function Home() {
     const data = await response.json()
 
 
-    // ARRUMAR ESTA LOGICA Q ESTA FERRADA
-
     if(data['total_pages']){
       setTotalPages(parseInt(data['total_pages']))
-      // SetRestaurants(data?.results)
 
       if(Restaurants.length > 0){
         SetRestaurants([...Restaurants, ...data?.results])
 
-      } else{
+      } else {
         SetRestaurants(data?.results)
 
       }
-      
+
     } 
 
+    setIsLoading(false)
+  }
+
+
+
+  const fetchRestaurantsSearch = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants-search/?page=${SearchPageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}`) => {
+    setIsLoading(true)
+    const response = await fetch(url, {
+      method:'GET',
+      headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+    })
+
+    const data = await response.json()
+
+    if(data['total_pages']){
+      setTotalSearchPages(parseInt(data['total_pages']))
+
+      SetRestaurantsSearched(data?.results)
+
+      // Continue working on this
+      // if(RestaurantsSearched.length > 0){
+
+      //   SetRestaurantsSearched([...RestaurantsSearched, ...data?.results])
+
+      // } else {
+      //   SetRestaurantsSearched(data?.results)
+
+      // }
+
+    } 
 
     setIsLoading(false)
   }
@@ -135,14 +177,34 @@ function Home() {
   }
 
 
-  useEffect(()=>{fetchRestaurants();fetchCategories();},[user])
+  useEffect(()=>{fetchCategories();},[user])
+
+  
+
+  useEffect(()=>{
+
+    SetRestaurantsSearched([])  
+    SetRestaurants([])
+
+    if(SuperRestaurant || PartnerDelivery || FreeDelivery){
+
+      fetchRestaurantsSearch()
+
+    } else {
+      fetchRestaurants()
+      setSearchPageNumber(1)
+      setPageNumber(1)
+    }
+
+  },[SearchPageNumber, SuperRestaurant ,PartnerDelivery, FreeDelivery])
+
 
 
   useEffect(()=>{
 
     fetchRestaurants();
 
-  },[PageNumber, SuperRestaurant,PartnerDelivery,FreeDelivery])
+  },[PageNumber])
 
 
   return (
@@ -195,18 +257,22 @@ function Home() {
   
               <div id='main-stores' > 
                 <h1 id='title-stores' className='text-left'>
-                  Lojas
+                  <span>Lojas</span>
+                  <span></span>
+                  <span></span>
                 </h1>
 
                 <div id='stores'>
-
-                  <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
-
+                  {Restaurants.length > 0 ?
+                    <RestaurantsList data={Restaurants} HandleFetch={fetchRestaurants} />
+                    :
+                    <RestaurantsList data={RestaurantsSearched} HandleFetch={fetchRestaurantsSearch} />
+                  }
                 </div>
               </div>
 
               <div style={{margin:'0 auto', display:'flex', marginTop:'4rem', justifyContent:'center'}}>
-                <button onClick={()=>{ setPageNumber(HandlePageNumber);}} style={{width:'75%'}} className="btn btn-block">
+                <button onClick={()=>{ handlePaginationClick() }} style={{width:'75%'}} className="btn btn-block">
                   {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Mais'}
                 </button>
               </div>
@@ -219,15 +285,33 @@ function Home() {
           
                     <div id='sort-container'>
                       <div>
-                        <div>a</div>
-                        <div>b</div>
-                        <div>c</div>
+                        <div id='sort-container-item'>
+                          <i className="fa-solid fa-list"></i>
+                          Ordenação padrão
+                        </div>
+                        <div id='sort-container-item'>
+                          <i className="fa-regular fa-money-bill-1"></i>
+                          Preço
+                        </div>
+                        <div id='sort-container-item'>
+                          <i className="fa-solid fa-star"></i>
+                          Avaliação
+                        </div>
                       </div>
 
                       <div>
-                        <div>a</div>
-                        <div>b</div>
-                        <div>c</div>
+                        <div id='sort-container-item'>
+                          <i className="fa-solid fa-clock"></i>
+                          Tempo de entrega
+                        </div>
+                        <div id='sort-container-item'>
+                          <i className="fa-solid fa-motorcycle"></i>
+                          Taxa de entrega
+                        </div>
+                        <div id='sort-container-item'>
+                          <i className="fa-solid fa-signs-post"></i>
+                          Menos distância
+                        </div>
                       </div>
                     </div>
 

@@ -14,6 +14,11 @@ export default function DefaultPage(props) {
 
     if(!Phone && getCurrentUser()){
       navigate('/phone-google-register')
+    } 
+
+    if(!getCurrentUser()){
+      navigate('/login')
+
     }
 
   },[])

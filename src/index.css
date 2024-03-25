@@ -198,16 +198,6 @@ div#content{
     background-color: #f0f0f0;
 }
 
-@media only screen and (min-width: 768px) {
-    #filters > ul > li {
-        height: 40px;
-        border-radius: 20px;
-        padding: 9px 20px;
-    }
-}
-
-
-
 #category{
     display: flex;
     flex-direction: column;
@@ -316,6 +306,9 @@ div#content{
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 
@@ -328,3 +321,65 @@ div#content{
 #cart-items{
 
 }
+
+
+#sort-container-item{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: 250ms ease-in-out;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#sort-container-item:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+}
+
+
+@media only screen and (min-width: 768px) {
+    #filters > ul > li {
+        height: 40px;
+        border-radius: 20px;
+        padding: 9px 20px;
+    }
+}
+
+
+
+@media only screen and (max-width: 1024px) {
+    #menu-1{
+        display: none;
+
+    }
+
+    #menu-2{
+        display: none;
+
+    }
+
+    #menu-3{
+       display: none;
+
+    }
+
+    #title-stores{
+        display: flex;
+        flex-direction: row !important;
+        justify-content: space-around !important;
+    }
+}
+
+
+@media only screen and (max-width: 560px) {
+/* FIGURE THIS OUT LATER */
+/* for the navbar cart and search */
+}
+
+@media only screen and (max-width: 360px) {
+    /* FIGURE THIS OUT LATER */
+    /* ORDENATION MODAL */
+ }
+    
