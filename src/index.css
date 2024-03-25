@@ -365,6 +365,8 @@ div#content{
 
     }
 
+
+
     #title-stores{
         display: flex;
         flex-direction: row !important;
@@ -372,10 +374,18 @@ div#content{
     }
 }
 
-
+#main-dropdown-navbar{
+    display: none;
+}
 @media only screen and (max-width: 560px) {
-/* FIGURE THIS OUT LATER */
-/* for the navbar cart and search */
+    #menu-4{
+        display: none;
+    }
+    #navbar{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 @media only screen and (max-width: 360px) {

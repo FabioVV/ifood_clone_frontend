@@ -42,6 +42,7 @@ function Home() {
 
   const [Restaurants, SetRestaurants] = useState([])
   const [RestaurantsSearched, SetRestaurantsSearched] = useState([])
+
   const [Categories, SetCategories] = useState([])
 
   const [PageNumber, setPageNumber] = useState(1)
@@ -133,31 +134,55 @@ function Home() {
 
   const fetchRestaurantsSearch = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants-search/?page=${SearchPageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}`) => {
     setIsLoading(true)
-    const response = await fetch(url, {
-      method:'GET',
-      headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
-    })
 
-    const data = await response.json()
+    try{
+      const response = await fetch(url, {
+        method:'GET',
+        headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+      })
+  
+      const data = await response.json()
+  
+      if(data['total_pages']){
+        setTotalSearchPages(parseInt(data['total_pages']))
+  
+        // SetRestaurantsSearched(data?.results)
+  
+  
+        ///Continue working on this
+        if(RestaurantsSearched.length > 0){
+  
+          if(data?.results.length == 0){
+            SetRestaurantsSearched([])
+  
+            return false
+  
+          }
+  
+          const newData = data?.results.filter(newRestaurant => 
+            !RestaurantsSearched.some(existingRestaurant => existingRestaurant.id === newRestaurant.id)
+          );
+          SetRestaurantsSearched([...RestaurantsSearched, ...newData])
+  
+          
+  
+        } else {
+          SetRestaurantsSearched(data?.results)
+  
+        }
+  
+        //SetRestaurantsSearched(data?.results)
+  
+      } 
+  
+    } catch(e){
+      console.log(e.message)
 
-    if(data['total_pages']){
-      setTotalSearchPages(parseInt(data['total_pages']))
+    } finally{
+      setIsLoading(false)
 
-      SetRestaurantsSearched(data?.results)
-
-      // Continue working on this
-      // if(RestaurantsSearched.length > 0){
-
-      //   SetRestaurantsSearched([...RestaurantsSearched, ...data?.results])
-
-      // } else {
-      //   SetRestaurantsSearched(data?.results)
-
-      // }
-
-    } 
-
-    setIsLoading(false)
+    }
+    
   }
 
 
@@ -187,6 +212,7 @@ function Home() {
     SetRestaurants([])
 
     if(SuperRestaurant || PartnerDelivery || FreeDelivery){
+      SetRestaurantsSearched([])  
 
       fetchRestaurantsSearch()
 

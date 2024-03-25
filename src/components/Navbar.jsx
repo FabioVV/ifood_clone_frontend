@@ -23,7 +23,7 @@ function Navbar() {
     }
     
     return (
-        <div style={{padding:'', zIndex:'10000'}} className="navbar bg-base-100 sticky top-0">
+        <div id='navbar' style={{padding:'', zIndex:'10000'}} className="navbar bg-base-100 sticky top-0">
 
             { User?.token ? (
                 <>
@@ -98,8 +98,7 @@ function Navbar() {
 
                         </ul>
                     </div>
-                    <div className="navbar-end">
-
+                    <div id='menu-4' className="navbar-end">
 
                         <label className="input input-bordered flex items-center gap-2 md:w-full">
                             <input type="search" className="grow" placeholder="Busque por item ou loja" />
@@ -187,6 +186,28 @@ function Navbar() {
 
 
 
+                    </div>
+                    <div id='main-dropdown-navbar' className="navbar-end dropdown">
+                            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                            </div>
+                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                                <li><NavLink to="/">Inicio</NavLink></li>
+                                <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
+                                <li><a>Escolha um endereço</a></li>
+                                <hr />
+                                <li>
+                                <a>Minha conta</a>
+                                    <ul className="p-2">
+                                        <li><NavLink  to="/criar-restaurante" ><i className="fa-sharp fa-solid fa-gear"></i> Criar restaurante</NavLink></li>
+                                        <li><NavLink  to="/criar-produto" ><i className="fa-sharp fa-solid fa-gear"></i> Criar produto</NavLink></li>
+                                        <li><NavLink  to="/produtos" ><i className="fa-sharp fa-solid fa-gear"></i> Listar produtos</NavLink></li>
+                                        <hr />
+                                        <li><NavLink  to="/minha-conta" ><i className="fa-sharp fa-solid fa-gear"></i> Seus dados</NavLink></li>
+                                        <li><a onClick={() => SignOut()}><i className="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Sair</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                     </div>
                 </> 
         
