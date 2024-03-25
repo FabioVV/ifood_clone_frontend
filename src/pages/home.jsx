@@ -97,9 +97,21 @@ function Home() {
 
     const data = await response.json()
 
+
+    // ARRUMAR ESTA LOGICA Q ESTA FERRADA
+
     if(data['total_pages']){
       setTotalPages(parseInt(data['total_pages']))
-      SetRestaurants(data?.results)
+      // SetRestaurants(data?.results)
+
+      if(Restaurants.length > 0){
+        SetRestaurants([...Restaurants, ...data?.results])
+
+      } else{
+        SetRestaurants(data?.results)
+
+      }
+      
     } 
 
 
@@ -131,7 +143,6 @@ function Home() {
     fetchRestaurants();
 
   },[PageNumber, SuperRestaurant,PartnerDelivery,FreeDelivery])
-
 
 
   return (
