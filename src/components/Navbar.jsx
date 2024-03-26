@@ -7,8 +7,8 @@ import google_waypointer_purple from '../public/img/google_waypointer.png'
 import { getCurrentUser, clearLocalStorage } from '../utils/UserlocalStorage'
 import { googleLogout } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom";
-
-
+import GoogleMapComponent from './GoogleMap'
+import GooglePlaces from './GooglePlaces'
 
 
 function Navbar() {
@@ -32,19 +32,20 @@ function Navbar() {
                         <div className="modal-box w-11/12 max-w-5xl">
 
                             <div id='image-div-google'>
-                                <img width={130} height={130} src={google_waypointer_purple} alt="Google maps waypointer image" style={{zIndex:'1000', margin:'0 auto'}}/>
+                                <img width={130} height={130} src={google_waypointer_purple} alt="Google maps waypointer image" style={{zIndex:'1', margin:'0 auto'}}/>
                             </div>
 
                             <h3 className="font-bold text-lg text-center">Onde você quer receber seu pedido?</h3>
 
                             <div id='search-div'>
-
+                                <GooglePlaces/>
                             </div>  
 
                             <div id='user-addresses-div'>
 
                             </div>  
 
+                            {/* <GoogleMapComponent/> */}
 
                             <div className="modal-action">
                                 <form method="dialog">

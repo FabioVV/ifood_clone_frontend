@@ -4,7 +4,7 @@ import hero_food from '../public/img/hero_food.jpg'
 import { getCurrentUser, getCurrentUserToken } from '../utils/UserlocalStorage'
 import Restaurant from '../components/Restaurant'
 import Category from '../components/Category'
-
+import GooglePlaces from '../components/GooglePlaces'
 
 function RestaurantsList({data, HandleFetch}){
   return (

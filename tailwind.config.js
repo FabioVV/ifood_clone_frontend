@@ -5,7 +5,7 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {zIndex:{'daisy-modal': 1050,}},
   },
   plugins: [require("daisyui")],
   daisyui: {

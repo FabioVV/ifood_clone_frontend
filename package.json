@@ -16,14 +16,17 @@
     "@hookform/error-message": "^2.0.1",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.13",
+    "@reach/combobox": "^0.18.0",
     "@react-google-maps/api": "^2.19.3",
     "@react-oauth/google": "^0.12.1",
+    "autosuggest-highlight": "^3.3.4",
     "react": "^18.2.0",
     "react-currency-input-field": "^3.8.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
     "react-router-dom": "^6.22.1",
-    "react-social-login-buttons": "^3.9.1"
+    "react-social-login-buttons": "^3.9.1",
+    "use-places-autocomplete": "^4.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",
