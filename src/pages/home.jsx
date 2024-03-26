@@ -145,12 +145,8 @@ function Home() {
   
       if(data['total_pages']){
         setTotalSearchPages(parseInt(data['total_pages']))
-  
-        // SetRestaurantsSearched(data?.results)
-  
-  
-        ///Continue working on this
-        if(RestaurantsSearched.length > 0){
+    
+          if(RestaurantsSearched.length > 0){
   
           if(data?.results.length == 0){
             SetRestaurantsSearched([])
@@ -164,15 +160,12 @@ function Home() {
           );
           SetRestaurantsSearched([...RestaurantsSearched, ...newData])
   
-          
   
         } else {
           SetRestaurantsSearched(data?.results)
   
         }
-  
-        //SetRestaurantsSearched(data?.results)
-  
+    
       } 
   
     } catch(e){

@@ -81,9 +81,11 @@ function Navbar() {
 
                         <div style={{maxWidth:'85px', marginLeft:'2.2rem', marginRight:'2.2rem'}}>
                             
-                            <NavLink  to="/"><img width={65} height={50} src={logo}/></NavLink>
+                            <NavLink to="/"><img style={{maxWidth:'none'}}  width={65} height={50} src={logo}/></NavLink>
                        
                         </div>
+
+
                         <ul id='menu-1' className="menu menu-horizontal px-1">
                             <li><NavLink style={{marginRight:'1.5rem'}} to="/">Inicio</NavLink></li>
                             <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>

@@ -382,9 +382,7 @@ div#content{
         display: none;
     }
     #navbar{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+
     }
 }
 
