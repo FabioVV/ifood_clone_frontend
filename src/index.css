@@ -345,9 +345,7 @@ div#content{
     margin-top: 2rem;
 }
 
-.MuiAutocomplete-popper {
-    z-index: 2000 !important; /* Adjust 2000 based on your needs */
-}
+
 
 
 @media only screen and (min-width: 768px) {

@@ -2,13 +2,16 @@ import React from 'react'
 import { getCurrentUser } from '../utils/UserlocalStorage'
 import DeleteRestaurant from './DeleteRestaurantModal'
 import { NavLink } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 
 
 function Restaurant({restaurant, HandleFetch}) {
 
+  let navigate = useNavigate();
+
   return (
-    <div id='merchant'>
+    <div id='merchant' onClick={()=>{navigate(`delivery/restaurante/${restaurant?.id}`)}}>
       <div id='image-container' className='rounded-lg  overflow-hidden'>
 
         <img style={{objectFit:'contain', maxHeight:'135px'}} width={135} height={135} src={`http://localhost:8000${restaurant?.logo ? restaurant?.logo:'/media/_default/restaurant_default.jpeg'}`} alt={`Imagem do restaurante ${restaurant?.name}`} className='rounded-lg overflow-hidden'/>

@@ -16,6 +16,7 @@ import CreateRestaurant from './pages/restaurants/create/CreateRestaurant'
 import CreateProduct from './pages/products/create/CreateProduct'
 import RestaurantsHome from './pages/restaurants/Home'
 import EditRestaurant from './pages/restaurants/edit/EditRestaurant'
+import RestaurantProducts from './pages/restaurants/delivery/RestaurantProducts'
 import Products from './pages/products/_list/Products'
 import EditProduct from './pages/products/edit/EditProduct'
 import { RequireAuth } from './components/RequireAuth'
@@ -98,6 +99,12 @@ function _Routes() {
         <Route path='editar-restaurante/:id' element={
             <RequireAuth redirectTo="/login">
                 <EditRestaurant />
+            </RequireAuth>
+        } />
+
+        <Route path='delivery/restaurante/:id' element={
+            <RequireAuth redirectTo="/login">
+                <RestaurantProducts />
             </RequireAuth>
         } />
 

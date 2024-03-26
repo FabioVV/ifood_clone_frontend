@@ -101,9 +101,9 @@ export default function GooglePlaces() {
 
   return (
     <Autocomplete
+      disablePortal
       id="google-map-autocomplete"
-      sx={{ width: `100%`, zIndex:'2000'}}
-      PopperComponent={(props) => <Popper {...props} style={{ zIndex: 2000 }} />}
+      sx={{ width: `100%`}}
       getOptionLabel={(option) =>
         typeof option === 'string' ? option : option.description
       }
@@ -136,15 +136,15 @@ export default function GooglePlaces() {
         return (
           <li  {...props}>
             <Grid container alignItems="center">
-              <Grid item sx={{ display: 'flex', width: 44, zIndex:1000 }}>
+              <Grid item sx={{ display: 'flex', width: 44 }}>
                 <LocationOnIcon sx={{ color: 'text.secondary' }} />
               </Grid>
-              <Grid item sx={{ width: 'calc(100% - 44px)', wordWrap: 'break-word', zIndex:1000 }}>
+              <Grid item sx={{ width: 'calc(100% - 44px)', wordWrap: 'break-word' }}>
                 {parts.map((part, index) => (
                   <Box
                     key={index}
                     component="span"
-                    sx={{ fontWeight: part.highlight ? 'bold' : 'regular' , zIndex:1000}}
+                    sx={{ fontWeight: part.highlight ? 'bold' : 'regular' }}
                   >
                     {part.text}
                   </Box>
