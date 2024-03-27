@@ -201,7 +201,36 @@ function Navbar() {
                                     <div id='menu-cart-container'>
                                         <h1 className='text-center'>{products.length <= 0 ? 'Seu carrinho esta vazio );' : null} </h1>
                                         
-                                        <CartProductsList data={products} HandleFetch={null}/>
+                                        {products.length > 0 ?
+                                        <>
+                                            <CartProductsList data={products} HandleFetch={null}/>
+                                            <div id='footer-cart'>
+
+                                                <div>
+                                                    <span>Subtotal</span>
+                                                    <span>R$ 10</span>
+                                                </div>
+                                    
+                                                <div>
+                                                    <span>Taxa de serviço</span>
+                                                    <span>R$ 10</span>
+                                                </div>
+                                    
+                                                <div>
+                                                    <span>Taxa de entrega</span>
+                                                    <span>R$ 10</span>
+                                                </div>
+
+                                                <div id='cart-total-span'>
+                                                    <span>Total</span>
+                                                    <span>R$ {totalPriceCart(products)}</span>
+                                                </div>
+                                    
+                                            </div>
+                                        </>
+                                        :
+                                            ''
+                                        }
                                         
                                     </div>
                                 </ul>

@@ -38,24 +38,7 @@ function CartProduct({product, handleFetch}) {
 
         <hr />
 
-        <div id='footer-cart'>
 
-            <div>
-                <span>Subtotal</span>
-                <span>R$ 10</span>
-            </div>
-
-            <div>
-                <span>Taxa de serviço</span>
-                <span>R$ 10</span>
-            </div>
-
-            <div>
-                <span>Taxa de entrega</span>
-                <span>R$ 10</span>
-            </div>
-
-        </div>
         
     </div>
   )
