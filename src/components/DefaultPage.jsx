@@ -16,10 +16,6 @@ export default function DefaultPage(props) {
       navigate('/phone-google-register')
     } 
 
-    if(!getCurrentUser()){
-      navigate('/login')
-
-    }
 
   },[])
 
