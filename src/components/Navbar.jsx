@@ -1,33 +1,57 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import user_icon from '../public/img/user.svg'
 import logo from '../public/img/b-logo.png'
 import google_waypointer_purple from '../public/img/google_waypointer.png'
+import useLocalStorageState from "use-local-storage-state"
+import { totalPriceCart } from '../utils/CartLocalStorage'
+
 
 import { getCurrentUser, clearLocalStorage } from '../utils/UserlocalStorage'
+
 import { googleLogout } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom";
 import GoogleMapComponent from './GoogleMap'
 import GooglePlaces from './GooglePlaces'
-
+import CartProduct from './CartProduct'
 
 function Navbar() {
 
-    const [User, SetUser] = useState(getCurrentUser)
     let navigate = useNavigate();
+
+    const [User, SetUser] = useState(getCurrentUser)
 
     function SignOut(){
         googleLogout()
-        clearLocalStorage()
+        clearLocalStorage()     
         navigate("/"); navigate(0);
     }
+
+    const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
+
+    console.log(products)
+
+
+    function CartProductsList({data, HandleFetch}){
+        return (
+          <>
+            {data?.map((product) => (
+                <CartProduct
+                  product={product}
+                  HandleFetch={HandleFetch}
+                />
+            ))}
+          </>
+        )
+    }
+
     
+
     return (
         <div id='navbar' style={{padding:'', zIndex:'10000'}} className="navbar bg-base-100 sticky top-0">
 
             { User?.token ? (
-                <>
-                    
+                <>  
                     <dialog id="google_modal" className="modal">
                         <div className="modal-box w-11/12 max-w-5xl">
 
@@ -164,9 +188,9 @@ function Navbar() {
                                 <label htmlFor="my-drawer-4" className="drawer-button btn btn-ghost">
                                     <div className="indicator">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                                        <span style={{zIndex:'0'}} className="badge badge-sm indicator-item">0</span>
+                                        <span style={{zIndex:'0'}} className="badge badge-sm indicator-item">{products.length ? products.length : 0}</span>
                                     </div>
-                                    <span style={{marginLeft:'8px'}}>R$ 0,00</span>
+                                    <span style={{marginLeft:'8px'}}>R$ {totalPriceCart(products) ? totalPriceCart(products): '0,00'} </span>
 
                                </label>
                             </div> 
@@ -175,13 +199,10 @@ function Navbar() {
 
                                 <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                                     <div id='menu-cart-container'>
-                                        <h1 className='text-center'>Seu carrinho está vazio ); </h1>
+                                        <h1 className='text-center'>{products.length <= 0 ? 'Seu carrinho esta vazio );' : null} </h1>
                                         
-                                        <div id='cart-items'>
-                                            <li><a>Sidebar Item 1</a></li>
-                                            <li><a>Sidebar Item 2</a></li>
-                                        </div>
-
+                                        <CartProductsList data={products} HandleFetch={null}/>
+                                        
                                     </div>
                                 </ul>
                             </div>

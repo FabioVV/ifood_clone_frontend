@@ -1,3 +1,6 @@
+import { setCart } from "./CartLocalStorage"
+
+
 function ExpiredLocalStorage(){
 
     let expiration_date = undefined
@@ -60,7 +63,7 @@ export function setCurrentUser(user, token){
         Object.assign(user, {expiration:new Date().getTime()+ (60000 * 30)})
 
         localStorage.setItem('userBytefood', JSON.stringify(user))
-
+        setCart()
 
     } catch(error){
         console.log("Error setting user ->" + error)
