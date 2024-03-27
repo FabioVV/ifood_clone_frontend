@@ -4,6 +4,23 @@ import { useParams } from "react-router-dom";
 import Alert from '../../../components/Alert';
 import { show_flash_message } from '../../../utils/FlashMessages';
 import { getCurrentUserToken } from '../../../utils/UserlocalStorage';
+import Product from '../../../components/Product';
+
+
+function ProductList({data, HandleFetch}){
+    return (
+      <>
+        {data?.map((product) => (
+            <Product
+              key={product.id}
+              product={product}
+              HandleFetch={HandleFetch}
+            />
+        ))}
+      </>
+    )
+}
+
 
 function RestaurantProducts() {
 
@@ -34,6 +51,9 @@ function RestaurantProducts() {
         partner_delivery:'',
         super_restaurant:'',
     })
+
+    const [Products, SetProducts] = useState([])
+
 
     useEffect(()=>{
         async function getRestaurant() {
@@ -92,8 +112,28 @@ function RestaurantProducts() {
     
         }
 
-        if(id)getRestaurant()
+        async function getProducts(url = `http://127.0.0.1:8000/api/v1/products/available-products-restaurant/${id}/`) {
+            setIsLoading(true)
+    
+            const response = await fetch(url, {
+              method:'GET',
+              headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+            })
+        
+            if(response.ok){
+                const data = await response.json()
+                SetProducts(data)
+            } 
+            setIsLoading(false)
+        }
+
+        if(id){
+            getRestaurant()
+            getProducts()
+        }
     }, [id])
+    
+
     
 
     return (
@@ -173,6 +213,10 @@ function RestaurantProducts() {
                 </div>
 
                 <div id='menu'>
+
+                    <div id='stores'>
+                        <ProductList data={Products} HandleFetch={null} />
+                    </div>
 
                 </div>
             </div>

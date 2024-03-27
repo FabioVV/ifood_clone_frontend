@@ -61,15 +61,17 @@ function Product({product, HandleFetch}) {
         {/* <div id='context'>
           [AREA DE CUPOM] 
         </div> */}
-        {!getCurrentUser()['is_staff'] ? 
+        {getCurrentUser()['is_staff'] ? 
 
+          <div id=''>
+            <NavLink to={`/editar-produto/${product?.id}`} className="btn btn-outline btn-info">Editar</NavLink>
+            <button onClick={() => {document.getElementById(`my_modal_delete_product_${product?.id}`)?.showModal()}} className="btn btn-outline btn-error">Excluir</button>
+            <button onClick={() => {handle()}} className="btn btn-outline btn-primary">Adicionar ao carrinho</button>
+          </div>
+        :
         <div id=''>
-          <NavLink to={`/editar-produto/${product?.id}`} className="btn btn-outline btn-info">Editar</NavLink>
-          {/* <button onClick={() => {document.getElementById(`my_modal_delete_product_${product?.id}`)?.showModal()}} className="btn btn-outline btn-error">Excluir</button> */}
           <button onClick={() => {handle()}} className="btn btn-outline btn-primary">Adicionar ao carrinho</button>
         </div>
-        :
-        null
         }
 
       </div>
