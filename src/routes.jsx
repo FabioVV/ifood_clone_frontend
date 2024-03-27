@@ -102,7 +102,7 @@ function _Routes() {
             </RequireAuth>
         } />
 
-        <Route path='delivery/restaurante/:id' element={
+        <Route path='delivery/restaurante/:id/:slug' element={
             <RequireAuth redirectTo="/login">
                 <RestaurantProducts />
             </RequireAuth>

@@ -410,8 +410,115 @@ div#content{
 #cart-total-span{
     margin-top: 4rem;
     font-weight: 600;
-    font-size: 1.em;
+    font-size: 1em;
 }
+
+
+#merchant-banner{
+    margin: 2rem;
+    height: 40vh;
+}
+
+#merchant-banner > img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+#merchant-info{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2rem;
+
+}
+
+
+
+
+
+#header{
+
+}
+
+#smallest-amount-delivery{
+    color: #313131;
+    font-weight: 300;
+    font-size: .875rem;
+    font-weight: 600;
+}
+
+#merchant-info > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    flex: 1 1 50%;
+}
+
+#restaurant-title-delivery{
+    font-size: 2.25rem;
+    line-height: 44px;
+    margin-bottom: 0;
+}
+
+
+#logo-restaurant-round{
+    object-fit: cover; /* Ensure the image covers the entire container */
+    border-radius: 50%; /* Make the border radius 50% to create a circle */
+}
+
+
+#search-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2rem;
+
+}
+
+#itens-search-info-restaurant{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    align-items: center;
+    margin-left: 2rem;
+    
+}
+
+#itens-time{
+    border: 1px solid #f2f2f2;
+}
+
+#itens-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: .875rem;
+    border: 1px solid #f2f2f2;
+
+}
+
+#itens-info-time{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+
+
+@media only screen and (max-width: 570px) {
+    #search-info{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+ }
+
+
 
 @media only screen and (min-width: 768px) {
     #filters > ul > li {
