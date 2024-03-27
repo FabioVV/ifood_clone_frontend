@@ -208,12 +208,12 @@ function Navbar() {
 
                                                 <div>
                                                     <span>Subtotal</span>
-                                                    <span>R$ 10</span>
+                                                    <span>R$ {totalPriceCart(products)}</span>
                                                 </div>
                                     
                                                 <div>
                                                     <span>Taxa de serviço</span>
-                                                    <span>R$ 10</span>
+                                                    <span>R$ 0,99</span>
                                                 </div>
                                     
                                                 <div>
@@ -223,7 +223,7 @@ function Navbar() {
 
                                                 <div id='cart-total-span'>
                                                     <span>Total</span>
-                                                    <span>R$ {totalPriceCart(products)}</span>
+                                                    <span>R$ {parseFloat(totalPriceCart(products))+10+0.99}</span>
                                                 </div>
                                     
                                             </div>
