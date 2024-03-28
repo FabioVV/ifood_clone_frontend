@@ -87,10 +87,8 @@ function EditRestaurant() {
                             
                         }
                     )
-                        console.log(Restaurant.partner_delivery)
                         setRestaurantCurrentImage(restaurant.logo)
                     
-
                     reset({...restaurant})
                 }
     

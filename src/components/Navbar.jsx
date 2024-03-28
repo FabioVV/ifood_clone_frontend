@@ -29,7 +29,6 @@ function Navbar() {
 
     const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
 
-    console.log(products)
 
 
     function CartProductsList({data, HandleFetch}){
@@ -37,6 +36,7 @@ function Navbar() {
           <>
             {data?.map((product) => (
                 <CartProduct
+                  key={product.card_id}
                   product={product}
                   HandleFetch={HandleFetch}
                 />
@@ -152,6 +152,7 @@ function Navbar() {
                             </div>
                             <ul id='ul-dropdown-user' tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-lg dropdown-content bg-base-100 rounded-box w-80">
                                 <h1 className='dropdown-title-navbar-mainmenu'>Olá, {User?.first_name}</h1>
+                                
                                 {!User?.is_staff ?
                                     <>
                                         <li>
@@ -225,7 +226,11 @@ function Navbar() {
                                                     <span>Total</span>
                                                     <span>R$ {parseFloat(totalPriceCart(products))+10+0.99}</span>
                                                 </div>
-                                    
+
+                                            </div>
+                                            
+                                            <div style={{margin:'0 auto'}}>
+                                                <button className="btn btn-primary btn-outline btn-wide">Escolher forma de pagamento</button>
                                             </div>
                                         </>
                                         :

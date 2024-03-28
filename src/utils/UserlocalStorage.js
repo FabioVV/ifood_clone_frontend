@@ -60,7 +60,7 @@ export function setCurrentUser(user, token){
         Object.assign(user, {token:token})
 
         //EXPIRATION TIME FOR LOCALSTORAGEDATA
-        Object.assign(user, {expiration:new Date().getTime()+ (60000 * 30)})
+        Object.assign(user, {expiration:new Date().getTime()+ (60000 * 60)})
 
         localStorage.setItem('userBytefood', JSON.stringify(user))
         setCart()

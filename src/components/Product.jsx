@@ -19,7 +19,7 @@ function Product({product, HandleFetch}) {
     <div id="merchant">
 
       <div id='image-container' className='rounded-lg  overflow-hidden'>
-        <img width={135} height={135} src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name}`} className='rounded-lg overflow-hidden'/>
+        <img width={135} height={135} src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
       </div>
 
       <div id="content">
@@ -51,23 +51,27 @@ function Product({product, HandleFetch}) {
           </div>
 
         <div id='footer'>
-            <span>Quantidade: {product?.qtd}</span>
+            {/* <span>Quantidade: {product?.qtd}</span> */}
             <span id='separator'>•</span>
             <span>R$ {product?.price}</span>
+            <span id='separator'>•</span>
+
         </div>
 
         {/* <div id='context'>
           [AREA DE CUPOM] 
         </div> */}
-        {!getCurrentUser()['is_staff'] ? 
+        {getCurrentUser()['is_staff'] ? 
 
+          <div id=''>
+            <NavLink to={`/editar-produto/${product?.id}`} className="btn btn-outline btn-info">Editar</NavLink>
+            <button onClick={() => {document.getElementById(`my_modal_delete_product_${product?.id}`)?.showModal()}} className="btn btn-outline btn-error">Excluir</button>
+            <button onClick={() => {handle()}} className="btn btn-outline btn-primary">Adicionar ao carrinho</button>
+          </div>
+        :
         <div id=''>
-          <NavLink to={`/editar-produto/${product?.id}`} className="btn btn-outline btn-info">Editar</NavLink>
-          {/* <button onClick={() => {document.getElementById(`my_modal_delete_product_${product?.id}`)?.showModal()}} className="btn btn-outline btn-error">Excluir</button> */}
           <button onClick={() => {handle()}} className="btn btn-outline btn-primary">Adicionar ao carrinho</button>
         </div>
-        :
-        null
         }
 
       </div>
