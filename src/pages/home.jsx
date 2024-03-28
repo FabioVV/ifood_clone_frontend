@@ -54,11 +54,11 @@ function Home() {
   const [FreeDelivery, setFreeDelivery] = useState(false)
   const [PartnerDelivery, setPartnerDelivery] = useState(false)
   const [SuperRestaurant, setSuperRestaurant] = useState(false)
+  const [OrderBy, setOrderBy] = useState('')
 
   const [isLoading, setIsLoading] = useState(false)
 
   const [leftPosition, setLeftPosition] = useState(0); 
-
 
 
   function handlePaginationClick(){
@@ -130,7 +130,7 @@ function Home() {
 
 
 
-  const fetchRestaurantsSearch = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants-search/?page=${SearchPageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}`) => {
+  const fetchRestaurantsSearch = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants-search/?page=${SearchPageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}&order_by=${OrderBy}`) => {
     setIsLoading(true)
 
     try{
@@ -263,7 +263,11 @@ function Home() {
               <div id='filters' className='sticky top-0 z-10'  style={{top:'6rem'}}>
                 <ul>
                 
-                  <button onClick={()=>document.getElementById('sort-modal').showModal()} className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">Ordernar<i className="fa-solid fa-chevron-down"></i></button>
+                  <select value={OrderBy} onChange={(e)=>{setOrderBy(e.target.value)}} className="select select-bordered w-full max-w-xs">
+                    <option value='id' selected>Ordenação padrão</option>
+                    <option value='price'>Ordenação por preço</option>
+                    <option value='delivery_fee'>Ordenação por taxa de entrega</option>
+                  </select>
                   <input checked={FreeDelivery} onChange={()=>{setFreeDelivery(!FreeDelivery)}} type="checkbox" aria-label="Entrega grátis" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
                   <input checked={PartnerDelivery} onChange={()=>{setPartnerDelivery(!PartnerDelivery)}} type="checkbox" aria-label="Entrega parceira" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
                   <input checked={SuperRestaurant} onChange={()=>{setSuperRestaurant(!SuperRestaurant)}} type="checkbox" aria-label="Super restaurantes" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />
@@ -294,51 +298,6 @@ function Home() {
                 </button>
               </div>
 
-
-
-              <dialog id="sort-modal" className="modal modal-bottom sm:modal-middle">
-                <div className="modal-box">
-                    <h3 className="font-bold text-lg text-center">Ordernar por</h3>
-          
-                    <div id='sort-container'>
-                      <div>
-                        <div id='sort-container-item'>
-                          <i className="fa-solid fa-list"></i>
-                          Ordenação padrão
-                        </div>
-                        <div id='sort-container-item'>
-                          <i className="fa-regular fa-money-bill-1"></i>
-                          Preço
-                        </div>
-                        <div id='sort-container-item'>
-                          <i className="fa-solid fa-star"></i>
-                          Avaliação
-                        </div>
-                      </div>
-
-                      <div>
-                        <div id='sort-container-item'>
-                          <i className="fa-solid fa-clock"></i>
-                          Tempo de entrega
-                        </div>
-                        <div id='sort-container-item'>
-                          <i className="fa-solid fa-motorcycle"></i>
-                          Taxa de entrega
-                        </div>
-                        <div id='sort-container-item'>
-                          <i className="fa-solid fa-signs-post"></i>
-                          Menos distância
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="modal-action">
-                      <form method="dialog">
-                          <button className="btn">Fechar</button>
-                      </form>
-                    </div>
-                </div>
-              </dialog>
           </>
         }
 
