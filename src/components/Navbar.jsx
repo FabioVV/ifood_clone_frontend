@@ -29,6 +29,29 @@ function Navbar() {
 
     const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
 
+    const [UserGeolocation, setUserGeolocation] = useState({
+        lat:'',
+        lng:'',
+        location:'',
+        result:'',
+    })
+    
+    const [UserAddress, setUserAddress] = useState({
+        name:'',
+        street:'',
+        neighborhood:'',
+        number:'',
+        complement:'',
+        city:'',
+        state:'',
+        zip_code:'',
+        user:'',
+    })
+
+
+
+ 
+    
 
 
     function CartProductsList({data, HandleFetch}){
@@ -55,27 +78,33 @@ function Navbar() {
                     <dialog id="google_modal" className="modal">
                         <div className="modal-box w-11/12 max-w-5xl">
 
-                            <div id='image-div-google'>
-                                <img width={130} height={130} src={google_waypointer_purple} alt="Google maps waypointer image" style={{zIndex:'1', margin:'0 auto'}}/>
-                            </div>
+                            {!UserGeolocation?.lat && !UserGeolocation.lng ?
+                                <>
+                                    <div id='image-div-google'>
+                                        <img width={130} height={130} src={google_waypointer_purple} alt="Google maps waypointer image" style={{zIndex:'1', margin:'0 auto'}}/>
+                                    </div>
+        
+                                    <h3 className="font-bold text-lg text-center">Onde você quer receber seu pedido?</h3>
+        
+                                    <div id='search-div'>
+                                        <GooglePlaces user_geolocation_fn={setUserGeolocation} user_address_fn={setUserAddress} user_address_obj={UserAddress}/>
+                                    </div>  
+        
+                                    <div id='user-addresses-div'>
+        
+                                    </div>  
+        
+        
+                                    <div className="modal-action">
+                                        <form method="dialog">
+                                            <button className="btn">Fechar</button>
+                                        </form>
+                                    </div>
+                                </>
+                                :
+                                <GoogleMapComponent UserGeolocation={UserGeolocation}/> 
+                            }
 
-                            <h3 className="font-bold text-lg text-center">Onde você quer receber seu pedido?</h3>
-
-                            <div id='search-div'>
-                                <GooglePlaces/>
-                            </div>  
-
-                            <div id='user-addresses-div'>
-
-                            </div>  
-
-                            {/* <GoogleMapComponent/> */}
-
-                            <div className="modal-action">
-                                <form method="dialog">
-                                    <button className="btn">Fechar</button>
-                                </form>
-                            </div>
                         </div>
                     </dialog>
 

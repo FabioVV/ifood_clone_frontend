@@ -156,8 +156,23 @@ function Home() {
           const newData = data?.results.filter(newRestaurant => 
             !RestaurantsSearched.some(existingRestaurant => existingRestaurant.id === newRestaurant.id)
           );
+
           SetRestaurantsSearched([...RestaurantsSearched, ...newData])
   
+          if (SuperRestaurant) {
+            const newSearch = RestaurantsSearched.filter(existingRestaurant => existingRestaurant.super_restaurant);
+            SetRestaurantsSearched([...newSearch, ...newData]);
+          }
+          
+          if (PartnerDelivery) {
+            const newSearch = RestaurantsSearched.filter(existingRestaurant => existingRestaurant.PartnerDelivery);
+            SetRestaurantsSearched([...newSearch, ...newData]);
+          }
+
+          if (FreeDelivery) {
+            const newSearch = RestaurantsSearched.filter(existingRestaurant => existingRestaurant.delivery_fee === 0);
+            SetRestaurantsSearched([...newSearch, ...newData]);
+          }
   
         } else {
           SetRestaurantsSearched(data?.results)
@@ -195,19 +210,23 @@ function Home() {
 
   useEffect(()=>{fetchCategories();},[user])
 
-  
-
   useEffect(()=>{
 
     SetRestaurantsSearched([])  
+
+  },[SuperRestaurant ,PartnerDelivery, FreeDelivery])
+
+  useEffect(()=>{
+
     SetRestaurants([])
 
     if(SuperRestaurant || PartnerDelivery || FreeDelivery){
-      SetRestaurantsSearched([])  
 
       fetchRestaurantsSearch()
 
     } else {
+      SetRestaurantsSearched([])  
+
       fetchRestaurants()
       setSearchPageNumber(1)
       setPageNumber(1)
@@ -264,7 +283,7 @@ function Home() {
                 <ul>
                 
                   <select value={OrderBy} onChange={(e)=>{setOrderBy(e.target.value)}} className="select select-bordered w-full max-w-xs">
-                    <option value='id' selected>Ordenação padrão</option>
+                    <option value='id'>Ordenação padrão</option>
                     <option value='price'>Ordenação por preço</option>
                     <option value='delivery_fee'>Ordenação por taxa de entrega</option>
                   </select>
