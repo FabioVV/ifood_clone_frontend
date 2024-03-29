@@ -27,6 +27,8 @@ function RestaurantProducts() {
     const { id } = useParams();
     const [isLoading, setIsLoading] = useState(false)
 
+    const [Search, SetSearch] = useState('')
+
     const [ShowAlert, setShowAlert] = useState({
         show: false,
         message:'',
@@ -132,6 +134,24 @@ function RestaurantProducts() {
             getProducts()
         }
     }, [id])
+
+
+    useEffect(()=>{
+        (async (url = `http://127.0.0.1:8000/api/v1/products/available-products-restaurant/${id}/?q=${Search}`)=>{
+            setIsLoading(true)
+    
+            const response = await fetch(url, {
+              method:'GET',
+              headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+            })
+        
+            if(response.ok){
+                const data = await response.json()
+                SetProducts(data)
+            } 
+            setIsLoading(false)
+        })()
+    }, [Search])
     
 
     
@@ -191,7 +211,7 @@ function RestaurantProducts() {
                 <div id='search-info'>
                     <div style={{width:'70%'}}>
                         <label className="input input-bordered flex items-center gap-2">
-                            <input type="text" className="grow" placeholder="Procure no cardápio" />
+                            <input type="search" className="grow" placeholder="Procure no cardápio" onChange={(e)=>{SetSearch(e.target.value)}}/>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
                         </label>
                     </div>

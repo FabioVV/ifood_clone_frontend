@@ -233,7 +233,7 @@ function Navbar() {
                                         
                                         {products.length > 0 ?
                                         <>
-                                            <CartProductsList data={products} HandleFetch={null}/>
+                                            <CartProductsList  data={products} HandleFetch={null}/>
                                             <div id='footer-cart'>
 
                                                 <div>
