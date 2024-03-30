@@ -540,6 +540,65 @@ div#content{
 
 
 
+#address{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #dfdfdf;
+    transition: 200ms ease-in-out;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+#address-info{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    word-break: break-word;
+}
+
+
+#address:hover{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#address-info-all{
+    line-height: 18px;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+#address-info-title{
+    font-size: 1.1em;
+    font-weight: 400;
+}
+
+#address-icone{
+    margin: auto 0;
+}
+
+
+#address-elp{
+    font-size: 27px;
+    margin: auto 1rem;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#address-container{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.address-selected{
+    border-color: purple !important;
+}
+
+
 @media only screen and (max-width: 570px) {
     #search-info{
         flex-wrap: wrap;

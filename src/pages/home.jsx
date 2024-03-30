@@ -39,7 +39,7 @@ function CategoriesList({data, HandleFetch}){
 function Home() {
 
   const [user, SetUser] = useState(getCurrentUser)
-
+  
   const [Restaurants, SetRestaurants] = useState([])
   const [RestaurantsSearched, SetRestaurantsSearched] = useState([])
 

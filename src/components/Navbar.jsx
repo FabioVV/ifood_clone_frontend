@@ -7,19 +7,53 @@ import useLocalStorageState from "use-local-storage-state"
 import { totalPriceCart } from '../utils/CartLocalStorage'
 
 
-import { getCurrentUser, clearLocalStorage } from '../utils/UserlocalStorage'
+import { getCurrentUser, clearLocalStorage, getCurrentUserToken } from '../utils/UserlocalStorage'
+
 
 import { googleLogout } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom";
 import GoogleMapComponent from './GoogleMap'
 import GooglePlaces from './GooglePlaces'
 import CartProduct from './CartProduct'
+import Address from '../pages/addresses/_list/Address'
+
+
+function AddressesList({data, HandleFetch}){
+    return (
+      <>
+        {data?.map((address) => (
+            <Address
+              key={address.id}
+              address={address}
+              HandleFetch={HandleFetch}
+            />
+        ))}
+      </>
+    )
+}
+
+
+function CartProductsList({data, HandleFetch}){
+    return (
+      <>
+        {data?.map((product) => (
+            <CartProduct
+              key={product.card_id}
+              product={product}
+              HandleFetch={HandleFetch}
+            />
+        ))}
+      </>
+    )
+}
+
+
+
+
 
 function Navbar() {
 
     let navigate = useNavigate();
-
-    const [User, SetUser] = useState(getCurrentUser)
 
     function SignOut(){
         googleLogout()
@@ -27,7 +61,12 @@ function Navbar() {
         navigate("/"); navigate(0);
     }
 
-    const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
+
+    const [User, SetUser] = useState(getCurrentUser)
+    const [Products, setProducts] = useLocalStorageState('bytefood_cart', [])
+    const [Addresses, SetAddresses] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+
 
     const [UserGeolocation, setUserGeolocation] = useState({
         lat:'',
@@ -49,24 +88,34 @@ function Navbar() {
     })
 
 
+    useEffect(()=>{
 
- 
-    
+        (async(url = 'http://127.0.0.1:8000/api/v1/addresses/user-addresses/') => {
+            setIsLoading(true)
 
+            try{
 
-    function CartProductsList({data, HandleFetch}){
-        return (
-          <>
-            {data?.map((product) => (
-                <CartProduct
-                  key={product.card_id}
-                  product={product}
-                  HandleFetch={HandleFetch}
-                />
-            ))}
-          </>
-        )
-    }
+                const response = await fetch(url, {
+                    method:'GET',
+                    headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+                })
+
+                if(response.ok){
+                    const data = await response.json()
+                    SetAddresses(data)
+                } 
+
+            } catch(e){
+                console.log(e.message)
+
+            } finally{
+                setIsLoading(false)
+
+            }
+
+        })()
+
+    },[User?.token])
 
     
 
@@ -91,6 +140,13 @@ function Navbar() {
                                     </div>  
         
                                     <div id='user-addresses-div'>
+
+                                        {!isLoading ? 
+                                        
+                                            <AddressesList data={Addresses} HandleFetch={null} />
+                                            :
+                                            <span className="loading loading-spinner loading-lg"></span>
+                                        }
         
                                     </div>  
         
@@ -124,7 +180,6 @@ function Navbar() {
                                     <ul className="p-2">
                                         <li><NavLink  to="/criar-restaurante" ><i className="fa-sharp fa-solid fa-gear"></i> Criar restaurante</NavLink></li>
                                         <li><NavLink  to="/criar-produto" ><i className="fa-sharp fa-solid fa-gear"></i> Criar produto</NavLink></li>
-                                        <li><NavLink  to="/produtos" ><i className="fa-sharp fa-solid fa-gear"></i> Listar produtos</NavLink></li>
                                         <hr />
                                         <li><NavLink  to="/minha-conta" ><i className="fa-sharp fa-solid fa-gear"></i> Seus dados</NavLink></li>
                                         <li><a onClick={() => SignOut()}><i className="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Sair</a></li>
@@ -190,9 +245,6 @@ function Navbar() {
                                         <li>
                                             <NavLink  to="/criar-produto" ><i className="fa-sharp fa-solid fa-gear"></i> Criar produto</NavLink>
                                         </li>
-                                        <li>
-                                            <NavLink  to="/produtos" ><i className="fa-sharp fa-solid fa-gear"></i> Listar produtos</NavLink>
-                                        </li>
                                         <hr style={{marginBottom:'8px'}}/>
                                     </>
                                     :
@@ -218,9 +270,9 @@ function Navbar() {
                                 <label htmlFor="my-drawer-4" className="drawer-button btn btn-ghost">
                                     <div className="indicator">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                                        <span style={{zIndex:'0'}} className="badge badge-sm indicator-item">{products.length ? products.length : 0}</span>
+                                        <span style={{zIndex:'0'}} className="badge badge-sm indicator-item">{Products.length ? Products.length : 0}</span>
                                     </div>
-                                    <span style={{marginLeft:'8px'}}>R$ {totalPriceCart(products) ? totalPriceCart(products): '0,00'} </span>
+                                    <span style={{marginLeft:'8px'}}>R$ {totalPriceCart(Products) ? totalPriceCart(Products): '0,00'} </span>
 
                                </label>
                             </div> 
@@ -229,16 +281,16 @@ function Navbar() {
 
                                 <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                                     <div id='menu-cart-container'>
-                                        <h1 className='text-center'>{products.length <= 0 ? 'Seu carrinho esta vazio );' : null} </h1>
+                                        <h1 className='text-center'>{Products.length <= 0 ? 'Seu carrinho esta vazio );' : null} </h1>
                                         
-                                        {products.length > 0 ?
+                                        {Products.length > 0 ?
                                         <>
-                                            <CartProductsList  data={products} HandleFetch={null}/>
+                                            <CartProductsList  data={Products} HandleFetch={null}/>
                                             <div id='footer-cart'>
 
                                                 <div>
                                                     <span>Subtotal</span>
-                                                    <span>R$ {totalPriceCart(products)}</span>
+                                                    <span>R$ {totalPriceCart(Products)}</span>
                                                 </div>
                                     
                                                 <div>
@@ -253,7 +305,7 @@ function Navbar() {
 
                                                 <div id='cart-total-span'>
                                                     <span>Total</span>
-                                                    <span>R$ {parseFloat(totalPriceCart(products))+10+0.99}</span>
+                                                    <span>R$ {parseFloat(totalPriceCart(Products))+10+0.99}</span>
                                                 </div>
 
                                             </div>
@@ -288,7 +340,6 @@ function Navbar() {
                                     <ul className="p-2">
                                         <li><NavLink  to="/criar-restaurante" ><i className="fa-sharp fa-solid fa-gear"></i> Criar restaurante</NavLink></li>
                                         <li><NavLink  to="/criar-produto" ><i className="fa-sharp fa-solid fa-gear"></i> Criar produto</NavLink></li>
-                                        <li><NavLink  to="/produtos" ><i className="fa-sharp fa-solid fa-gear"></i> Listar produtos</NavLink></li>
                                         <hr />
                                         <li><NavLink  to="/minha-conta" ><i className="fa-sharp fa-solid fa-gear"></i> Seus dados</NavLink></li>
                                         <li><a onClick={() => SignOut()}><i className="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Sair</a></li>
