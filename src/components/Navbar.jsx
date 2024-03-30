@@ -49,8 +49,6 @@ function CartProductsList({data, HandleFetch}){
 
 
 
-
-
 function Navbar() {
 
     let navigate = useNavigate();
@@ -63,10 +61,12 @@ function Navbar() {
 
 
     const [User, SetUser] = useState(getCurrentUser)
+
     const [Products, setProducts] = useLocalStorageState('bytefood_cart', [])
     const [Addresses, SetAddresses] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
+    const [SelectedAddress, SetSelectedAddress] = useState('')
 
+    const [isLoading, setIsLoading] = useState(false)
 
     const [UserGeolocation, setUserGeolocation] = useState({
         lat:'',
@@ -87,33 +87,35 @@ function Navbar() {
         user:'',
     })
 
+    async function get_addresses(url = 'http://127.0.0.1:8000/api/v1/addresses/user-addresses/'){
+        try{
+
+            const response = await fetch(url, {
+                method:'GET',
+                headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+            })
+
+            if(response.ok){
+                const data = await response.json()
+                SetAddresses(data)
+                SetSelectedAddress(data.find(item => item.is_selected))
+
+            } 
+
+        } catch(e){
+            console.log(e.message)
+
+        } finally{
+            setIsLoading(false)
+
+        }
+
+    }
+
 
     useEffect(()=>{
 
-        (async(url = 'http://127.0.0.1:8000/api/v1/addresses/user-addresses/') => {
-            setIsLoading(true)
-
-            try{
-
-                const response = await fetch(url, {
-                    method:'GET',
-                    headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
-                })
-
-                if(response.ok){
-                    const data = await response.json()
-                    SetAddresses(data)
-                } 
-
-            } catch(e){
-                console.log(e.message)
-
-            } finally{
-                setIsLoading(false)
-
-            }
-
-        })()
+        get_addresses()
 
     },[User?.token])
 
@@ -143,7 +145,7 @@ function Navbar() {
 
                                         {!isLoading ? 
                                         
-                                            <AddressesList data={Addresses} HandleFetch={null} />
+                                            <AddressesList data={Addresses} HandleFetch={get_addresses} />
                                             :
                                             <span className="loading loading-spinner loading-lg"></span>
                                         }
@@ -173,7 +175,7 @@ function Navbar() {
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/">Inicio</NavLink></li>
                                 <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
-                                <li><a>Escolha um endereço</a></li>
+                                <li><a>{SelectedAddress?.street}, {SelectedAddress?.number}</a></li>
                                 <hr />
                                 <li>
                                 <a>Minha conta</a>
@@ -221,7 +223,7 @@ function Navbar() {
                                 <li onClick={()=>document.getElementById('google_modal').showModal()}>
                                     <details>
                                         <summary>
-                                            Escolha um endereço
+                                            {SelectedAddress?.street}, {SelectedAddress?.number}
                                         </summary>
                                     </details>
                                 </li>
@@ -333,7 +335,7 @@ function Navbar() {
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/">Inicio</NavLink></li>
                                 <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
-                                <li><a>Escolha um endereço</a></li>
+                                <li><a>{SelectedAddress?.street}, {SelectedAddress?.number}</a></li>
                                 <hr />
                                 <li>
                                 <a>Minha conta</a>

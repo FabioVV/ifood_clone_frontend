@@ -187,13 +187,13 @@ function RestaurantProducts() {
                                             {/* Sidebar content here */}
 
                                             <div role="tablist" className="tabs tabs-lifted">
-                                                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Sobre" checked/>
+                                                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Sobre" readOnly/>
                                                 <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">Sobre</div>
 
-                                                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Horário"  />
+                                                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Horário"  readOnly/>
                                                 <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">Horário</div>
 
-                                                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Pagamento" />
+                                                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Pagamento" readOnly/>
                                                 <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">Pagamento</div>
                                             </div>
 
@@ -234,7 +234,7 @@ function RestaurantProducts() {
 
                 <div id='menu'>
 
-                    <div id='stores'>
+                    <div id='products'>
                         <ProductList data={Products} HandleFetch={null} />
                     </div>
 

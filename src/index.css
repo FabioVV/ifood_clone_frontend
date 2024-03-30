@@ -96,14 +96,44 @@ div.navbar{
 }
 
 
+#products{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 120rem;    
+    margin: 0 auto;
+}
+
+
+
 #stores{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-    max-width: 89rem;
+    max-width: 95rem;    
     margin: 0 auto;
+}
+
+#product{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 0.8rem;
+    transition: 0.4s ease-in-out;
+    width: max-content;
+    padding: 2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid #e2e2e2;
+
+}
+
+#product:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transform: scale(1.03);
 }
 
 

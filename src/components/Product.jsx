@@ -9,58 +9,40 @@ function Product({product, HandleFetch}) {
   
   const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
 
-  function handle(){
+  function HandleCart(){
 
     Object.assign(product, {id_cart : Math.floor(Math.random() * 1000)})
     setProducts([...products, product])
   }
 
   return (
-    <div id="merchant">
+    <div id="product" onClick={() => {HandleCart()}}>
 
       <div id='image-container' className='rounded-lg  overflow-hidden'>
-        <img width={135} height={135} src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
+        <img width={210} height={210} src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
       </div>
 
       <div id="content">
         <h3 id='title'>
 
           <div id='title-header'>
-            <span id='title-name'>{product?.name}</span>
+            <span id='title-name' style={{fontSize:'1.3em'}}>{product?.name}</span>
           </div>
           
         </h3>
 
         <div id='title-info'>
 
-            {/* <span id='rating'>
-                <span>
-                  imagem estrela
-                </span>
-                  4.5
-                </span> 
-              </span> 
-            */}
-            <span id='separator'>•</span>
-            <span>{product?.restaurant_name}</span>
-            <span id='separator'>•</span>
-
-
-            {/* <span>0.8 KM</span> */}
-
-          </div>
-
-        <div id='footer'>
-            {/* <span>Quantidade: {product?.qtd}</span> */}
-            <span id='separator'>•</span>
-            <span>R$ {product?.price}</span>
-            <span id='separator'>•</span>
+          <span>{product?.description}</span>
 
         </div>
 
-        {/* <div id='context'>
-          [AREA DE CUPOM] 
-        </div> */}
+        <div id='footer'>
+            <span className='text-green-700'>R$ {product?.price.toString().replace('.', ',')}</span>
+
+        </div>
+
+
         {getCurrentUser()['is_staff'] ? 
 
           <div id=''>
@@ -69,9 +51,7 @@ function Product({product, HandleFetch}) {
             <button onClick={() => {handle()}} className="btn btn-outline btn-primary">Adicionar ao carrinho</button>
           </div>
         :
-        <div id=''>
-          <button onClick={() => {handle()}} className="btn btn-outline btn-primary">Adicionar ao carrinho</button>
-        </div>
+          null
         }
 
       </div>
