@@ -670,6 +670,44 @@ div#content{
 
 
 
+#product-modal-section{
+    display: flex;
+    flex-direction: row;
+    gap: 0.7rem;
+}
+
+
+#dish-info{
+    display: inline-block;
+    font-size: .975rem;
+    padding-top: 10px;
+    margin: 0;
+    font-weight: 300;
+    line-height: 1.22;
+    color: #717171;
+    white-space: pre-line;
+    word-break: break-all;
+}
+
+
+#dish-title{
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #3e3e3e;
+    z-index: 30;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 0;
+}
+
+#product-modal-info{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+
+
 @media only screen and (max-width: 570px) {
     #search-info{
         flex-wrap: wrap;

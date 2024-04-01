@@ -7,7 +7,7 @@ import useLocalStorageState from "use-local-storage-state"
 import { totalPriceCart } from '../utils/CartLocalStorage'
 
 
-import { getCurrentUser, clearLocalStorage, getCurrentUserToken } from '../utils/UserlocalStorage'
+import { getCurrentUser, clearLocalStorage } from '../utils/UserlocalStorage'
 
 
 import { googleLogout } from '@react-oauth/google';
@@ -50,8 +50,6 @@ function Navbar() {
 
     const [Products, setProducts] = useLocalStorageState('bytefood_cart', [])
     const [SelectedAddress, SetSelectedAddress] = useState('')
-
-
 
     const [UserGeolocation, setUserGeolocation] = useState({
         lat:'',
@@ -111,7 +109,7 @@ function Navbar() {
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/">Inicio</NavLink></li>
                                 <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
-                                <li>
+                                <li onClick={()=>document.getElementById('google_modal').showModal()}>
                                     <a>
                                         {SelectedAddress ? 
                                             <>
@@ -287,7 +285,7 @@ function Navbar() {
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/">Inicio</NavLink></li>
                                 <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
-                                <li>
+                                <li onClick={()=>document.getElementById('google_modal').showModal()}>
                                     <a>
                                         {SelectedAddress ? 
                                             <>

@@ -137,7 +137,6 @@ function GoogleMapComponent({UserGeolocation}) {
                     user_address.zip_code = obj['long_name']
 
                 }
-
             }
         }
 
