@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { getCurrentUser } from '../utils/UserlocalStorage';
 import { useForm } from 'react-hook-form';
@@ -92,7 +92,6 @@ function GoogleMapComponent({UserGeolocation}) {
         
 
         let results = UserGeolocation?.result
-        let size_address_components = results['address_components'].length
 
         let user_address = {
             name:'',
@@ -105,31 +104,46 @@ function GoogleMapComponent({UserGeolocation}) {
             zip_code:'',
             user:getCurrentUser()['id'],
         }
-        console.log(results)
 
-        // FIX THIS LATER (THE FIELDS HAVE TYPES IN THE GOOGLE RESPONSE, USE THEM TO FILL THESE OUT)
-        if(size_address_components > 6){
-            user_address.number = results['address_components'][0]['long_name']
-            user_address.zip_code = results['address_components'][size_address_components-1]['long_name']
-            user_address.state = results['address_components'][4]['short_name']
-            user_address.city = results['address_components'][3]['long_name']
-            user_address.neighborhood = results['address_components'][1]['long_name']
-            user_address.street = results['address_components'][2]['long_name']
-  
-            setUserAddress({...UserAddress, ...user_address})
-            reset({...UserAddress})
-        } else {
+        for(let obj of results['address_components']){
+            for(let type_obj of obj['types']){
 
-            user_address.zip_code = results['address_components'][size_address_components-1]['long_name']
-            user_address.state = results['address_components'][3]['short_name']
-            user_address.city = results['address_components'][2]['long_name']
-            user_address.neighborhood = results['address_components'][1]['long_name']
-            user_address.street = results['address_components'][0]['long_name']
-  
-            setUserAddress({...UserAddress, ...user_address})
-            reset({...UserAddress})
+                if(type_obj == 'street_number'){
+                    user_address.number = obj['long_name']
 
+                }
+
+                if(type_obj == 'route'){
+                    user_address.street = obj['long_name']
+
+                }
+
+                if(type_obj == 'sublocality'){
+                    user_address.neighborhood = obj['long_name']
+
+                }
+
+                if(type_obj == 'administrative_area_level_2'){
+                    user_address.city = obj['long_name']
+
+                }
+
+                if(type_obj == 'administrative_area_level_1'){
+                    user_address.state = obj['short_name']
+
+                }
+
+                if(type_obj == 'postal_code'){
+                    user_address.zip_code = obj['long_name']
+
+                }
+
+            }
         }
+
+        setUserAddress({...UserAddress, ...user_address})
+        reset({...UserAddress})
+
 
 
     }
