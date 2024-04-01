@@ -1,6 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { getCurrentUser } from '../utils/UserlocalStorage';
+import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+import { useNavigate } from "react-router-dom";
+import { getCurrentUserToken } from '../utils/UserlocalStorage';
 
 // INFO WINDOW
 
@@ -13,9 +17,93 @@ const mapContainerStyle = {
 
 
 
-function GoogleMapComponent({UserGeolocation, user_address_fn, user_address_obj}) {
+function GoogleMapComponent({UserGeolocation}) {
+
+    const { register, handleSubmit, reset, setError, formState: { errors } } = useForm();
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [UserAddress, setUserAddress] = useState({
+        name:'',
+        street:'',
+        neighborhood:'',
+        number:'',
+        complement:'',
+        city:'',
+        state:'',
+        zip_code:'',
+        user:'',
+    })
+
+    const ConfirmButton = useRef()
+    const AddressForm = useRef()
+
+
+    async function onSubmitAddress(form, event){
+        event.preventDefault()
+        setIsLoading(true)
+
+        try{
+
+            const res = await fetch("http://127.0.0.1:8000/api/v1/users/edit-user-personal-data/",{
+                method:"PATCH",
+                headers:{
+                    "Content-Type":"application/json", 
+                    Authorization:` Token ${getCurrentUserToken()}`,
+                },
+    
+                body:JSON.stringify({
+
+                })
+            })
+
+            if (!res.ok) {
+                console.log(res.status)
+            } 
+            
+            const user_updated = await res.json()
+
+            if(user_updated['first_name_blank']){
+
+                setError('first_name', {
+                    type: 'first_name_blank',
+                    message: user_updated['first_name_blank']
+                })
+                setIsLoading(false)
+
+            }
+
+            if(user_updated['cpf_blank']){
+
+                setError('cpf', {
+                    type: 'cpf_blank',
+                    message: user_updated['cpf_blank']
+                })
+                setIsLoading(false)
+
+            }
+
+
+            if(user_updated['first_name']){
+                updateCurrentUser(User)
+                show_flash_message(setShowAlert, ShowAlert, 'Dados alterados com sucesso', 'alert-success')
+
+            }   
+
+            setIsLoading(false)
+        } catch(error){
+            console.log(errors)
+        }
+
+    }
+
 
     function onSubmit(){
+
+        ConfirmButton.current.style.display = 'none'
+        AddressForm.current.style.display = 'block'
+
+        
+
         let results = UserGeolocation?.result
         let size_address_components = results['address_components'].length
 
@@ -29,16 +117,30 @@ function GoogleMapComponent({UserGeolocation, user_address_fn, user_address_obj}
             state:'',
             zip_code:'',
             user:getCurrentUser()['id'],
-          }
+        }
+        console.log(results)
 
-          user_address.number = results['address_components'][0]['long_name']
-          user_address.zip_code = results['address_components'][size_address_components-1]['long_name']
-          user_address.state = results['address_components'][4]['short_name']
-          user_address.city = results['address_components'][3]['long_name']
-          user_address.neighborhood = results['address_components'][1]['long_name']
-          user_address.street = results['address_components'][2]['long_name']
+        // FIX THIS LATER (THE FIELDS HAVE TYPES IN THE GOOGLE RESPONSE, USE THEM TO FILL THESE OUT)
+        if(size_address_components > 6){
+            user_address.number = results['address_components'][0]['long_name']
+            user_address.zip_code = results['address_components'][size_address_components-1]['long_name']
+            user_address.state = results['address_components'][4]['short_name']
+            user_address.city = results['address_components'][3]['long_name']
+            user_address.neighborhood = results['address_components'][1]['long_name']
+            user_address.street = results['address_components'][2]['long_name']
+  
+            user_address_fn({...user_address_obj, ...user_address})
+        } else {
 
-          user_address_fn({...user_address_obj, ...user_address})
+            user_address.zip_code = results['address_components'][size_address_components-1]['long_name']
+            user_address.state = results['address_components'][3]['short_name']
+            user_address.city = results['address_components'][2]['long_name']
+            user_address.neighborhood = results['address_components'][1]['long_name']
+            user_address.street = results['address_components'][0]['long_name']
+  
+            user_address_fn({...user_address_obj, ...user_address})
+        }
+
 
     }
 
@@ -81,7 +183,71 @@ function GoogleMapComponent({UserGeolocation, user_address_fn, user_address_obj}
             <GoogleMap mapContainerStyle={mapContainerStyle} zoom={19} center={center} onClick={onMapClick} onLoad={onMapLoad}>
                 {markers.map(marker => (<Marker key={Math.floor(Math.random() * 1000)} position={{lat:marker.lat, lng:marker.lng}} />))}
             </GoogleMap>
-            <button onClick={()=>{onSubmit()}} className='btn btn-primary sm:btn-sm md:btn-md lg:btn-lg' id="map-button">Confirmar localização</button>
+
+
+            <div style={{display:'none'}} ref={AddressForm} id='address-form'>
+                <form method='post' onSubmit={handleSubmit(onSubmitAddress)} style={{justifyContent:'center'}} id='form' className="card-body gap-4 text-black" >
+
+                    <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap', gap:'1.5rem'}}>
+                        <div>
+                            Número
+                            <input name="number" id='number' type="text" className="input input-bordered input-md w-full" placeholder="350" 
+                                {...register("number", { required: "Campo obrigatório.", maxLength:{value:12, message:'Máximo de 12 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracter'}, onChange: (e) => {SetUser({...User, first_name:e.target.value})}, })}
+                            />
+
+                            <ErrorMessage
+                                errors={errors}
+                                name="first_name"
+                                render={({ message }) => 
+                                <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                    <strong className="font-bold">* {message}</strong>
+                                </div>}
+                            />
+                        </div>
+                        <div>
+                            Complemento
+                            <input name="last_name" id='last_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="Apartamento/casa/bloco" 
+                                {...register("last_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, last_name:e.target.value})}, })}
+                            />
+
+                            <ErrorMessage
+                                errors={errors}
+                                name="last_name"
+                                render={({ message }) => 
+                                <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                    <strong className="font-bold">* {message}</strong>
+                                </div>}
+                            />
+                        </div>
+                    </div>
+                    Ponto de referência
+                    <input name="last_name" id='last_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="Ponto de referência" 
+                        {...register("last_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, last_name:e.target.value})}, })}
+                    />
+
+                    <ErrorMessage
+                        errors={errors}
+                        name="last_name"
+                        render={({ message }) => 
+                        <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                            <strong className="font-bold">* {message}</strong>
+                        </div>}
+                    />
+                    
+                    <select onChange={(e)=>{''}} className="select select-bordered w-full max-w-xs">
+                        <option value='W'>Favoritar como trabalho</option>
+                        <option value='H'>Favoritar como casa</option>
+                    </select>
+
+                    <button disabled={isLoading} type='submit' className="btn btn-outline">
+                        
+                        {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Salvar endereço'}
+
+                    </button>
+                </form>
+            </div>
+
+            <button ref={ConfirmButton} onClick={()=>{onSubmit()}} className='btn btn-primary sm:btn-sm md:btn-md lg:btn-lg' id="map-button">Confirmar localização</button>
         </div>
     </div>
   )

@@ -60,21 +60,7 @@ function Navbar() {
         result:'',
     })
     
-    const [UserAddress, setUserAddress] = useState({
-        name:'',
-        street:'',
-        neighborhood:'',
-        number:'',
-        complement:'',
-        city:'',
-        state:'',
-        zip_code:'',
-        user:'',
-    })
 
-    useEffect(()=>{
-        console.log(UserAddress)
-    }, [UserAddress])
 
     return (
         <div id='navbar' style={{padding:'', zIndex:'10000'}} className="navbar bg-base-100 sticky top-0">
@@ -110,7 +96,7 @@ function Navbar() {
                                     </div>
                                 </>
                                 :
-                                <GoogleMapComponent UserGeolocation={UserGeolocation} user_address_fn={setUserAddress} user_address_obj={UserAddress}/> 
+                                <GoogleMapComponent UserGeolocation={UserGeolocation}/> 
                             }
 
                         </div>
@@ -125,7 +111,17 @@ function Navbar() {
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/">Inicio</NavLink></li>
                                 <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
-                                <li><a>{SelectedAddress?.street}, {SelectedAddress?.number}</a></li>
+                                <li>
+                                    <a>
+                                        {SelectedAddress ? 
+                                            <>
+                                            {SelectedAddress?.street}, {SelectedAddress?.number}
+                                             </>
+                                        :
+                                            "Escolha um endereço"
+                                        }
+                                    </a>
+                                </li>
                                 <hr />
                                 <li>
                                 <a>Minha conta</a>
@@ -173,7 +169,13 @@ function Navbar() {
                                 <li onClick={()=>document.getElementById('google_modal').showModal()}>
                                     <details>
                                         <summary>
+                                        {SelectedAddress ? 
+                                            <>
                                             {SelectedAddress?.street}, {SelectedAddress?.number}
+                                             </>
+                                        :
+                                            "Escolha um endereço"
+                                        }
                                         </summary>
                                     </details>
                                 </li>
@@ -285,8 +287,21 @@ function Navbar() {
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/">Inicio</NavLink></li>
                                 <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
-                                <li><a>{SelectedAddress?.street}, {SelectedAddress?.number}</a></li>
+                                <li>
+                                    <a>
+                                        {SelectedAddress ? 
+                                            <>
+                                            {SelectedAddress?.street}, {SelectedAddress?.number}
+                                             </>
+                                        :
+                                            "Escolha um endereço"
+                                        }
+                                        
+                                    </a>
+                                </li>
+
                                 <hr />
+
                                 <li>
                                 <a>Minha conta</a>
                                     <ul className="p-2">
