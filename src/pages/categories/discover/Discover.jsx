@@ -26,7 +26,7 @@ function Discover() {
   return (
     <DefaultPage>
 
-      <section id='discover-section'>
+      <section id='main-section'>
 
         <h1 id='discover-title'>{Slug}</h1>
 

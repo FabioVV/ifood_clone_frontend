@@ -152,11 +152,13 @@ function Restaurants({category_list_id = ''}) {
             prevFilterValues.current = { SuperRestaurant, PartnerDelivery, FreeDelivery };
         }
 
-        fetchRestaurantsSearch();
 
+    }, [SuperRestaurant ,PartnerDelivery, FreeDelivery, OrderBy]);
 
+    useEffect(() => {
+        setShouldFetch(true);
 
-    }, [SearchPageNumber, SuperRestaurant ,PartnerDelivery, FreeDelivery, OrderBy]);
+    }, [SearchPageNumber]);
   
 
     useEffect(() => {
@@ -197,10 +199,10 @@ function Restaurants({category_list_id = ''}) {
                     <RestaurantsList data={RestaurantsSearched} HandleFetch={fetchRestaurantsSearch} />
                 }
             </div>
-            
+
         </div>
 
-        <div style={{margin:'0 auto', display:'flex', marginTop:'4rem', justifyContent:'center'}}>
+        <div style={{display:'flex', marginTop:'4.5rem', justifyContent:'center'}}>
             <button onClick={()=>{ handlePaginationClick() }} style={{width:'75%'}} className="btn btn-block">
                 {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Mais'}
             </button>

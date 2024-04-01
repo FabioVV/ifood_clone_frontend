@@ -79,8 +79,8 @@ div.navbar{
 
 #title-stores{
     text-align: left;
-    width: 56rem;
-    margin: 0 auto;
+    /* width: 56rem;
+    margin: 0 auto; */
 
     color: #3e3e3e;
     font-size: 1.5625rem;
@@ -628,10 +628,9 @@ div#content{
 }
 
 
-#discover-section{
-    width: 76vw;
+#main-section{
+    width: 80vw;
     margin: 0 auto;
-
     display: flex;
     flex-direction: column;
 }
@@ -697,11 +696,11 @@ div#content{
 
 
 
-    #title-stores{
+    /* #title-stores{
         display: flex;
         flex-direction: row !important;
         justify-content: space-around !important;
-    }
+    } */
 }
 
 #main-dropdown-navbar{

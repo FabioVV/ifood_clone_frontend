@@ -35,17 +35,13 @@ function Home() {
               </div>
           </div>
         :
-          <>
+          <section id='main-section'>
             <Categories/>
 
-            <h1 id='title-stores' className='text-left'>
-              <span>Lojas</span>
-              <span></span>
-              <span></span>
-            </h1>
+            <h1 id='title-stores' className='text-left'>Lojas</h1>
 
             <Restaurants category_list_id={''}/>
-          </>
+          </section>
         }
 
 
