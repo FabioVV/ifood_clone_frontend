@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { getCurrentUser } from '../utils/UserlocalStorage';
 import { useForm } from 'react-hook-form';
@@ -19,8 +19,13 @@ const mapContainerStyle = {
 
 function GoogleMapComponent({UserGeolocation}) {
 
+    const {isLoaded, loadError} = useLoadScript({googleMapsApiKey:import.meta.env.VITE_GOOGLE_MAPS_KEY, libraries})
     const { register, handleSubmit, reset, setError, formState: { errors } } = useForm();
+    let navigate = useNavigate()
+
     const [isLoading, setIsLoading] = useState(false)
+    const [markers, setMarkers] = useState([])
+
 
     const [UserAddress, setUserAddress] = useState({
         name:'',
@@ -28,6 +33,8 @@ function GoogleMapComponent({UserGeolocation}) {
         neighborhood:'',
         number:'',
         complement:'',
+        type_of:'W',
+        reference_point:'',
         city:'',
         state:'',
         zip_code:'',
@@ -36,6 +43,7 @@ function GoogleMapComponent({UserGeolocation}) {
 
     const ConfirmButton = useRef()
     const AddressForm = useRef()
+    const mapRef = useRef()
 
 
     async function onSubmitAddress(form, event){
@@ -44,16 +52,14 @@ function GoogleMapComponent({UserGeolocation}) {
 
         try{
 
-            const res = await fetch("http://127.0.0.1:8000/api/v1/users/edit-user-personal-data/",{
-                method:"PATCH",
+            const res = await fetch("http://127.0.0.1:8000/api/v1/addresses/register-user-address/",{
+                method:"POST",
                 headers:{
                     "Content-Type":"application/json", 
                     Authorization:` Token ${getCurrentUserToken()}`,
                 },
     
-                body:JSON.stringify({
-
-                })
+                body:JSON.stringify({...UserAddress})
             })
 
             if (!res.ok) {
@@ -62,32 +68,13 @@ function GoogleMapComponent({UserGeolocation}) {
             
             const user_updated = await res.json()
 
-            if(user_updated['first_name_blank']){
 
-                setError('first_name', {
-                    type: 'first_name_blank',
-                    message: user_updated['first_name_blank']
-                })
-                setIsLoading(false)
-
+            if(res.ok){
+                navigate('/') 
+                navigate(0)          
+ 
             }
 
-            if(user_updated['cpf_blank']){
-
-                setError('cpf', {
-                    type: 'cpf_blank',
-                    message: user_updated['cpf_blank']
-                })
-                setIsLoading(false)
-
-            }
-
-
-            if(user_updated['first_name']){
-                updateCurrentUser(User)
-                show_flash_message(setShowAlert, ShowAlert, 'Dados alterados com sucesso', 'alert-success')
-
-            }   
 
             setIsLoading(false)
         } catch(error){
@@ -129,7 +116,8 @@ function GoogleMapComponent({UserGeolocation}) {
             user_address.neighborhood = results['address_components'][1]['long_name']
             user_address.street = results['address_components'][2]['long_name']
   
-            user_address_fn({...user_address_obj, ...user_address})
+            setUserAddress({...UserAddress, ...user_address})
+            reset({...UserAddress})
         } else {
 
             user_address.zip_code = results['address_components'][size_address_components-1]['long_name']
@@ -138,20 +126,21 @@ function GoogleMapComponent({UserGeolocation}) {
             user_address.neighborhood = results['address_components'][1]['long_name']
             user_address.street = results['address_components'][0]['long_name']
   
-            user_address_fn({...user_address_obj, ...user_address})
+            setUserAddress({...UserAddress, ...user_address})
+            reset({...UserAddress})
+
         }
 
 
     }
+
+
 
     const center = {
         lat:UserGeolocation?.lat,
         lng:UserGeolocation?.lng,
     }
 
-
-    const {isLoaded, loadError} = useLoadScript({googleMapsApiKey:import.meta.env.VITE_GOOGLE_MAPS_KEY, libraries})
-    const [markers, setMarkers] = useState([])
     
 
     const onMapClick = useCallback((event)=>{
@@ -161,7 +150,6 @@ function GoogleMapComponent({UserGeolocation}) {
         }])
     }, [])
 
-    const mapRef = useRef()
     const onMapLoad = useCallback((map)=>{
         mapRef.current = map
 
@@ -191,13 +179,13 @@ function GoogleMapComponent({UserGeolocation}) {
                     <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap', gap:'1.5rem'}}>
                         <div>
                             Número
-                            <input name="number" id='number' type="text" className="input input-bordered input-md w-full" placeholder="350" 
-                                {...register("number", { required: "Campo obrigatório.", maxLength:{value:12, message:'Máximo de 12 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracter'}, onChange: (e) => {SetUser({...User, first_name:e.target.value})}, })}
+                            <input name="number" id='number' type="number" className="input input-bordered input-md w-full" placeholder="350" 
+                                {...register("number", { required: "Campo obrigatório.", maxLength:{value:12, message:'Máximo de 12 caracteres'}, minLength:{value:1, message:'Necessita no minímo 1 caracter'}, onChange: (e) => {setUserAddress({...UserAddress, number:e.target.value})}, })}
                             />
 
                             <ErrorMessage
                                 errors={errors}
-                                name="first_name"
+                                name="number"
                                 render={({ message }) => 
                                 <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                     <strong className="font-bold">* {message}</strong>
@@ -206,13 +194,13 @@ function GoogleMapComponent({UserGeolocation}) {
                         </div>
                         <div>
                             Complemento
-                            <input name="last_name" id='last_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="Apartamento/casa/bloco" 
-                                {...register("last_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, last_name:e.target.value})}, })}
+                            <input name="complement" id='complement' type="text" className="input input-bordered input-md w-full max-w" placeholder="Apartamento/casa/bloco" 
+                                {...register("complement", { required: "Campo obrigatório.", maxLength:{value:75, message:'Máximo de 75 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {setUserAddress({...UserAddress, complement:e.target.value})}, })}
                             />
 
                             <ErrorMessage
                                 errors={errors}
-                                name="last_name"
+                                name="complement"
                                 render={({ message }) => 
                                 <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                                     <strong className="font-bold">* {message}</strong>
@@ -221,20 +209,20 @@ function GoogleMapComponent({UserGeolocation}) {
                         </div>
                     </div>
                     Ponto de referência
-                    <input name="last_name" id='last_name' type="text" className="input input-bordered input-md w-full max-w" placeholder="Ponto de referência" 
-                        {...register("last_name", { required: "Campo obrigatório.", maxLength:{value:25, message:'Máximo de 25 caracteres'}, minLength:{value:2, message:'Necessita no minímo 2 caracteres '}, onChange: (e) => {SetUser({...User, last_name:e.target.value})}, })}
+                    <input name="reference_point" id='reference_point' type="text" className="input input-bordered input-md w-full max-w" placeholder="Ponto de referência" 
+                        {...register("reference_point", { required: "Campo obrigatório.", maxLength:{value:75, message:'Máximo de 75 caracteres'}, minLength:{value:10, message:'Necessita no minímo 10 caracteres '}, onChange: (e) => {setUserAddress({...UserAddress, reference_point:e.target.value})}, })}
                     />
 
                     <ErrorMessage
                         errors={errors}
-                        name="last_name"
+                        name="reference_point"
                         render={({ message }) => 
                         <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
                             <strong className="font-bold">* {message}</strong>
                         </div>}
                     />
                     
-                    <select onChange={(e)=>{''}} className="select select-bordered w-full max-w-xs">
+                    <select value={UserAddress.type_of} name='type_of' id='type_of' className="select select-bordered w-full max-w-xs" {...register("type_of", {required:'Campo obrigatório.', onChange: (e) => {setUserAddress({...UserAddress, type_of:e.target.value})}})}>
                         <option value='W'>Favoritar como trabalho</option>
                         <option value='H'>Favoritar como casa</option>
                     </select>
