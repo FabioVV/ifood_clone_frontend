@@ -1,13 +1,14 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+
 
 
 function Category({category, HandleFetch}) {
 
-
+  const navigate = useNavigate()
 
   return (
-    <div id='category' >
+    <div id='category' onClick={()=>{navigate(`/delivery/descobrir/${category?.id}/${category?.name.replaceAll(' ', '-')}`)}}>
 
       <div id='image-container' className='rounded-lg  overflow-hidden'>
         {/* FAZER UM IF AQUI PARA CHECAR SE O LINK EXISTE {category?.image ?}, PARA ELE NAO FAZER REQUISIÇÕES PROS SERVIDORES TODA VEZ */}
@@ -18,7 +19,7 @@ function Category({category, HandleFetch}) {
         <h3 id='title'>
 
           <div id='title-header'>
-            <span id='title-name'>{category.name}</span>
+            <span id='title-name'>{category?.name}</span>
           </div>
           
         </h3>

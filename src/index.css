@@ -80,7 +80,10 @@ div.navbar{
 #title-stores{
     text-align: left;
     width: 56rem;
-  margin: 0 auto;
+    margin: 0 auto;
+
+    color: #3e3e3e;
+    font-size: 1.5625rem;
 }
 
 #main-stores{
@@ -114,7 +117,8 @@ div.navbar{
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-    max-width: 95rem;    
+    /* max-width: 95rem; */
+    max-width: 90vw;    
     margin: 0 auto;
 }
 
@@ -624,9 +628,35 @@ div#content{
 }
 
 
+#discover-section{
+    width: 76vw;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#filters-discover{
+    /* margin-right: auto;
+    width: 60%; */
+    align-self: flex-start;
+    flex-flow: 1; 
+}
+
+
 .address-selected{
     border-color: purple !important;
 }
+
+#discover-title{
+    margin-top: 2em;
+    margin-bottom: 2em;
+
+    color: #3e3e3e;
+    font-size: 1.5625rem;
+
+}
+
 
 
 @media only screen and (max-width: 570px) {
@@ -686,8 +716,3 @@ div#content{
     }
 }
 
-@media only screen and (max-width: 360px) {
-    /* FIGURE THIS OUT LATER */
-    /* ORDENATION MODAL */
- }
-    
