@@ -1,5 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { GoogleMap, useLoadScript, InfoWindow, Marker } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import { getCurrentUser } from '../utils/UserlocalStorage';
+
+// INFO WINDOW
 
 const libraries = ["places"]
 
@@ -10,9 +13,32 @@ const mapContainerStyle = {
 
 
 
-function GoogleMapComponent({UserGeolocation}) {
+function GoogleMapComponent({UserGeolocation, user_address_fn, user_address_obj}) {
 
     function onSubmit(){
+        let results = UserGeolocation?.result
+        let size_address_components = results['address_components'].length
+
+        let user_address = {
+            name:'',
+            street:'',
+            neighborhood:'',
+            number:'',
+            complement:'',
+            city:'',
+            state:'',
+            zip_code:'',
+            user:getCurrentUser()['id'],
+          }
+
+          user_address.number = results['address_components'][0]['long_name']
+          user_address.zip_code = results['address_components'][size_address_components-1]['long_name']
+          user_address.state = results['address_components'][4]['short_name']
+          user_address.city = results['address_components'][3]['long_name']
+          user_address.neighborhood = results['address_components'][1]['long_name']
+          user_address.street = results['address_components'][2]['long_name']
+
+          user_address_fn({...user_address_obj, ...user_address})
 
     }
 
@@ -53,9 +79,9 @@ function GoogleMapComponent({UserGeolocation}) {
         <div>
             <h1 id='address-title-maps'>{UserGeolocation?.result['formatted_address']}</h1>
             <GoogleMap mapContainerStyle={mapContainerStyle} zoom={19} center={center} onClick={onMapClick} onLoad={onMapLoad}>
-                {markers.map(marker => (<Marker key={marker.lat} position={{lat:marker.lat, lng:marker.lng}} />))}
+                {markers.map(marker => (<Marker key={Math.floor(Math.random() * 1000)} position={{lat:marker.lat, lng:marker.lng}} />))}
             </GoogleMap>
-            <button onClick={()=>{console.log(UserGeolocation?.result)}} className='btn btn-primary sm:btn-sm md:btn-md lg:btn-lg' id="map-button">Confirmar localização</button>
+            <button onClick={()=>{onSubmit()}} className='btn btn-primary sm:btn-sm md:btn-md lg:btn-lg' id="map-button">Confirmar localização</button>
         </div>
     </div>
   )

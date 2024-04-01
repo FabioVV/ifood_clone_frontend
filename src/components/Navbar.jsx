@@ -15,22 +15,8 @@ import { useNavigate } from "react-router-dom";
 import GoogleMapComponent from './GoogleMap'
 import GooglePlaces from './GooglePlaces'
 import CartProduct from './CartProduct'
-import Address from '../pages/addresses/_list/Address'
+import Addresses from './Addresses'
 
-
-function AddressesList({data, HandleFetch}){
-    return (
-      <>
-        {data?.map((address) => (
-            <Address
-              key={address.id}
-              address={address}
-              HandleFetch={HandleFetch}
-            />
-        ))}
-      </>
-    )
-}
 
 
 function CartProductsList({data, HandleFetch}){
@@ -51,22 +37,21 @@ function CartProductsList({data, HandleFetch}){
 
 function Navbar() {
 
-    let navigate = useNavigate();
-
     function SignOut(){
         googleLogout()
         clearLocalStorage()     
         navigate("/"); navigate(0);
     }
 
+    let navigate = useNavigate();
 
-    const [User, SetUser] = useState(getCurrentUser)
+
+    const [User] = useState(getCurrentUser)
 
     const [Products, setProducts] = useLocalStorageState('bytefood_cart', [])
-    const [Addresses, SetAddresses] = useState([])
     const [SelectedAddress, SetSelectedAddress] = useState('')
 
-    const [isLoading, setIsLoading] = useState(false)
+
 
     const [UserGeolocation, setUserGeolocation] = useState({
         lat:'',
@@ -87,39 +72,9 @@ function Navbar() {
         user:'',
     })
 
-    async function get_addresses(url = 'http://127.0.0.1:8000/api/v1/addresses/user-addresses/'){
-        try{
-
-            const response = await fetch(url, {
-                method:'GET',
-                headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
-            })
-
-            if(response.ok){
-                const data = await response.json()
-                SetAddresses(data)
-                SetSelectedAddress(data.find(item => item.is_selected))
-
-            } 
-
-        } catch(e){
-            console.log(e.message)
-
-        } finally{
-            setIsLoading(false)
-
-        }
-
-    }
-
-
     useEffect(()=>{
-
-        get_addresses()
-
-    },[User?.token])
-
-    
+        console.log(UserAddress)
+    }, [UserAddress])
 
     return (
         <div id='navbar' style={{padding:'', zIndex:'10000'}} className="navbar bg-base-100 sticky top-0">
@@ -138,17 +93,12 @@ function Navbar() {
                                     <h3 className="font-bold text-lg text-center">Onde você quer receber seu pedido?</h3>
         
                                     <div id='search-div'>
-                                        <GooglePlaces user_geolocation_fn={setUserGeolocation} user_address_fn={setUserAddress} user_address_obj={UserAddress}/>
+                                        <GooglePlaces user_geolocation_fn={setUserGeolocation} />
                                     </div>  
         
                                     <div id='user-addresses-div'>
 
-                                        {!isLoading ? 
-                                        
-                                            <AddressesList data={Addresses} HandleFetch={get_addresses} />
-                                            :
-                                            <span className="loading loading-spinner loading-lg"></span>
-                                        }
+                                        <Addresses SetSelectedAddress={SetSelectedAddress}/>
         
                                     </div>  
         
@@ -160,7 +110,7 @@ function Navbar() {
                                     </div>
                                 </>
                                 :
-                                <GoogleMapComponent UserGeolocation={UserGeolocation}/> 
+                                <GoogleMapComponent UserGeolocation={UserGeolocation} user_address_fn={setUserAddress} user_address_obj={UserAddress}/> 
                             }
 
                         </div>

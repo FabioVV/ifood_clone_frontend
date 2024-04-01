@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import { debounce } from '@mui/material/utils';
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
-import { getCurrentUser } from '../utils/UserlocalStorage';
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
@@ -28,7 +27,7 @@ function loadScript(src, position, id) {
 const autocompleteService = { current: null };
 
 
-export default function GooglePlaces({user_geolocation_fn, user_address_fn, user_address_obj}) {
+export default function GooglePlaces({user_geolocation_fn}) {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState([]);
@@ -130,31 +129,6 @@ export default function GooglePlaces({user_geolocation_fn, user_address_fn, user
               location:inputValue,
               result:results[0],
             })
-
-            let user_address = {
-              name:'',
-              street:'',
-              neighborhood:'',
-              number:'',
-              complement:'',
-              city:'',
-              state:'',
-              zip_code:'',
-              user:getCurrentUser()['id'],
-            }
-
-
-            for(let i = 0; i < results[0]['address_components'].length; i++){
-              user_address.number = results[0]['address_components'][0]['long_name']
-              user_address.zip_code = results[0]['address_components'][results[0]['address_components'].length]['long_name']
-              user_address.state = results[0]['address_components'][4]['short_name']
-              user_address.city = results[0]['address_components'][3]['long_name']
-              user_address.neighborhood = results[0]['address_components'][1]['long_name']
-              user_address.street = results[0]['address_components'][2]['long_name']
-            }
-
-            user_address_fn({...user_address_obj, ...user_address})
-
 
           } catch(e){
 
