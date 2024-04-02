@@ -20,15 +20,19 @@ import Addresses from './Addresses'
 
 
 function CartProductsList({data, HandleFetch}){
+
+
+
+
     return (
       <>
-        {data?.map((product) => (
-            <CartProduct
-              key={product.card_id}
+        {data?.map((product) => {
+            return <CartProduct
+              key={product.id + product.id_cart}
               product={product}
               HandleFetch={HandleFetch}
             />
-        ))}
+        })}
       </>
     )
 }
@@ -237,6 +241,13 @@ function Navbar() {
                                         
                                         {Products.length > 0 ?
                                         <>
+
+                                            <header id='header-cart'>
+
+                                                <span id="header-span">Seus pedidos em </span>
+
+                                            </header>
+
                                             <CartProductsList  data={Products} HandleFetch={null}/>
                                             <div id='footer-cart'>
 

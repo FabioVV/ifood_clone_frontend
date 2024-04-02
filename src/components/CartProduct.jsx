@@ -4,16 +4,38 @@ import useLocalStorageState from "use-local-storage-state"
 function CartProduct({product, handleFetch}) {
 
     const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
+
+
 
     const removeItem = (id) => {
-        setProducts(products.filter(item => item.id_cart !== id));
+
+        if(product.product_quantity_choosen && product.product_quantity_choosen > 1){
+
+            let index = products.findIndex(product_ => product_.id_cart === product.id_cart);
+            let updatedProducts = [...products];
+
+            product.product_quantity_choosen = product.product_quantity_choosen - 1
+            updatedProducts[index] = product;
+
+            setProducts(updatedProducts)
+
+            forceUpdate()
+        } else {
+            setProducts(products.filter(item => item.id_cart !== id));
+        }
+
+
     };
+
+
+
 
   return (
     <div id='cart-items'>
         <header id='header-cart'>
 
-            <span id="header-span">Seu pedido em </span>
             <h1>{product?.restaurant_name}</h1>
             <span></span>
 
@@ -23,8 +45,8 @@ function CartProduct({product, handleFetch}) {
 
         <div id='cart-content'>
             <div id='cart-item'>
-                <span>1x {product?.name}</span>
-                <span>R$ {product?.price}</span>
+                <span>{product?.product_quantity_choosen}x {product?.name}</span>
+                <span>R$ {product?.new_price ? parseFloat(product?.new_price).toFixed(2): parseFloat(product?.price).toFixed(2)}</span>
             </div>
             {/* <div>
                 <span>MODIFICA;'AO PRODUTO</span>

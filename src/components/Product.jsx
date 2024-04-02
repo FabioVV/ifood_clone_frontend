@@ -12,8 +12,12 @@ function Product({product, HandleFetch}) {
 
 
   function HandleCart(){
-    
+
+
     Object.assign(product, {id_cart : Math.floor(Math.random() * 1000)})
+    Object.assign(product, {product_quantity_choosen : TotalProductsCart})
+    Object.assign(product, {new_price : UpdatedPrice})
+
     setProducts([...products, product])
 
   }
