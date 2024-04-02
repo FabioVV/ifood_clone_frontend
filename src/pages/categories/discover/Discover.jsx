@@ -10,19 +10,6 @@ function Discover() {
   const {id} = useParams()
 
 
-  const [FreeDelivery, setFreeDelivery] = useState(false)
-  const [PartnerDelivery, setPartnerDelivery] = useState(false)
-  const [SuperRestaurant, setSuperRestaurant] = useState(false)
-  const [OrderBy, setOrderBy] = useState('')
-
-
-
-  function cleanSearchFields(){
-    setFreeDelivery(false)
-    setPartnerDelivery(false)
-    setSuperRestaurant(false)
-  }
-
   return (
     <DefaultPage>
 

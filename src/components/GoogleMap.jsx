@@ -142,9 +142,6 @@ function GoogleMapComponent({UserGeolocation}) {
 
         setUserAddress({...UserAddress, ...user_address})
         reset({...UserAddress})
-
-
-
     }
 
 

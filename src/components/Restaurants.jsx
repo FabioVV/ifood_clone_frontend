@@ -21,7 +21,6 @@ function RestaurantsList({data, HandleFetch}){
 
 function Restaurants({category_list_id = ''}) {
   
-//   const [Restaurants, SetRestaurants] = useState([])
   const [RestaurantsSearched, SetRestaurantsSearched] = useState([])
 
 
