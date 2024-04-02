@@ -12,7 +12,8 @@ function Product({product, HandleFetch}) {
 
 
   function HandleCart(){
-
+    
+    Object.assign(product, {id_cart : Math.floor(Math.random() * 1000)})
     setProducts([...products, product])
 
   }
@@ -37,9 +38,9 @@ function Product({product, HandleFetch}) {
   }
 
   return (
-    <div id="product" onClick={() => {document.getElementById('product_modal').showModal()}}>
+    <div id="product" onClick={() => {document.getElementById(`product_modal_${product?.id}`).showModal()}}>
 
-      <dialog id="product_modal" className="modal">
+      <dialog id={`product_modal_${product?.id}`} className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
 
           <section id='product-modal-section'>
@@ -77,6 +78,7 @@ function Product({product, HandleFetch}) {
           </div>
         </div>
       </dialog>
+
 
       <div id='image-container' className='rounded-lg  overflow-hidden'>
         <img width={210} height={210} src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>

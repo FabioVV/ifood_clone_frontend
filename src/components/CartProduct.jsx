@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import useLocalStorageState from "use-local-storage-state"
 
 function CartProduct({product, handleFetch}) {
