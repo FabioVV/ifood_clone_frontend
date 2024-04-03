@@ -30,14 +30,15 @@ function Restaurant({restaurant, HandleFetch}) {
 
         <div id='title-info'>
 
-            {/* <span id='rating'>
+            <span id='rating'>
                 <span>
-                  imagem estrela
+                  <i style={{fontSize:'12px'}} className="fa-solid fa-star text-secondary"></i>
                 </span>
-                  4.5
+                <span style={{fontSize:'12px'}} className='text-secondary'>
+                  {restaurant?.restaurant_avg_rating}
                 </span> 
-              </span> 
-            */}
+             </span> 
+           
             <span id='separator'>•</span>
             <span>{restaurant?.category_name}</span>
             <span id='separator'>•</span>

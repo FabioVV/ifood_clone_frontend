@@ -179,6 +179,7 @@ function Restaurants({category_list_id = ''}) {
                 <select value={OrderBy} onChange={(e)=>{setOrderBy(e.target.value)}} className="select select-bordered w-full max-w-xs">
                     <option value='id'>Ordenação padrão</option>
                     <option value='price'>Ordenação por preço</option>
+                    <option value='rating'>Ordenação por avaliação</option>
                     <option value='delivery_fee'>Ordenação por taxa de entrega</option>
                 </select>
                 <input checked={FreeDelivery} onChange={()=>{setFreeDelivery(!FreeDelivery)}} type="checkbox" aria-label="Entrega grátis" className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md" />

@@ -50,6 +50,7 @@ function RestaurantProducts() {
         banner:'',
         cnpj:'',
         delivery_fee:'',
+        restaurant_avg_rating:'',
         partner_delivery:'',
         super_restaurant:'',
     })
@@ -95,6 +96,7 @@ function RestaurantProducts() {
                             delivery_fee:restaurant.delivery_fee,
                             partner_delivery:restaurant.partner_delivery,
                             super_restaurant:restaurant.super_restaurant,
+                            restaurant_avg_rating:restaurant.restaurant_avg_rating,
                             banner:restaurant.banner,
                             logo:restaurant.logo,
 
@@ -172,7 +174,17 @@ function RestaurantProducts() {
                                 <img id='logo-restaurant-round' width={100} height={100}  src={`http://localhost:8000${Restaurant?.logo}`} alt={`Imagem do restaurante ${Restaurant?.name}`} />
                             </div>
                             <h2 id='restaurant-title-delivery'>{Restaurant.name}</h2>
-                            <span>{Restaurant.super_restaurant ? <i className="fa-solid fa-medal"></i>:''}</span>
+                            <span>
+                                {Restaurant.super_restaurant ? <i className="fa-solid fa-medal"></i>:''}
+                            </span>
+                            <span id='rating'>
+                                <span>
+                                    <i style={{fontSize:'12px'}} className="fa-solid fa-star text-secondary"></i>
+                                </span>
+                                <span style={{fontSize:'12px'}} className='text-secondary'>
+                                    {Restaurant?.restaurant_avg_rating}
+                                </span> 
+                            </span> 
                         </div>
                         <div>
                             <div className="drawer drawer-end">

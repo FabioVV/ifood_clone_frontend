@@ -805,14 +805,14 @@ div#content{
 
 @media screen and (max-width: 1580px) {
     #stores {
-      grid-template-columns: repeat(2, 4fr);
+      grid-template-columns: repeat(2, 1fr);
       justify-items: center;
     }
   }
   
   @media screen and (max-width: 840px) {
     #stores {
-      grid-template-columns: repeat(1, 4fr);
+      grid-template-columns: repeat(1, 1fr);
       align-items: center;
       justify-items: center;
     }
