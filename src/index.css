@@ -99,18 +99,6 @@ div.navbar{
 }
 
 
-#products{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    max-width: 120rem;    
-    margin: 0 auto;
-}
-
-
-
 #stores{
     display: flex;
     flex-direction: row;
@@ -122,7 +110,27 @@ div.navbar{
     margin: 0 auto;
 }
 
-#product{
+/* #products{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 120rem;    
+    margin: 0 auto;
+} */
+
+#products{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 products per row */
+    gap: 1rem;
+    justify-items: center;
+}
+
+
+
+
+/* #product{
     display: flex;
     flex-direction: row-reverse;
     gap: 0.8rem;
@@ -133,11 +141,34 @@ div.navbar{
     cursor: pointer;
     border: 1px solid #e2e2e2;
 
+} */
+
+
+#product{
+    max-width: fit-content;
+    width: 90%; /* adjust as needed */
+    height: 240px; /* adjust as needed */
+    transition: 0.3s ease-in-out;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding: 2rem;
+    cursor: pointer;
+    border: 1px solid #e2e2e2;
+
 }
+
+#product > div{
+    flex: 1;
+}
+
+
 
 #product:hover{
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    transform: scale(1.03);
+    
 }
 
 
@@ -168,13 +199,23 @@ div.navbar{
 
 #title-info{
     font-size: .935rem;
-    line-height: 1.0625rem;
+    line-height: 1.2rem;
     color: #717171;
     display: flex;
     align-items: center;
-    width: 100%;
     font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
 }
+
+#image-container{
+    object-fit: contain;
+    width: 30%;
+}
+
 
 
 div#footer{
@@ -450,7 +491,7 @@ div#content{
 
 #merchant-banner{
     margin: 2rem;
-    height: 40vh;
+    height: 280px;
 }
 
 #merchant-banner > img{
@@ -501,7 +542,10 @@ div#content{
 
 #logo-restaurant-round{
     object-fit: cover; /* Ensure the image covers the entire container */
-    border-radius: 50%; /* Make the border radius 50% to create a circle */
+    border-radius: 100%; /* Make the border radius 50% to create a circle */
+    height: 90px;
+    width: 90px;
+    border: 1px solid rgba(0,0,0,.1);
 }
 
 
@@ -706,6 +750,15 @@ div#content{
     margin: 0 auto;
 }
 
+#restaurant-container{
+    width: 75vw;
+    margin: 0 auto;
+    max-width: 1600px;
+}
+
+
+
+
 
 
 @media only screen and (max-width: 570px) {
@@ -756,6 +809,8 @@ div#content{
 #main-dropdown-navbar{
     display: none;
 }
+
+
 @media only screen and (max-width: 560px) {
     #menu-4{
         display: none;
@@ -765,3 +820,25 @@ div#content{
     }
 }
 
+
+
+@media only screen and (max-width: 743px) {
+
+    #product{
+        min-width: 320px;
+        border: 1px solid #f2f2f2;
+        box-shadow: 0 1px 4px rgba(0,0,0,.05);
+        border-radius: 4px;
+    }
+}
+
+
+@media only screen and (max-width: 743px) {
+
+    #product{
+        min-width: 320px;
+        border: 1px solid #f2f2f2;
+        box-shadow: 0 1px 4px rgba(0,0,0,.05);
+        border-radius: 4px;
+    }
+}

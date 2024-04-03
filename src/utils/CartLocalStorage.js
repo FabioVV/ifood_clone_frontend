@@ -13,8 +13,6 @@ export function totalPriceCart(products){
     try{
         let total_price = 0.00
 
-
-        
         products.forEach(product => {
 
             if(product.product_quantity_choosen && product.product_quantity_choosen > 1){
@@ -26,10 +24,7 @@ export function totalPriceCart(products){
 
             }
 
-            
-
         });
-
 
         return parseFloat(total_price).toFixed(2).toString().replace('.',',')
 

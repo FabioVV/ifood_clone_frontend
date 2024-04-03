@@ -14,7 +14,7 @@ function Product({product, HandleFetch}) {
   function HandleCart(){
 
 
-    Object.assign(product, {id_cart : Math.floor(Math.random() * 1000)})
+    Object.assign(product, {id_cart : Math.floor(Math.random() * 10000)})
     Object.assign(product, {product_quantity_choosen : TotalProductsCart})
     Object.assign(product, {new_price : UpdatedPrice})
 
@@ -39,6 +39,17 @@ function Product({product, HandleFetch}) {
     setUpdatedPrice(updatedPrice)
 
 
+  }
+
+  function truncated_description(){
+
+    const description_length = 220
+
+    if(product.description.length > description_length){
+      return product.description.substring(0, description_length) + "..."
+    }
+
+    return product.description
   }
 
   return (
@@ -84,8 +95,8 @@ function Product({product, HandleFetch}) {
       </dialog>
 
 
-      <div id='image-container' className='rounded-lg  overflow-hidden'>
-        <img width={210} height={210} src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
+      <div id='image-container' className='overflow-hidden'>
+        <img  src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
       </div>
 
       <div id="content">
@@ -99,12 +110,12 @@ function Product({product, HandleFetch}) {
 
         <div id='title-info'>
 
-          <span>{product?.description}</span>
+          <span>{truncated_description()}</span>
 
         </div>
 
         <div id='footer'>
-            <span className='text-green-700'>R$ {product?.price.toString().replace('.', ',')}</span>
+            <span className='text-green-700'>A partir de R$ {parseFloat(product?.price).toFixed(2).toString().replace('.', ',')}</span>
 
         </div>
 
@@ -114,7 +125,7 @@ function Product({product, HandleFetch}) {
           <div id=''>
             <NavLink to={`/editar-produto/${product?.id}`} className="btn btn-outline btn-info">Editar</NavLink>
             <button onClick={() => {document.getElementById(`my_modal_delete_product_${product?.id}`)?.showModal()}} className="btn btn-outline btn-error">Excluir</button>
-            <button onClick={() => {handle()}} className="btn btn-outline btn-primary">Adicionar ao carrinho</button>
+            <button onClick={() => {document.getElementById(`product_modal_${product?.id}`).showModal()}} className="btn btn-outline btn-primary">Adicionar ao carrinho</button>
           </div>
         :
           null

@@ -235,7 +235,11 @@ function RestaurantProducts() {
                 <div id='menu'>
 
                     <div id='products'>
-                        <ProductList data={Products} HandleFetch={null} />
+                        {isLoading ? 
+                            <span className="loading loading-spinner loading-lg"></span>
+                        :
+                            <ProductList data={Products} HandleFetch={null} />
+                        }
                     </div>
 
                 </div>
