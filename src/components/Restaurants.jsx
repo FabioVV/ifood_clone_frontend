@@ -189,17 +189,15 @@ function Restaurants({category_list_id = ''}) {
             </ul>
         </div>
 
-        <div id='main-stores' > 
 
-            <div id='stores'>
-                { isLoading || shouldFetch ?
-                    <span className="loading loading-spinner loading-lg"></span>
-                :
-                    <RestaurantsList data={RestaurantsSearched} HandleFetch={fetchRestaurantsSearch} />
-                }
-            </div>
-
+        <div id='stores'>
+            { isLoading || shouldFetch ?
+                <span className="loading loading-spinner loading-lg"></span>
+            :
+                <RestaurantsList data={RestaurantsSearched} HandleFetch={fetchRestaurantsSearch} />
+            }
         </div>
+
 
         <div style={{display:'flex', marginTop:'4.5rem', justifyContent:'center'}}>
             <button onClick={()=>{ handlePaginationClick() }} style={{width:'75%'}} className="btn btn-block">

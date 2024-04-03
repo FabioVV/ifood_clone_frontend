@@ -86,12 +86,6 @@ div.navbar{
     font-size: 1.5625rem;
 }
 
-#main-stores{
-    display: flex;
-    flex-direction: column;
-    /* width: 75rem; */
-    margin: 0 auto;
-}
 
 #main-stores > h1{
     font-size: 1.30rem;
@@ -105,20 +99,13 @@ div.navbar{
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-    /* max-width: 95rem; */
     max-width: 90vw;    
     margin: 0 auto;
+    /* display: grid;
+    grid-template-columns: repeat(4, 1fr); */
+    
 }
 
-/* #products{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    max-width: 120rem;    
-    margin: 0 auto;
-} */
 
 #products{
     display: grid;
@@ -127,21 +114,6 @@ div.navbar{
     justify-items: center;
 }
 
-
-
-
-/* #product{
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 0.8rem;
-    transition: 0.4s ease-in-out;
-    width: max-content;
-    padding: 2rem;
-    border-radius: 10px;
-    cursor: pointer;
-    border: 1px solid #e2e2e2;
-
-} */
 
 
 #product{
@@ -213,7 +185,7 @@ div.navbar{
 
 #image-container{
     object-fit: contain;
-    width: 30%;
+    /* width: 30%; */
 }
 
 
