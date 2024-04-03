@@ -20,6 +20,7 @@ import RestaurantProducts from './pages/restaurants/delivery/RestaurantProducts'
 import Products from './pages/products/_list/Products'
 import EditProduct from './pages/products/edit/EditProduct'
 import Discover from './pages/categories/discover/Discover'
+import Order from './pages/order/finalize/Order'
 import { RequireAuth } from './components/RequireAuth'
 
 
@@ -88,6 +89,12 @@ function _Routes() {
         <Route path='produtos' element={
             <RequireAuth redirectTo="/login">
                 <Products />
+            </RequireAuth>
+        } />
+
+        <Route path='pedido/finalizar' element={
+            <RequireAuth redirectTo="/login">
+                <Order />
             </RequireAuth>
         } />
 

@@ -274,7 +274,7 @@ function Navbar() {
                                             </div>
                                             
                                             <div style={{margin:'0 auto'}}>
-                                                <button className="btn btn-primary btn-outline btn-wide">Escolher forma de pagamento</button>
+                                                <NavLink className="btn btn-primary btn-outline btn-wide" to="/pedido/finalizar" >Escolher forma de pagamento</NavLink>
                                             </div>
                                         </>
                                         :

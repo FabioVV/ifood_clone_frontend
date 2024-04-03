@@ -716,7 +716,63 @@ div#content{
 
 
 
+#order-section{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
 
+
+#finalize-title{
+    color: #3e3e3e;
+    font-size: 2.125rem;
+    margin: 10px 0 40px;
+}
+
+
+#order-section > div{
+    margin-left: 2rem;
+    margin-right: 2rem;
+
+    padding: 2rem;
+}
+
+#delivery-order-title{
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 22px;
+    color: #3e3e3e;
+    margin-top: 10px;
+}
+
+#deliveries-type{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:1rem;
+    margin-top: 10px;
+}
+
+#deliveries-type > div{
+    border: 1px solid #d1d1d1;
+    width: 150px;
+    height: 130px;
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    transition: 150ms ease-in-out;
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+
+#deliveries-type > div:hover{
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+}
 
 
 @media only screen and (max-width: 570px) {
