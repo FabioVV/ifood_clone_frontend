@@ -715,11 +715,16 @@ div#content{
 
 
 #product-modal-section{
-    display: flex;
-    flex-direction: row;
-    gap: 0.7rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
 }
 
+#image-container-modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 #dish-info{
     display: inline-block;
@@ -730,7 +735,6 @@ div#content{
     line-height: 1.22;
     color: #717171;
     white-space: pre-line;
-    word-break: break-all;
 }
 
 

@@ -56,20 +56,21 @@ function Product({product, HandleFetch}) {
     <div id="product" onClick={() => {document.getElementById(`product_modal_${product?.id}`).showModal()}}>
 
       <dialog id={`product_modal_${product?.id}`} className="modal">
-        <div className="modal-box w-11/12 max-w-5xl">
+        <div className="modal-box w-11/12 max-w-screen-2xl">
 
           <section id='product-modal-section'>
 
-            <div>
-              <div id='image-container' className='rounded-lg  overflow-hidden'>
-                <img width={500} height={500} src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
-              </div>
+            
+            <div id='image-container-modal' className='rounded-lg  overflow-hidden'>
+              <img src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
             </div>
+          
 
             <div id='product-modal-info'>
               <div><h1 id='dish-title' style={{fontSize:'1.3em', textAlign:'center'}}>{product?.name}</h1></div>
-              <div><p id='dish-info'>{product?.description}</p></div>
               <div style={{alignSelf:'flex-start'}}><span className='text-green-700'>A partir de R$ {product?.price.toString().replace('.', ',')}</span></div>
+
+              <div><p id='dish-info'>{product?.description}</p></div>
             </div>
 
 
