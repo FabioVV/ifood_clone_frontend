@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 
-
 html{
     overflow-x: hidden;
 }
@@ -94,17 +93,11 @@ div.navbar{
 
 
 #stores{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    max-width: 90vw;    
-    margin: 0 auto;
-    /* display: grid;
-    grid-template-columns: repeat(4, 1fr); */
-    
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
 }
+
 
 
 #products{
@@ -365,10 +358,6 @@ div#content{
     gap: 2rem;
 }
 
-#cart-items{
-
-}
-
 
 #sort-container-item{
     display: flex;
@@ -482,13 +471,6 @@ div#content{
 
 }
 
-
-
-
-
-#header{
-
-}
 
 #smallest-amount-delivery{
     color: #313131;
@@ -818,3 +800,20 @@ div#content{
         border-radius: 4px;
     }
 }
+
+
+
+@media screen and (max-width: 1580px) {
+    #stores {
+      grid-template-columns: repeat(2, 4fr);
+      justify-items: center;
+    }
+  }
+  
+  @media screen and (max-width: 840px) {
+    #stores {
+      grid-template-columns: repeat(1, 4fr);
+      align-items: center;
+      justify-items: center;
+    }
+  }

@@ -90,7 +90,7 @@ function Publicity() {
             <li style={{marginBottom:'2.5rem'}}>
               <div className='user-info-edit'>
                 <strong>
-                  <h1 className='user_data_title' >Escolha se você quer receber anúncios fora do iFood</h1>
+                  <h1 className='user_data_title' >Escolha se você quer receber anúncios fora do byteFood</h1>
                   <span style={{color: '#717171'}}>
                     Os anúncios são apresentados em sites e apps de terceiros que utilizam o 
                     nosso serviço de publicidade. O anunciante define seu público-alvo, 
