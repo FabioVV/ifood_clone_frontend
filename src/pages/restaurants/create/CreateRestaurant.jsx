@@ -35,6 +35,7 @@ function CreateRestaurant() {
         state:'',
         zip_code:'',
         logo:'',
+        banner:'',
         cnpj:'',
         delivery_fee:'',
         partner_delivery:'',
@@ -51,6 +52,9 @@ function CreateRestaurant() {
 
         if (Restaurant.logo){
             form_data_restaurant.append("logo", Restaurant.logo, Restaurant.logo.name);
+        }
+        if (Restaurant.banner){
+            form_data_restaurant.append("banner", Restaurant.banner, Restaurant.banner.name);
         }
         form_data_restaurant.append("name", Restaurant.name);
         form_data_restaurant.append("description", Restaurant.description);
@@ -351,6 +355,20 @@ function CreateRestaurant() {
                                 <strong className="font-bold">* {message}</strong>
                             </div>}
                         />
+
+                        Banner
+                        <input name="banner" id='banner' type="file" className="file-input w-full max-w-xs"  accept="image/jpeg,image/png,image/gif"
+                            {...register("banner", { onChange: (e) => {setRestaurant({...Restaurant, banner:e.target.files[0]})}, })}
+                        />
+
+                        <ErrorMessage
+                            errors={errors}
+                            name="banner"
+                            render={({ message }) => 
+                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                <strong className="font-bold">* {message}</strong>
+                            </div>}
+                        />              
 
                         <button disabled={isLoading} type='submit' className="btn btn-outline">
                             

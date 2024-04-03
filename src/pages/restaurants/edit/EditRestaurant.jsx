@@ -40,13 +40,15 @@ function EditRestaurant() {
         state:'',
         zip_code:'',
         logo:'',
+        banner:'',
         cnpj:'',
         delivery_fee:'',
         partner_delivery:'',
     })
 
     const[RestaurantCurrentImage, setRestaurantCurrentImage] = useState('')
-        
+    const[RestaurantCurrentBanner, setRestaurantCurrentBanner] = useState('')
+
     useEffect(()=>{
         async function getRestaurant() {
             setIsLoading(true)
@@ -84,10 +86,12 @@ function EditRestaurant() {
                             cnpj:restaurant.cnpj,
                             delivery_fee:restaurant.delivery_fee,
                             partner_delivery:restaurant.partner_delivery,
+                            banner:restaurant.banner,
                             
                         }
                     )
                         setRestaurantCurrentImage(restaurant.logo)
+                        setRestaurantCurrentBanner(restaurant.banner)
                     
                     reset({...restaurant})
                 }
@@ -123,6 +127,9 @@ function EditRestaurant() {
 
         if (Restaurant?.logo){
             form_data_restaurant.append("logo", Restaurant.logo, Restaurant.logo.name);
+        }
+        if (Restaurant?.banner){
+            form_data_restaurant.append("banner", Restaurant.banner, Restaurant.banner.name);
         }
         form_data_restaurant.append("name", Restaurant.name);
         form_data_restaurant.append("description", Restaurant.description);
@@ -418,6 +425,26 @@ function EditRestaurant() {
                         Logo atual
                         <div id='image-container' className='rounded-lg  overflow-hidden'>
                             <img width={170} height={170} src={`http://localhost:8000${RestaurantCurrentImage}`} alt={`Imagem do restaurante ${Restaurant?.name}`} className='rounded-lg overflow-hidden'/>
+                        </div>
+
+
+                        Banner novo
+                        <input name="banner" id='banner' type="file" className="file-input w-full max-w-xs"  accept="image/jpeg,image/png,image/gif"
+                            {...register("banner", { onChange: (e) => {setRestaurant({...Restaurant, banner:e.target.files[0]})}, })}
+                        />
+
+                        <ErrorMessage
+                            errors={errors}
+                            name="banner"
+                            render={({ message }) => 
+                            <div className="text-red-400 px-2 py-1 rounded relative" role="alert" id='email-message'>
+                                <strong className="font-bold">* {message}</strong>
+                            </div>}
+                        />      
+
+                        Banner atual
+                        <div id='image-container' className='rounded-lg  overflow-hidden'>
+                            <img width={170} height={170} src={`http://localhost:8000${RestaurantCurrentBanner}`} alt={`Imagem banner do restaurante ${Restaurant?.name}`} className='rounded-lg overflow-hidden'/>
                         </div>
 
                         <button disabled={isLoading} type='submit' className="btn btn-outline">
