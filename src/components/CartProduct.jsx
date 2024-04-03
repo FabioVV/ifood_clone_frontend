@@ -19,6 +19,15 @@ function CartProduct({product, handleFetch}) {
             product.product_quantity_choosen = product.product_quantity_choosen - 1
             updatedProducts[index] = product;
 
+            if(product.product_quantity_choosen == 1){
+                product.new_price = 0
+                
+            } else if(product.product_quantity_choosen > 1) {
+                product.new_price = product.product_quantity_choosen * product.price
+
+
+            }
+
             setProducts(updatedProducts)
 
             forceUpdate()
@@ -46,7 +55,7 @@ function CartProduct({product, handleFetch}) {
         <div id='cart-content'>
             <div id='cart-item'>
                 <span>{product?.product_quantity_choosen}x {product?.name}</span>
-                <span>R$ {product?.new_price ? parseFloat(product?.new_price).toFixed(2): parseFloat(product?.price).toFixed(2)}</span>
+                <span>R$ {product?.new_price > 0 ? parseFloat(product?.new_price).toFixed(2): parseFloat(product?.price).toFixed(2)}</span>
             </div>
             {/* <div>
                 <span>MODIFICA;'AO PRODUTO</span>
