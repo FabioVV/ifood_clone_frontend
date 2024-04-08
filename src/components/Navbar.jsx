@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import user_icon from '../public/img/user.svg'
 import logo from '../public/img/b-logo.png'
 import google_waypointer_purple from '../public/img/google_waypointer.png'
 import useLocalStorageState from "use-local-storage-state"
 import { totalPriceCart } from '../utils/CartLocalStorage'
-
 
 import { getCurrentUser, clearLocalStorage } from '../utils/UserlocalStorage'
 
@@ -41,19 +40,14 @@ function CartProductsList({data, HandleFetch}){
 
 function Navbar() {
 
-    function SignOut(){
-        googleLogout()
-        clearLocalStorage()     
-        navigate("/"); navigate(0);
-    }
-
     let navigate = useNavigate();
 
 
     const [User] = useState(getCurrentUser)
 
-    const [Products, setProducts] = useLocalStorageState('bytefood_cart', [])
+    const [Products] = useLocalStorageState('bytefood_cart', [])
     const [SelectedAddress, SetSelectedAddress] = useState('')
+    const [QueryProductsRestaurants, SetQueryProductsRestaurants] = useState('')
 
     const [UserGeolocation, setUserGeolocation] = useState({
         lat:'',
@@ -61,7 +55,19 @@ function Navbar() {
         location:'',
         result:'',
     })
-    
+
+    function SignOut(){
+        googleLogout()
+        clearLocalStorage()     
+        navigate("/"); navigate(0);
+    }
+
+    function handleSearchNav(e){
+        if(QueryProductsRestaurants.trim() !== ''){
+            navigate(`/busca/${QueryProductsRestaurants}`)
+
+        }
+    }
 
 
     return (
@@ -160,11 +166,15 @@ function Navbar() {
                         </ul>
                     </div>
                     <div id='menu-4' className="navbar-end">
+                        <form method='get' onSubmit={()=>{handleSearchNav()}}>
+                            
+                            <label className="input input-bordered flex items-center gap-2 md:w-full">
+                                <input type="search" className="grow" placeholder="Busque por item ou loja" onChange={(e)=>{SetQueryProductsRestaurants(e.target.value)}}/>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
+                            </label>
 
-                        <label className="input input-bordered flex items-center gap-2 md:w-full">
-                            <input type="search" className="grow" placeholder="Busque por item ou loja" />
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
-                        </label>
+                        </form>
+
 
                         <div className="flex-none" id='menu-3'>
                             <ul className="menu menu-horizontal px-1">

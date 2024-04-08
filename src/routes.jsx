@@ -21,6 +21,7 @@ import Products from './pages/products/_list/Products'
 import EditProduct from './pages/products/edit/EditProduct'
 import Discover from './pages/categories/discover/Discover'
 import Order from './pages/order/finalize/Order'
+import QueryNav from './pages/QueryNavbar/list/QueryNav'
 import { RequireAuth } from './components/RequireAuth'
 
 
@@ -32,6 +33,12 @@ function _Routes() {
         <Route path='login' element={<Login/>} />
         <Route path='register' element={<Register/>} />
         <Route path='phone-google-register' element={<PhoneGoogleRegister/>} />
+
+        <Route path='busca/:q' element={
+            <RequireAuth redirectTo="/login">
+                <QueryNav />
+            </RequireAuth>
+        } />
 
         <Route path='minha-conta'> 
 

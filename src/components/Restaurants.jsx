@@ -19,7 +19,7 @@ function RestaurantsList({data, HandleFetch}){
 
 
 
-function Restaurants({category_list_id = ''}) {
+function Restaurants({category_list_id = '', name = ''}) {
   
   const [RestaurantsSearched, SetRestaurantsSearched] = useState([])
 
@@ -61,7 +61,7 @@ function Restaurants({category_list_id = ''}) {
 
   
 
-  const fetchRestaurantsSearch = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants-search/?page=${SearchPageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}&order_by=${OrderBy}&category_id=${category_list_id}`) => {
+  const fetchRestaurantsSearch = async (url = `http://127.0.0.1:8000/api/v1/restaurants/available-restaurants-search/?page=${SearchPageNumber}&super_restaurant=${SuperRestaurant}&partner_delivery=${PartnerDelivery}&free_delivery=${FreeDelivery}&order_by=${OrderBy}&category_id=${category_list_id}&name=${name}`) => {
     setIsLoading(true)
 
     try{

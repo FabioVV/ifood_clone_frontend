@@ -40,7 +40,7 @@ function Home() {
 
             <h1 id='title-stores' className='text-left'>Lojas</h1>
 
-            <Restaurants category_list_id={''}/>
+            <Restaurants category_list_id={''} name={''}/>
           </section>
         }
 

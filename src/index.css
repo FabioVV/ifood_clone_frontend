@@ -775,6 +775,19 @@ div#content{
 }
 
 
+#query-nav-page{
+    width: 75vw;
+    margin: 2.5em auto;
+    
+}
+
+#query-nav-title{
+    color: #3e3e3e;
+    font-size: 1.5625rem;
+    margin-bottom: 0;
+}
+
+
 @media only screen and (max-width: 570px) {
     #search-info{
         flex-wrap: wrap;
@@ -864,6 +877,8 @@ div#content{
       grid-template-columns: repeat(2, 1fr);
       justify-items: center;
     }
+
+
   }
   
   @media screen and (max-width: 840px) {
@@ -872,4 +887,13 @@ div#content{
       align-items: center;
       justify-items: center;
     }
+
+    #products{
+        grid-template-columns: repeat(1, minmax(0, 1fr)); /* 2 products per row */
+    }
   }
+
+
+
+
+
