@@ -74,7 +74,7 @@ function Product({product, HandleFetch}) {
 
             
             <div id='image-container-modal' className='rounded-lg  overflow-hidden'>
-              <img src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
+              <img src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
             </div>
           
 
@@ -109,7 +109,7 @@ function Product({product, HandleFetch}) {
 
 
       <div id='image-container' className='overflow-hidden'>
-        <img  src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '/media/_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
+        <img  src={`http://localhost:8000${product?.image}`} alt={`Imagem do producte ${product?.name ? product?.name : '_default/restaurant_default.jpeg'}`} className='rounded-lg overflow-hidden'/>
       </div>
 
       <div id="content">

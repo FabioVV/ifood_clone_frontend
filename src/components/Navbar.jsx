@@ -1,4 +1,4 @@
-import React, {useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import user_icon from '../public/img/user.svg'
 import logo from '../public/img/b-logo.png'
@@ -70,6 +70,8 @@ function Navbar() {
     }
 
 
+    useEffect(()=>{document.getElementById('btn_google_modal_fechar').click()},[SelectedAddress])
+
     return (
         <div id='navbar' style={{padding:'', zIndex:'10000'}} className="navbar bg-base-100 sticky top-0">
 
@@ -99,7 +101,7 @@ function Navbar() {
         
                                     <div className="modal-action">
                                         <form method="dialog">
-                                            <button className="btn">Fechar</button>
+                                            <button className="btn" id='btn_google_modal_fechar'>Fechar</button>
                                         </form>
                                     </div>
                                 </>

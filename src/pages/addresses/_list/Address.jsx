@@ -3,14 +3,13 @@ import { getCurrentUser, getCurrentUserToken } from '../../../utils/UserlocalSto
 
 import work_cup from '../../../public/img/work-cup.png'
 import house from '../../../public/img/house.png'
-
-
+import DeleteAddress from '../../../components/DeleteAddressModal'
 
 function Address({address, HandleFetch}) {
   const [User, SetUser] = useState(getCurrentUser) 
   const [isLoading, setIsLoading] = useState(false)
 
-  function onSubmit(){
+  function onSubmitSetNewActiveAddress(){
     
     try{
 
@@ -46,33 +45,41 @@ function Address({address, HandleFetch}) {
   }
   
   return (
-    <div id='address-container' onClick={()=>{onSubmit()}}>
-      <div id={`address`} className={`m-3 z-1 ${address.is_selected ? 'address-selected': ''}`} onClick={()=>{}}>
-        <div id='address-icone'>
-          
-          {(() => {
-            switch (address.type_of) {
-              case 'H':
-                return <img width={60} height={60} src={house} alt="imagem casa dos enderecos" />;
-              case 'W':
-                return <img width={60} height={60} src={work_cup} alt="imagem trabalho dos enderecos" />;
-              default:
-                return <img width={60} height={60} src={house} alt="imagem padrao dos enderecos" />;
-            }
-          })()}
+    <div id='address-container'>
+        <div id={`address`} className={`m-3 z-1 ${address.is_selected ? 'address-selected': ''}`} onClick={()=>{onSubmitSetNewActiveAddress()}}>
+          <div id='address-icone'>
+            
+            {(() => {
+              switch (address.type_of) {
+                case 'H':
+                  return <img width={60} height={60} src={house} alt="imagem casa dos enderecos" />;
+                case 'W':
+                  return <img width={60} height={60} src={work_cup} alt="imagem trabalho dos enderecos" />;
+                default:
+                  return <img width={60} height={60} src={house} alt="imagem padrao dos enderecos" />;
+              }
+            })()}
+
+          </div>
+
+          <div className='p-3' id='address-info'>
+              <h4 id='address-info-title'>{address?.street}</h4> {/*{- TROCAR POR NOME ou MANTER caso nao seja casa ou trabalho} */}
+              <span id='address-info-all'>{address?.street}, {address?.neighborhood}, {address?.number}, {address?.city} - {address?.state}</span>
+          </div>
 
         </div>
 
-        <div className='p-3' id='address-info'>
-            <h4 id='address-info-title'>{address?.street}</h4> {/*{- TROCAR POR NOME ou MANTER caso nao seja casa ou trabalho} */}
-            <span id='address-info-all'>{address?.street}, {address?.neighborhood}, {address?.number}, {address?.city} - {address?.state}</span>
+      <div id='address-elp'>
+        <div className="dropdown dropdown-left dropdown-end">
+          <i tabIndex={0} role="button" className="fa-solid fa-ellipsis-vertical"></i>
+          <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+            {/* <li><a>Editar Endereço</a></li> */}
+            <li><a onClick={() => {document.getElementById(`my_modal_delete_address_${address?.id}`)?.showModal()}}>Excluir endereço</a></li>
+            <DeleteAddress HandleFetch={HandleFetch} address_id={address?.id} />
+          </ul>
         </div>
-
       </div>
-      {/* ARRUMAR ISSO AQUI, QUANDO CLICA NELE OS O CLICK NO ENDERECO TBM EXECUTA */}
-      {/* <div id='address-elp' onClick={()=>{alert('b')}}>
-        <i className="fa-solid fa-ellipsis-vertical"></i>
-      </div> */}
+
     </div>
   )
 }
