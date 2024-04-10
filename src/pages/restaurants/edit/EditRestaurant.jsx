@@ -86,12 +86,11 @@ function EditRestaurant() {
                             cnpj:restaurant.cnpj,
                             delivery_fee:restaurant.delivery_fee,
                             partner_delivery:restaurant.partner_delivery,
-                            banner:restaurant.banner,
                             
                         }
                     )
-                        setRestaurantCurrentImage(restaurant.logo)
-                        setRestaurantCurrentBanner(restaurant.banner)
+                        setRestaurantCurrentImage(restaurant?.logo)
+                        setRestaurantCurrentBanner(restaurant?.banner)
                     
                     reset({...restaurant})
                 }
@@ -267,7 +266,7 @@ function EditRestaurant() {
 
                         Entrega parceira byteFood?
                         <select className="select select-bordered w-full max-w-xs" {...register("partner_delivery", {  required: "Campo obrigatório.", onChange: (e) => {setRestaurant({...Restaurant, partner_delivery:e.target.value})}, })}>
-                            <option value={true}>Sim</option>
+                            <option defaultChecked value={true}>Sim</option>
                             <option value={false}>Não</option>
                         </select>
 
