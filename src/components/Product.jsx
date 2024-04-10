@@ -9,6 +9,7 @@ function Product({product, HandleFetch}) {
   const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
   const [TotalProductsCart, setTotalProductsCart] = useState(1)
   const [UpdatedPrice, setUpdatedPrice] = useState(0)
+  const [AddedToCart, setAddedToCart] = useState(false)
 
 
   function HandleCart(){
@@ -19,7 +20,7 @@ function Product({product, HandleFetch}) {
     Object.assign(product, {new_price : UpdatedPrice})
 
     setProducts([...products, product])
-
+    setAddedToCart(true)
   }
 
 
@@ -51,6 +52,17 @@ function Product({product, HandleFetch}) {
 
     return product.description
   }
+
+
+  useEffect(()=>{
+
+    if(AddedToCart){
+      document.getElementById(`btn_close_product_modal_${product.id}`).click()
+      setAddedToCart(false)
+
+    }
+
+  },[AddedToCart])
 
   return (
     <div id="product" onClick={() => {document.getElementById(`product_modal_${product?.id}`).showModal()}}>
@@ -89,7 +101,7 @@ function Product({product, HandleFetch}) {
               </div>
               <button type='button' style={{marginRight:'9px'}} className="btn" onClick={()=>{HandleCart()}}>Adicionar<span className='text-green-700'>R$ {UpdatedPrice  ? parseFloat(UpdatedPrice).toFixed(2) : parseFloat(product?.price).toFixed(2)}</span></button>
 
-              <button className="btn">Fechar</button>
+              <button className="btn" id={`btn_close_product_modal_${product?.id}`}>Fechar</button>
             </form>
           </div>
         </div>

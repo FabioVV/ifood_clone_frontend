@@ -199,7 +199,7 @@ function RestaurantProducts() {
                                             {/* Sidebar content here */}
 
                                             <div role="tablist" className="tabs tabs-lifted">
-                                                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Sobre" defaultChecked={true}/>
+                                                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Sobre" readOnly defaultChecked={true}/>
                                                 <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">Sobre</div>
 
                                                 <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Horário"  readOnly/>
