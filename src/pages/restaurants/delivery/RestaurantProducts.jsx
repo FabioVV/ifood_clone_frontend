@@ -22,6 +22,23 @@ function ProductList({data, HandleFetch}){
 }
 
 
+const useDebounce = (value, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+  
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+  
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [value, delay]);
+  
+    return debouncedValue;
+  };
+
+
 function RestaurantProducts() {
 
     const { id } = useParams();
@@ -138,23 +155,28 @@ function RestaurantProducts() {
     }, [id])
 
 
-    useEffect(()=>{
-        (async (url = `http://127.0.0.1:8000/api/v1/products/available-products-restaurant/${id}/?q=${Search}`)=>{
-            setIsLoading(true)
-    
-            const response = await fetch(url, {
-              method:'GET',
-              headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
-            })
+    // This debounce hook/function ensures the request is only sent to the server when the user stops typing for 300ms
+    const debounceDelay = 300; // 300ms
+    const debouncedName = useDebounce(Search, debounceDelay);
+    useEffect(() => {
+        if (debouncedName) {
+            (async (url = `http://127.0.0.1:8000/api/v1/products/available-products-restaurant/${id}/?q=${Search}`)=>{
+                setIsLoading(true)
         
-            if(response.ok){
-                const data = await response.json()
-                SetProducts(data)
-            } 
-            setIsLoading(false)
-        })()
-    }, [Search])
-    
+                const response = await fetch(url, {
+                  method:'GET',
+                  headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+                })
+            
+                if(response.ok){
+                    const data = await response.json()
+                    SetProducts(data)
+                } 
+                setIsLoading(false)
+            })()
+        }
+      }, [debouncedName]);
+
 
     
 

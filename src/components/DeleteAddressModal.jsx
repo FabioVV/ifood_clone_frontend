@@ -1,10 +1,11 @@
-import React from 'react'
-import { useState } from 'react'
-import { getCurrentUserToken } from '../utils/UserlocalStorage'
-import Alert from './Alert';
-import { show_flash_message } from '../utils/FlashMessages';
+import React, { useState } from 'react'
 
-function DeleteRestaurant({restaurant_id, HandleFetch}) {
+import { getCurrentUserToken } from '../utils/UserlocalStorage'
+import { show_flash_message } from '../utils/FlashMessages';
+import Alert from './Alert';
+
+
+function DeleteAddress({address_id, HandleFetch}) {
 
     const [submitting, setSubmitting] = useState(false)
     const [ShowAlert, setShowAlert] = useState({
@@ -13,11 +14,11 @@ function DeleteRestaurant({restaurant_id, HandleFetch}) {
         type:'',
     })
 
-    const DeactivateRestaurant = async() => {
+    const DeactivateAddress = async() => {
         setSubmitting(true)
 
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/v1/restaurants/${restaurant_id}/`,{
+            const response = await fetch(`http://127.0.0.1:8000/api/v1/addresses/${address_id}/`,{
                 method:"DELETE",
     
                 headers: { 
@@ -28,7 +29,6 @@ function DeleteRestaurant({restaurant_id, HandleFetch}) {
             if(response.ok){
 
                 HandleFetch()
-                //show_flash_message(setShowAlert, ShowAlert, 'Restaurante removido', 'alert-success')
     
             } else {
                 show_flash_message(setShowAlert, ShowAlert, 'Oh não. Um erro ocorreu com a sua solicitação', 'alert-error')
@@ -39,7 +39,7 @@ function DeleteRestaurant({restaurant_id, HandleFetch}) {
 
         } finally {
             setSubmitting(false)
-            document.getElementById(`close_delete_restaurant_modal_${restaurant_id}`).click()
+            document.getElementById(`close_delete_address_modal_${address_id}`).click()
 
         }
         
@@ -52,7 +52,7 @@ function DeleteRestaurant({restaurant_id, HandleFetch}) {
     <>
         {ShowAlert?.show ? <Alert message={`${ShowAlert?.message}`} type={`${ShowAlert?.type}`}/>: ""}
 
-        <dialog id={`my_modal_delete_restaurant_${restaurant_id}`} className="modal">
+        <dialog id={`my_modal_delete_address_${address_id}`} className="modal">
             <div className="modal-box">
                 <h3 className="font-bold text-lg">
                     <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
@@ -60,15 +60,15 @@ function DeleteRestaurant({restaurant_id, HandleFetch}) {
                 </svg>Você tem certeza?
                     
                 </h3>
-                <p className="py-4">Está ação ira <span className='text-red-600'>remover</span> o restaurante.</p>
+                <p className="py-4">Está ação ira <span className='text-red-600'>remover</span> o endereço.</p>
                 <div className="modal-action">
 
-                    <button disabled={submitting} onClick={() => DeactivateRestaurant()} type="button" className="btn text-red-600">
-                        {submitting ? <span className="loading loading-spinner loading-lg"></span> : 'Remover restaurante'}
+                    <button disabled={submitting} onClick={() => DeactivateAddress()} type="button" className="btn text-red-600">
+                        {submitting ? <span className="loading loading-spinner loading-lg"></span> : 'Remover endereço'}
                     </button>
 
                     <form method="dialog">
-                        <button id={`close_delete_restaurant_modal_${restaurant_id}`} className="btn">Fechar</button>
+                        <button id={`close_delete_address_modal_${address_id}`} className="btn">Fechar</button>
                     </form>
                 </div>
             </div>
@@ -77,4 +77,4 @@ function DeleteRestaurant({restaurant_id, HandleFetch}) {
   )
 }
 
-export default DeleteRestaurant
+export default DeleteAddress
