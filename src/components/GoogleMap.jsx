@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useNavigate } from "react-router-dom";
 import { getCurrentUserToken } from '../utils/UserlocalStorage';
+import Alert from './Alert';
+import { show_flash_message } from '../utils/FlashMessages';
 
 // INFO WINDOW
 
@@ -17,7 +19,7 @@ const mapContainerStyle = {
 
 
 
-function GoogleMapComponent({UserGeolocation}) {
+function GoogleMapComponent({UserGeolocation, user_geolocation_fn}) {
 
     const {isLoaded, loadError} = useLoadScript({googleMapsApiKey:import.meta.env.VITE_GOOGLE_MAPS_KEY, libraries})
     const { register, handleSubmit, reset, setError, formState: { errors } } = useForm();
@@ -26,7 +28,12 @@ function GoogleMapComponent({UserGeolocation}) {
     const [isLoading, setIsLoading] = useState(false)
     const [markers, setMarkers] = useState([])
 
-
+    const [ShowAlert, setShowAlert] = useState({
+        show: false,
+        message:'',
+        type:'',
+    })
+    
     const [UserAddress, setUserAddress] = useState({
         name:'',
         street:'',
@@ -68,6 +75,9 @@ function GoogleMapComponent({UserGeolocation}) {
             
             const user_updated = await res.json()
 
+            // for (const [key, value] of Object.entries(user_updated)) {
+            //     console.log(`${key}: ${value}`);
+            //   }
 
             if(res.ok){
                 navigate('/') 
@@ -76,9 +86,12 @@ function GoogleMapComponent({UserGeolocation}) {
             }
 
 
-            setIsLoading(false)
         } catch(error){
-            console.log(errors)
+            console.log(error)
+
+        } finally {
+            setIsLoading(false)
+
         }
 
     }
@@ -140,6 +153,7 @@ function GoogleMapComponent({UserGeolocation}) {
             }
         }
 
+
         setUserAddress({...UserAddress, ...user_address})
         reset({...UserAddress})
     }
@@ -176,6 +190,8 @@ function GoogleMapComponent({UserGeolocation}) {
 
   return (
     <div id='map-container'>
+        {ShowAlert?.show ? <Alert message={`${ShowAlert?.message}`} type={`${ShowAlert?.type}`}/>: ""}
+
         <div>
             <h1 id='address-title-maps'>{UserGeolocation?.result['formatted_address']}</h1>
             <GoogleMap mapContainerStyle={mapContainerStyle} zoom={19} center={center} onClick={onMapClick} onLoad={onMapLoad}>

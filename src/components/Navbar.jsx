@@ -70,7 +70,7 @@ function Navbar() {
     }
 
 
-    useEffect(()=>{document.getElementById('btn_google_modal_fechar').click()},[SelectedAddress])
+    useEffect(()=>{document.getElementById('btn_google_modal_fechar')?.click()},[SelectedAddress])
 
     return (
         <div id='navbar' style={{padding:'', zIndex:'10000'}} className="navbar bg-base-100 sticky top-0">
@@ -106,7 +106,7 @@ function Navbar() {
                                     </div>
                                 </>
                                 :
-                                <GoogleMapComponent UserGeolocation={UserGeolocation}/> 
+                                <GoogleMapComponent user_geolocation_fn={setUserGeolocation} UserGeolocation={UserGeolocation}/> 
                             }
 
                         </div>
