@@ -6,7 +6,7 @@ function Order() {
 
   const [SelectedAddress, SetSelectedAddress] = useState('')
 
-  const [DeliveryType, SetDeliveryType] = useState('')
+  const [DeliveryType, SetDeliveryType] = useState('default')
 
 
 
@@ -25,21 +25,22 @@ function Order() {
                     <Addresses SetSelectedAddress={SetSelectedAddress}/>
                   </div>  
 
-                  <h4 id='delivery-order-title'>Hoje, 00-00</h4>
+                  <h4 id='delivery-order-title'>Hoje, {DeliveryType == 'fast' ? "30-50 min":"20-30 min"}</h4>
 
                   <div id='deliveries-type'>
-                    <div >
+                    <div style={{borderColor:DeliveryType == 'fast' ? "purple":""}} onClick={()=>SetDeliveryType("fast")}>
                       <span className='mb-3'>Padrão</span>
-                      <span>Hoje, 00-00</span>
-                      <span>R$ 7,99</span>
+                      <span>Hoje, 30-50 min</span>
+                      <span>R$ 8,99</span>
                     </div>
 
-                    <div>
+                    <div style={{borderColor:DeliveryType == 'default' ? "purple":""}} onClick={()=>SetDeliveryType("default")}>
                       <span className='mb-3'>Rápida</span>
-                      <span>Hoje, 00-00</span>
-                      <span>R$ 13,99</span>
+                      <span>Hoje, 20-30</span>
+                      <span>R$ 14,99</span>
                     </div>
                   </div>
+
 
 
                 </div>

@@ -736,10 +736,11 @@ div#content{
 
 #delivery-order-title{
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 1.3rem;
     line-height: 22px;
-    color: #3e3e3e;
+    color: #141414;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #deliveries-type{
