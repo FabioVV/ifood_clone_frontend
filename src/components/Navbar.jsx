@@ -120,7 +120,7 @@ function Navbar() {
                             </div>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/">Inicio</NavLink></li>
-                                <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
+                                {/* <li><NavLink to="/restaurantes">Restaurantes</NavLink></li> */}
                                 <li onClick={()=>document.getElementById('google_modal').showModal()}>
                                     <a>
                                         {SelectedAddress ? 
@@ -155,7 +155,7 @@ function Navbar() {
 
                         <ul id='menu-1' className="menu menu-horizontal px-1">
                             <li><NavLink style={{marginRight:'1.5rem'}} to="/">Inicio</NavLink></li>
-                            <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
+                            {/* <li><NavLink to="/restaurantes">Restaurantes</NavLink></li> */}
                         </ul>
                         
 
@@ -307,7 +307,7 @@ function Navbar() {
                             </div>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/">Inicio</NavLink></li>
-                                <li><NavLink to="/restaurantes">Restaurantes</NavLink></li>
+                                {/* <li><NavLink to="/restaurantes">Restaurantes</NavLink></li> */}
                                 <li onClick={()=>document.getElementById('google_modal').showModal()}>
                                     <a>
                                         {SelectedAddress ? 

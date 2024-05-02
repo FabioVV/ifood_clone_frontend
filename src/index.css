@@ -717,6 +717,7 @@ div#content{
 #order-section{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    margin-top: 16px;
 }
 
 
@@ -894,5 +895,19 @@ div#content{
 
 
 
+#order-info{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 12px;
+    width: 390px;
+}
 
+#order-info-title{
+    color: #717171;
+    font-weight: 300;
+    font-size: .875rem;
+}
 
+#order-info-restaurant{
+    font-size: 1.525rem;
+    font-weight: 500;
+}

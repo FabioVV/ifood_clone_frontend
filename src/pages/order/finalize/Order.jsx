@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import DefaultPage from '../../../components/DefaultPage'
 import Addresses from '../../../components/Addresses'
+import useLocalStorageState from 'use-local-storage-state'
 
 function Order() {
 
   const [SelectedAddress, SetSelectedAddress] = useState('')
-
   const [DeliveryType, SetDeliveryType] = useState('default')
 
+  const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
 
-
+  console.log(products)
   return (
     <DefaultPage>
 
@@ -18,7 +19,7 @@ function Order() {
               <h1 id='finalize-title'>Finalize seu pedido</h1>
 
               <div role="tablist" className="tabs tabs-bordered">
-                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Entrega" checked/>
+                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Entrega" defaultChecked/>
                 <div role="tabpanel" className="tab-content p-10">
 
                   <div id='user-addresses-div'>
@@ -55,6 +56,10 @@ function Order() {
             </div>
 
             <div id='order-info'>
+
+              <span id='order-info-title'>Seu pedido em</span>
+              <h1 id='order-info-restaurant'>{products[0]?.restaurant_name}</h1>
+
 
             </div>
         </section>
