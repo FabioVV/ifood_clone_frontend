@@ -46,11 +46,11 @@ function Address({address, HandleFetch, excludeDel}) {
   
   return (
     <div id='address-container'>
-        <div id={`address`} className={`m-3 z-1 ${address.is_selected ? 'address-selected': ''}`} onClick={()=>{onSubmitSetNewActiveAddress()}}>
+        <div id={`address`} className={`m-3 z-1 ${address?.is_selected ? 'address-selected': ''}`} onClick={()=>{onSubmitSetNewActiveAddress()}}>
           <div id='address-icone'>
             
             {(() => {
-              switch (address.type_of) {
+              switch (address?.type_of) {
                 case 'H':
                   return <img width={60} height={60} src={house} alt="imagem casa dos enderecos" />;
                 case 'W':
