@@ -788,6 +788,38 @@ div#content{
 }
 
 
+
+.payment-index-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: 4rem;
+}
+
+.payment-title{
+    text-transform: none;
+    text-align: left;
+    text-align: initial;
+    letter-spacing: -1px;
+    font-weight: 500;
+    font-size: 2.125rem;
+    line-height: 2.625em;
+}
+
+.payment-subtitle{
+    text-transform: none;
+    text-align: left;
+    text-align: initial;
+    letter-spacing: -1px;
+    font-weight: 500;
+    line-height: 2.625em;
+}
+
+.payment-text{
+}
+
 @media only screen and (max-width: 570px) {
     #search-info{
         flex-wrap: wrap;

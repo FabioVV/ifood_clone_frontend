@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import DefaultPage from '../../../components/DefaultPage'
 import Addresses from '../../../components/Addresses'
 import useLocalStorageState from 'use-local-storage-state'
+import Address from '../../addresses/_list/Address'
 
 function Order() {
 
@@ -10,10 +11,8 @@ function Order() {
 
   const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
 
-  console.log(products)
   return (
     <DefaultPage>
-
         <section id='order-section'>
             <div id='order-finalize'>
               <h1 id='finalize-title'>Finalize seu pedido</h1>
@@ -23,7 +22,15 @@ function Order() {
                 <div role="tabpanel" className="tab-content p-10">
 
                   <div id='user-addresses-div'>
-                    <Addresses SetSelectedAddress={SetSelectedAddress}/>
+                    <span style={{display:"none"}}>
+                      <Addresses SetSelectedAddress={SetSelectedAddress}/>
+                    </span>
+                    <Address
+                      key={SelectedAddress?.id}
+                      address={SelectedAddress}
+                      HandleFetch={null}
+                      excludeDel={true}
+                    />
                   </div>  
 
                   <h4 id='delivery-order-title'>Hoje, {DeliveryType == 'fast' ? "30-50 min":"20-30 min"}</h4>

@@ -22,6 +22,7 @@ import EditProduct from './pages/products/edit/EditProduct'
 import Discover from './pages/categories/discover/Discover'
 import Order from './pages/order/finalize/Order'
 import QueryNav from './pages/QueryNavbar/list/QueryNav'
+import IndexPayment from './pages/payment/Index'
 import { RequireAuth } from './components/RequireAuth'
 
 
@@ -82,6 +83,12 @@ function _Routes() {
             <Route path='celular-contato' element={
                 <RequireAuth redirectTo="/login">
                     <ChangePhone />
+                </RequireAuth>
+            } />
+
+            <Route path='pagamento' element={
+                <RequireAuth redirectTo="/login">
+                    <IndexPayment />
                 </RequireAuth>
             } />
 

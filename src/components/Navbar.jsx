@@ -140,6 +140,8 @@ function Navbar() {
                                         <li><NavLink  to="/criar-produto" ><i className="fa-sharp fa-solid fa-gear"></i> Criar produto</NavLink></li>
                                         <hr />
                                         <li><NavLink  to="/minha-conta" ><i className="fa-sharp fa-solid fa-gear"></i> Seus dados</NavLink></li>
+                                        <li><NavLink  to="/minha-conta/pagamento" ><i className="fa-solid fa-credit-card"></i> Pagamento</NavLink></li>
+
                                         <li><a onClick={() => SignOut()}><i className="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Sair</a></li>
                                     </ul>
                                 </li>
@@ -222,6 +224,8 @@ function Navbar() {
                              
                                 <li>
                                     <NavLink  to="/minha-conta" ><i className="fa-sharp fa-solid fa-gear"></i> Seus dados</NavLink>
+                                    <NavLink  to="/minha-conta/pagamento" ><i className="fa-solid fa-credit-card"></i> Pagamento</NavLink>
+
                                 </li>
                                 <li>
                                     <a onClick={() => SignOut()}><i className="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Sair</a>
@@ -330,6 +334,7 @@ function Navbar() {
                                         <li><NavLink  to="/criar-produto" ><i className="fa-sharp fa-solid fa-gear"></i> Criar produto</NavLink></li>
                                         <hr />
                                         <li><NavLink  to="/minha-conta" ><i className="fa-sharp fa-solid fa-gear"></i> Seus dados</NavLink></li>
+                                        <li><NavLink  to="/minha-conta/pagamento" ><i className="fa-solid fa-credit-card"></i> Pagamento</NavLink></li>
                                         <li><a onClick={() => SignOut()}><i className="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Sair</a></li>
                                     </ul>
                                 </li>

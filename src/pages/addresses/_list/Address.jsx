@@ -5,7 +5,7 @@ import work_cup from '../../../public/img/work-cup.png'
 import house from '../../../public/img/house.png'
 import DeleteAddress from '../../../components/DeleteAddressModal'
 
-function Address({address, HandleFetch}) {
+function Address({address, HandleFetch, excludeDel}) {
   const [User, SetUser] = useState(getCurrentUser) 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -69,7 +69,7 @@ function Address({address, HandleFetch}) {
 
         </div>
 
-      <div id='address-elp'>
+      <div id='address-elp' style={{display: excludeDel ? "none":""}}>
         <div className="dropdown dropdown-left dropdown-end">
           <i tabIndex={0} role="button" className="fa-solid fa-ellipsis-vertical"></i>
           <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
