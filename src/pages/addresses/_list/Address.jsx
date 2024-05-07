@@ -27,8 +27,12 @@ function Address({address, HandleFetch, excludeDel}) {
         })
     
         if(response.ok){
-          const data = await response.json()
-          HandleFetch()
+          // const data = await response.json()
+
+          if(HandleFetch != null){
+            HandleFetch()
+
+          }
         } 
 
       })()

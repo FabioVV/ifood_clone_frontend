@@ -82,11 +82,11 @@ export function updateCurrentUser(user_new_data){
                 user[key] = user_new_data[key]
             }
         });
+
         removeCurrentUser()
 
         //EXPIRATION TIME FOR LOCALSTORAGEDATA
         // Object.assign(user, {expiration:new Date().getTime()+ (60000 * 30)})
-
 
         localStorage.setItem('userBytefood', JSON.stringify(user))
 
@@ -96,6 +96,22 @@ export function updateCurrentUser(user_new_data){
     }
 }
 
+
+export function updateCurrentUserOrder(order){
+    try{
+        // ExpiredLocalStorage()
+
+        let user = getCurrentUser()
+        user['order'] = order
+        removeCurrentUser()
+
+        localStorage.setItem('userBytefood', JSON.stringify(user))
+
+
+    } catch(error){
+        console.log("Error updating user ->" + error)
+    }
+}
 
 export function removeCurrentUser(){
     try{

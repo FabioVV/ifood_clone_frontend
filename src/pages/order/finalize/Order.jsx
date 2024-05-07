@@ -4,6 +4,10 @@ import Addresses from '../../../components/Addresses'
 import useLocalStorageState from 'use-local-storage-state'
 import Address from '../../addresses/_list/Address'
 import CheckoutForm from '../../payment/CheckoutForm'
+
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from "@stripe/stripe-js/pure";
+
 import { getCurrentUser } from '../../../utils/UserlocalStorage'
 import { totalPriceCart } from '../../../utils/CartLocalStorage'
 
@@ -14,12 +18,12 @@ function Order() {
   const [DeliveryType, SetDeliveryType] = useState('default')
   const [DeliveryTypePrice, SetDeliveryTypePrice] = useState(8.99)
 
+  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-  const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
+  const [products] = useLocalStorageState('bytefood_cart', [])
   const [cpf, setCpf] = useState(user?.cpf)
   const [cpfNota, setcpfNota] = useState(false)
 
-    console.log(products)
 
   return (
     <DefaultPage>
@@ -46,13 +50,13 @@ function Order() {
                   <h4 id='delivery-order-title'>Hoje, {DeliveryType == 'fast' ? "30-50 min":"20-30 min"}</h4>
 
                   <div id='deliveries-type'>
-                    <div style={{borderColor:DeliveryType == 'fast' ? "purple":""}} onClick={()=>{SetDeliveryType("fast"); SetDeliveryTypePrice(14.99);}}>
+                    <div style={{borderColor:DeliveryType == 'fast' ? "purple":""}} onClick={()=>{SetDeliveryType("fast"); SetDeliveryTypePrice(8.99);}}>
                       <span className='mb-3'>Padrão</span>
                       <span>Hoje, 30-50 min</span>
                       <span>R$ 8,99</span>
                     </div>
 
-                    <div style={{borderColor:DeliveryType == 'default' ? "purple":""}} onClick={()=>{SetDeliveryType("default"); SetDeliveryTypePrice(8.99);}}>
+                    <div style={{borderColor:DeliveryType == 'default' ? "purple":""}} onClick={()=>{SetDeliveryType("default"); SetDeliveryTypePrice(14.99);}}>
                       <span className='mb-3'>Rápida</span>
                       <span>Hoje, 20-30</span>
                       <span>R$ 14,99</span>
@@ -71,7 +75,9 @@ function Order() {
                   </div>
 
                   <section className='pay-sec'>
-                    <CheckoutForm user_cpf_on_nfe={cpf} delivery_fee_speed_type={DeliveryType == 'fast' ? 8.99:14.99}/>
+                    <Elements stripe={stripePromise}>
+                      <CheckoutForm user_cpf_on_nfe={cpfNota ? cpf: ""} delivery_fee_speed_type={DeliveryType == 'fast' ? 8.99:14.99}/>
+                    </Elements>
                   </section>
 
 

@@ -1,11 +1,14 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
-import { getCurrentUser, getCurrentUserToken } from "../../utils/UserlocalStorage";
+import { getCurrentUser, getCurrentUserToken, updateCurrentUserOrder } from "../../utils/UserlocalStorage";
 import useLocalStorageState from "use-local-storage-state";
 import { totalPriceCart } from "../../utils/CartLocalStorage";
+import { useNavigate } from "react-router-dom";
+
 
 const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
     const user = getCurrentUser()
+    const navigate = useNavigate()
 
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -15,6 +18,7 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
 
     const stripe = useStripe()
     const elements = useElements()
+
 
     useEffect(()=>{
         setTotalAmount(parseFloat(totalPriceCart(products))+delivery_fee_speed_type+10+0.99)
@@ -33,6 +37,8 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const card = elements.getElement(CardElement);
+        setIsLoading(true)
+
 
         const {paymentMethod, error} = await stripe.createPaymentMethod({
             type: 'card',
@@ -47,16 +53,22 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
 
                 body:JSON.stringify({
                     "payment_method_id": paymentMethod.id,
+                    "amount":totalAmount,
                     "email":email,
                     "cpf":user_cpf_on_nfe,
-                    "amount":totalAmount,
+                    "user_id":user?.id,
                 })
             })
 
-            if(response.ok){
+
+            if(response.status == 200){
                 const data = await response.json()
-                console.log(data)
-            } 
+                updateCurrentUserOrder(data['data']['order'])
+                setProducts([])
+                navigate("/acompanhar-pedido")
+
+            }
+
 
         } catch(e){
             console.log(e.message)

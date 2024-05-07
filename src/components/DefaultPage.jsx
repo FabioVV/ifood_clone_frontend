@@ -10,11 +10,17 @@ export default function DefaultPage(props) {
 
   useEffect(()=>{
 
-    let Phone = getCurrentUser() ? getCurrentUser()['phone'] : ""
+    const Phone = getCurrentUser() ? getCurrentUser()['phone'] : ""
+    const active_order = getCurrentUser() ? getCurrentUser()['order'] : ""
+
 
     if(!Phone && getCurrentUser()){
       navigate('/phone-google-register')
     } 
+
+    // if(active_order && getCurrentUser()){
+    //   navigate('/acompanhar-pedido')
+    // } 
 
 
   },[])

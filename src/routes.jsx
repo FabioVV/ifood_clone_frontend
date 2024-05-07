@@ -1,6 +1,4 @@
-import React from 'react'
 import {Route, Routes} from 'react-router-dom'
-
 import Home from './pages/home'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
@@ -23,6 +21,7 @@ import Discover from './pages/categories/discover/Discover'
 import Order from './pages/order/finalize/Order'
 import QueryNav from './pages/QueryNavbar/list/QueryNav'
 import IndexPayment from './pages/payment/Index'
+import Status from './pages/order/status/Status'
 import { RequireAuth } from './components/RequireAuth'
 
 
@@ -40,6 +39,13 @@ function _Routes() {
                 <QueryNav />
             </RequireAuth>
         } />
+
+        <Route path='acompanhar-pedido' element={
+            <RequireAuth redirectTo="/login">
+                <Status/> 
+            </RequireAuth>
+        } />
+
 
         <Route path='minha-conta'> 
 
