@@ -3,13 +3,17 @@ import DefaultPage from '../../../components/DefaultPage'
 import Addresses from '../../../components/Addresses'
 import useLocalStorageState from 'use-local-storage-state'
 import Address from '../../addresses/_list/Address'
+import CheckoutForm from '../../payment/CheckoutForm'
+import { getCurrentUser } from '../../../utils/UserlocalStorage'
 
 function Order() {
+  const user = getCurrentUser()
 
   const [SelectedAddress, SetSelectedAddress] = useState('')
   const [DeliveryType, SetDeliveryType] = useState('default')
 
   const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
+  const [cpf, setCpf] = useState(user?.cpf)
 
   return (
     <DefaultPage>
@@ -48,6 +52,15 @@ function Order() {
                       <span>R$ 14,99</span>
                     </div>
                   </div>
+
+                  <div style={{marginTop:'1.3rem'}}>
+                    CPF
+                    <input disabled id='cpf' type="text" className="input input-bordered input-md w-full max-w" value={cpf} />
+                  </div>
+
+                  <section className='pay-sec'>
+                    <CheckoutForm/>
+                  </section>
 
 
 
