@@ -715,9 +715,12 @@ div#content{
 
 
 #order-section{
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin-top: 16px;
+    margin-top: 16px; */    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 
@@ -819,13 +822,6 @@ div#content{
 
 }
 
-.payment-text{
-}
-
-.payment-types{
-
-}
-
 .payment-types{
     display: flex;
     flex-direction: column;
@@ -849,7 +845,6 @@ div#content{
 }
 
 .pay-sec{
-    width: 30vw;
     margin: 0 auto;
     margin-top: 2em;
 }
@@ -868,6 +863,39 @@ div#content{
 .email-checkout{
     margin-bottom: 1.5em;
 }
+
+
+
+
+.order-info-title{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.orders-title{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product-name-order{
+}
+
+.product-price-order{
+    font-weight: 500;
+}
+
+.orders{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
 
 @media only screen and (max-width: 570px) {
     #search-info{

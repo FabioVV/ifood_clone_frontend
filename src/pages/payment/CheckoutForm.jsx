@@ -1,14 +1,25 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
-import { getCurrentUser } from "../../utils/UserlocalStorage";
+import { useEffect, useState } from "react";
+import { getCurrentUser, getCurrentUserToken } from "../../utils/UserlocalStorage";
+import useLocalStorageState from "use-local-storage-state";
+import { totalPriceCart } from "../../utils/CartLocalStorage";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
     const user = getCurrentUser()
 
+    const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const [email, setEmail] = useState(user?.email)
+    const [totalAmount, setTotalAmount] = useState(0)
+    const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
+
     const stripe = useStripe()
     const elements = useElements()
+
+    useEffect(()=>{
+        setTotalAmount(parseFloat(totalPriceCart(products))+delivery_fee_speed_type+10+0.99)
+    }, [])  
+
 
     // Handle real-time validation errors from the CardElement.
     const handleChange = (event) => {
@@ -27,6 +38,33 @@ const CheckoutForm = () => {
             type: 'card',
             card: card
        });
+
+        try{
+
+            const response = await fetch('http://127.0.0.1:8000/api/v1/payments/save-stripe-info/', {
+                method:'POST',
+                headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
+
+                body:JSON.stringify({
+                    "payment_method_id": paymentMethod.id,
+                    "email":email,
+                    "cpf":user_cpf_on_nfe,
+                    "amount":totalAmount,
+                })
+            })
+
+            if(response.ok){
+                const data = await response.json()
+                console.log(data)
+            } 
+
+        } catch(e){
+            console.log(e.message)
+
+        } finally{
+            setIsLoading(false)
+
+        }
 
     }
 
@@ -51,11 +89,10 @@ const CheckoutForm = () => {
             </div>
 
             <div className="card-button">
-                <button id="finalize_pay" style={{color:"white"}} type="submit" className="btn btn-primary">
+                <button disabled={isLoading} id="finalize_pay" style={{color:"white"}} type="submit" className="btn btn-primary">
                     Realizar pagamento
                 </button>
             </div>
-
 
         </form>
     )

@@ -661,11 +661,11 @@ return (
 
 
                         CPF
-                        <input name="cpf" id='cpf' type="text" className="input input-bordered input-lg w-full max-w" placeholder="00000000000" 
-                            {...register("cpf", { required: "Campo obrigatório.", pattern: {
+                        <input name="cpf" id='cpf' type="number" className="input input-bordered input-lg w-full max-w" placeholder="00000000000" 
+                            {...register("cpf", { valueAsNumber: true, required: "Campo obrigatório.", pattern: {
                                 value: /^([0-9]{2}[.]?[0-9]{3}[.]?[0-9]{3}[/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})$/i,
                                 message: "CPF inválido"
-                            } , valueAsNumber:true, maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, onChange: (e) => {SetUser({...User, cpf:e.target.value})}, })}
+                            } ,  maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, onChange: (e) => {SetUser({...User, cpf:e.target.value})}, })}
                         />
 
                         <ErrorMessage

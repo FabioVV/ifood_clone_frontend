@@ -146,12 +146,12 @@ function PersonalInfo() {
 
                                 CPF
                                 {!CurrentUser['cpf'] ?
-                                    <input name="cpf" id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
-                                        {...register("cpf", { required: "Campo obrigatório.", maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, onChange: (e) => {SetUser({...User, cpf:e.target.value})}, })}
+                                    <input name="cpf" id='cpf' type="number" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
+                                        {...register("cpf", { valueAsNumber:true, required: "Campo obrigatório.", maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, onChange: (e) => {SetUser({...User, cpf:e.target.value})}, })}
                                     />
                                 :
-                                    <input id='cpf' type="text" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
-                                        {...register("cpf", {disabled:true,  maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, })}
+                                    <input id='cpf' type="number" className="input input-bordered input-md w-full max-w" placeholder="00000000000" 
+                                        {...register("cpf", { valueAsNumber:true, disabled:true,  maxLength:{value:11, message:'Máximo de 11 caracteres'}, minLength:{value:11, message:'Necessita no minímo 11 caracteres '}, })}
                                     />
                                 }
 

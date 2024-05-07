@@ -1,11 +1,11 @@
-import React from 'react'
+import {useState, useCallback} from 'react'
 import useLocalStorageState from "use-local-storage-state"
 
 function CartProduct({product, handleFetch}) {
 
     const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
-    const [, updateState] = React.useState();
-    const forceUpdate = React.useCallback(() => updateState({}), []);
+    const [, updateState] = useState();
+    const forceUpdate = useCallback(() => updateState({}), []);
 
 
 
