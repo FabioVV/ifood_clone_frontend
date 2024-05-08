@@ -4,6 +4,7 @@ import Addresses from '../../../components/Addresses'
 import useLocalStorageState from 'use-local-storage-state'
 import Address from '../../addresses/_list/Address'
 import CheckoutForm from '../../payment/CheckoutForm'
+import { useNavigate } from "react-router-dom";
 
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from "@stripe/stripe-js/pure";
@@ -13,6 +14,8 @@ import { totalPriceCart } from '../../../utils/CartLocalStorage'
 
 function Order() {
   const user = getCurrentUser()
+
+  const navigate = useNavigate()
 
   const [SelectedAddress, SetSelectedAddress] = useState('')
   const [DeliveryType, SetDeliveryType] = useState('default')
@@ -97,7 +100,7 @@ function Order() {
               <span id='order-info-title'>Seu pedido em</span>
               <div className='order-info-title'>
                 <h1 id='order-info-restaurant'>{products[0]?.restaurant_name}</h1>
-                <span style={{cursor:'pointer'}} className='text-primary'>Ver cardápio</span>
+                <span onClick={()=>{navigate(`/delivery/restaurante/${products[0]?.restaurant_id}/${products[0]?.restaurant_name?.replace(' ','-')+products[0]?.restaurant_state.replace('','-')}`)}} style={{cursor:'pointer'}} className='text-primary'>Ver cardápio</span>
               </div>
 
               <hr />
@@ -126,6 +129,11 @@ function Order() {
               <div>
                   <span>Taxa de entrega</span>
                   <span>R$ 10</span>
+              </div>
+
+              <div>
+                  <span>Modo de entrega - {DeliveryType == 'fast' ? "Padrão":"Rápido"}</span>
+                  <span>R$ {parseFloat(DeliveryTypePrice).toFixed(2).toString().replaceAll(".", ",")}</span>
               </div>
 
               <div id='cart-total-span'>

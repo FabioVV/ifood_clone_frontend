@@ -172,7 +172,6 @@ function Restaurants({category_list_id = '', name = ''}) {
 
   return (
     <>
-
         <div id='filters' className='sticky top-0 z-10'  style={{top:'6rem'}}>
             <ul>
             

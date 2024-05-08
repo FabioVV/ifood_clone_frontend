@@ -15,6 +15,7 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
     const [email, setEmail] = useState(user?.email)
     const [totalAmount, setTotalAmount] = useState(0)
     const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
+    const [productsIds, setProductsIds] = useState([])
 
     const stripe = useStripe()
     const elements = useElements()
@@ -22,6 +23,8 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
 
     useEffect(()=>{
         setTotalAmount(parseFloat(totalPriceCart(products))+delivery_fee_speed_type+10+0.99)
+        setProductsIds(products.map(product => product.id));
+
     }, [])  
 
 
@@ -44,7 +47,7 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
             type: 'card',
             card: card
        });
-
+       
         try{
 
             const response = await fetch('http://127.0.0.1:8000/api/v1/payments/save-stripe-info/', {
@@ -52,11 +55,13 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
                 headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
 
                 body:JSON.stringify({
-                    "payment_method_id": paymentMethod.id,
+                    "payment_method_id": paymentMethod?.id,
                     "amount":totalAmount,
                     "email":email,
-                    "cpf":user_cpf_on_nfe,
+                    "cpf":user_cpf_on_nfe ? user_cpf_on_nfe:"",
                     "user_id":user?.id,
+                    "restaurant_id":products[0]?.id,
+                    "products_ids":productsIds,
                 })
             })
 
@@ -102,7 +107,9 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
 
             <div className="card-button">
                 <button disabled={isLoading} id="finalize_pay" style={{color:"white"}} type="submit" className="btn btn-primary">
-                    Realizar pagamento
+                    
+                    {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Realizar pagamento'}
+
                 </button>
             </div>
 
