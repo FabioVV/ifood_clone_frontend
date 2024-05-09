@@ -42,12 +42,19 @@ function Order() {
                     <span style={{display:"none"}}>
                       <Addresses SetSelectedAddress={SetSelectedAddress}/>
                     </span>
-                    <Address
+                    {SelectedAddress?.id ? 
+                      
+                      <Address
                       key={SelectedAddress?.id}
                       address={SelectedAddress}
                       HandleFetch={null}
                       excludeDel={true}
-                    />
+                      />
+
+                    :
+                      <span className='mb-5 underline'>Sem endereço selecionado</span>
+                    }
+
                   </div>  
 
                   <h4 id='delivery-order-title'>Hoje, {DeliveryType == 'fast' ? "30-50 min":"20-30 min"}</h4>
@@ -79,7 +86,7 @@ function Order() {
 
                   <section className='pay-sec'>
                     <Elements stripe={stripePromise}>
-                      <CheckoutForm user_cpf_on_nfe={cpfNota ? cpf: ""} delivery_fee_speed_type={DeliveryType == 'fast' ? 8.99:14.99}/>
+                      <CheckoutForm user_cpf_on_nfe={cpfNota ? cpf: ""} delivery_fee_speed_type={DeliveryType == 'fast' ? 8.99:14.99} address_selected={SelectedAddress}/>
                     </Elements>
                   </section>
 

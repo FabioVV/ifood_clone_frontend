@@ -6,7 +6,7 @@ import { totalPriceCart } from "../../utils/CartLocalStorage";
 import { useNavigate } from "react-router-dom";
 
 
-const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
+const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type, address_selected}) => {
     const user = getCurrentUser()
     const navigate = useNavigate()
 
@@ -39,9 +39,16 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+
+        if(!address_selected?.id){
+            document.getElementById('my_modal_address').showModal()
+            return false
+        }
+
+
         const card = elements.getElement(CardElement);
         setIsLoading(true)
-
 
         const {paymentMethod, error} = await stripe.createPaymentMethod({
             type: 'card',
@@ -86,34 +93,56 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="stripe-form">
-            <div className="email-checkout">
+        <>
+            <form onSubmit={handleSubmit} className="stripe-form">
+                <div className="email-checkout">
 
-                <label className="input input-bordered flex items-center gap-2">
-                    <span className="">Email</span>
-                <input type="text" className="grow" id="email" name="name" placeholder="jenny.rosen@example.com" required
-                value={email} onChange={(event) => { setEmail(event.target.value) }} />
-                </label>
+                    <label className="input input-bordered flex items-center gap-2">
+                        <span className="">Email</span>
+                    <input type="text" className="grow" id="email" name="name" placeholder="jenny.rosen@example.com" required
+                    value={email} onChange={(event) => { setEmail(event.target.value) }} />
+                    </label>
 
-            </div>
+                </div>
 
-            <div className="card-checkout">
+                <div className="card-checkout">
 
-                <label className="card-title" htmlFor="card-element">Cartão de crédito ou débito</label>
-                    <CardElement id="card-element" onChange={handleChange} />
-                <div className="card-errors" role="alert">{error}</div>
+                    <label className="card-title" htmlFor="card-element">Cartão de crédito ou débito</label>
+                        <CardElement id="card-element" onChange={handleChange} />
+                    <div className="card-errors" role="alert">{error}</div>
 
-            </div>
+                </div>
 
-            <div className="card-button">
-                <button disabled={isLoading} id="finalize_pay" style={{color:"white"}} type="submit" className="btn btn-primary">
-                    
-                    {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Realizar pagamento'}
+                <div className="card-button">
+                    <button disabled={isLoading} id="finalize_pay" style={{color:"white"}} type="submit" className="btn btn-primary">
+                        
+                        {isLoading ? <span className="loading loading-spinner loading-lg"></span>: 'Realizar pagamento'}
 
-                </button>
-            </div>
+                    </button>
+                </div>
 
-        </form>
+            </form>
+
+
+
+            <dialog id={`my_modal_address`} className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">
+                        <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    </svg>Aviso
+                        
+                    </h3>
+                    <p className="py-4">Você precisa ter um endereço selecionado para finalizar a compra.</p>
+                    <div className="modal-action">
+
+                        <form method="dialog">
+                            <button id={`my_modal_address`} className="btn">Fechar</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+        </>
     )
 }
 

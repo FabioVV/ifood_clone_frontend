@@ -20,9 +20,9 @@ import EditProduct from './pages/products/edit/EditProduct'
 import Discover from './pages/categories/discover/Discover'
 import Order from './pages/order/finalize/Order'
 import QueryNav from './pages/QueryNavbar/list/QueryNav'
-import IndexPayment from './pages/payment/Index'
 import Status from './pages/order/status/Status'
 import { RequireAuth } from './components/RequireAuth'
+import ReportsFilter from './pages/reports/ReportsFilter'
 
 
 function _Routes() {
@@ -46,6 +46,12 @@ function _Routes() {
             </RequireAuth>
         } />
 
+
+        <Route path='relatorio' element={
+                <RequireAuth redirectTo="/login">
+                    <ReportsFilter />
+                </RequireAuth>
+        } />
 
         <Route path='minha-conta'> 
 
@@ -92,11 +98,7 @@ function _Routes() {
                 </RequireAuth>
             } />
 
-            <Route path='pagamento' element={
-                <RequireAuth redirectTo="/login">
-                    <IndexPayment />
-                </RequireAuth>
-            } />
+
 
         </Route>
 
