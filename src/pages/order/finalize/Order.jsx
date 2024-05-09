@@ -145,7 +145,7 @@ function Order() {
 
               <div id='cart-total-span'>
                   <span>Total</span>
-                  <span>R$ {parseFloat(totalPriceCart(products))+DeliveryTypePrice+10+0.99}</span>
+                  <span>R$ {parseFloat(totalPriceCart(products)+DeliveryTypePrice+10+0.99).toFixed(2)}</span>
                   
               </div>
 
