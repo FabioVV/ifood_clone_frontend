@@ -714,6 +714,7 @@ div#content{
 
 
 
+
 #order-section{
     /* display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -898,6 +899,11 @@ div#content{
 }
 
 
+.reports-container{
+
+}
+
+
 @media only screen and (max-width: 570px) {
     #search-info{
         flex-wrap: wrap;
@@ -1021,3 +1027,24 @@ div#content{
     font-size: 1.525rem;
     font-weight: 500;
 }
+
+
+
+.reports-container{
+        /* display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 16px; */    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.reports-container > div{
+    margin-left: 2rem;
+    margin-right: 2rem;
+
+    padding: 2rem;
+}
+
+

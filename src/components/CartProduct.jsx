@@ -68,8 +68,6 @@ function CartProduct({product, handleFetch}) {
         </div>
 
         <hr />
-
-
         
     </div>
   )
