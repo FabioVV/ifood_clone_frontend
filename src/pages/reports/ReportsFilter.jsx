@@ -1,36 +1,36 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DefaultPage from '../../components/DefaultPage'
-import { getCurrentUserToken } from '../../utils/UserlocalStorage'
+
+import ReportAvgPriceOverTime from './reportAvgPriceOverTime'
+import SalesPerformanceByProductCategory from './reportPerformanceByCategory'
+import TopSellingProducts from './reportTopSellingProducts'
 
 
 function ReportsFilter() {
 
     const [reportType, setReportType] = useState('')
+    const [showReport, setShowReport] = useState('')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    const [topNum, setTopNum] = useState(10)
 
-    const fetchDataReport = async (url = `http://127.0.0.1:8000/api/v1/reports/filter-data/?teste=${1}`) => {
-    
-        try{
-          const response = await fetch(url, {
-            method:'GET',
-            headers:{ Authorization:` Token ${getCurrentUserToken()}`, 'Content-Type': 'application/json'},
-          })
-      
-          const data = await response.json()
-          console.log(data)
 
-        } catch(e){
-          console.log(e.message)
-    
+    function clearFields(){
+        setEndDate('')
+        setStartDate('')
+    }
+
+    function handleProductsNumber(e){
+        const numberRegex = /^[0-9]+$/
+
+        if (numberRegex.test(e.target.value) || e.target.value == '') {
+            setTopNum(e.target.value)
         } 
 
     }
-    /*
-        Sales Performance by Product Category:
-        X-axis: Product category.
-        Y-axis: Total sales amount.
-        Filter: Date range.
-        Chart Type: Vertical bar chart.
-    */
+
+
+    useEffect(()=>{clearFields();}, [reportType])
 
     /*
         Average Order Value Over Time:
@@ -38,6 +38,14 @@ function ReportsFilter() {
         Y-axis: Average order value.
         Filter: Date range.
         Chart Type: Line chart.
+    */
+
+    /*
+        Sales Performance by Product Category:
+        X-axis: Product category.
+        Y-axis: Total sales amount.
+        Filter: Date range.
+        Chart Type: Vertical bar chart.
     */
 
     /*
@@ -49,9 +57,6 @@ function ReportsFilter() {
     */
   return (
     <DefaultPage>
-
-         
-
         <section className='reports-container'>
             <div id='filter-side'>
                 <h1 className='payment-title'>Relatórios</h1>
@@ -65,37 +70,93 @@ function ReportsFilter() {
 
                 {(() => {
                 switch (reportType) {
+                    
                     case '1':
-                        return <></>
+                        return <>
+                            <label className="form-control w-full max-w-xs">
+                                <div className="label">
+                                    <span className="label-text">De</span>
+                                </div>
+                                <input value={startDate} onChange={(e)=>setStartDate(e.target.value)} type="datetime-local" className="input input-bordered w-full max-w-xs" />
+                            </label>
+                            <label className="form-control w-full max-w-xs">
+                                <div className="label">
+                                    <span className="label-text">Até</span>
+                                </div>
+                                <input value={endDate} onChange={(e)=>setEndDate(e.target.value)} type="datetime-local" className="input input-bordered w-full max-w-xs" />
+                            </label>
+                            <button onClick={()=>{setShowReport('1')}} className="mt-5 btn btn-outline btn-info btn-xs sm:btn-sm md:btn-md lg:btn-lg">Gerar relatório</button>
+                        </>
                     case '2':
                         return <>
                             <label className="form-control w-full max-w-xs">
                                 <div className="label">
                                     <span className="label-text">De</span>
                                 </div>
-                                <input type="datetime-local" className="input input-bordered w-full max-w-xs" />
+                                <input value={startDate} onChange={(e)=>setStartDate(e.target.value)} type="datetime-local" className="input input-bordered w-full max-w-xs" />
                             </label>
                             <label className="form-control w-full max-w-xs">
                                 <div className="label">
                                     <span className="label-text">Até</span>
                                 </div>
-                                <input type="datetime-local" className="input input-bordered w-full max-w-xs" />
+                                <input value={endDate} onChange={(e)=>setEndDate(e.target.value)} type="datetime-local" className="input input-bordered w-full max-w-xs" />
                             </label>
-                            <button className="mt-5 btn btn-outline btn-info btn-xs sm:btn-sm md:btn-md lg:btn-lg">Gerar relatório</button>
+                            <button onClick={()=>{setShowReport('2')}} className="mt-5 btn btn-outline btn-info btn-xs sm:btn-sm md:btn-md lg:btn-lg">Gerar relatório</button>
+                        </>
+                    case '3':
+                        return <>
+                            <label className="form-control w-full max-w-xs">
+                                <div className="label">
+                                    <span className="label-text">De</span>
+                                </div>
+                                <input value={startDate} onChange={(e)=>setStartDate(e.target.value)} type="datetime-local" className="input input-bordered w-full max-w-xs" />
+                            </label>
+                            <label className="form-control w-full max-w-xs">
+                                <div className="label">
+                                    <span className="label-text">Até</span>
+                                </div>
+                                <input value={endDate} onChange={(e)=>setEndDate(e.target.value)} type="datetime-local" className="input input-bordered w-full max-w-xs" />
+                            </label>
+
+                            <label className="form-control w-full max-w-xs">
+                                <div className="label">
+                                    <span className="label-text">Quantos produtos?</span>
+                                </div>
+                                <input value={topNum} onChange={(e)=>handleProductsNumber(e)} type="number" placeholder="Digite o número aqui" className="input input-bordered w-full max-w-xs" />
+                            </label>
+                            <button onClick={()=>{setShowReport('3')}} className="mt-5 btn btn-outline btn-info btn-xs sm:btn-sm md:btn-md lg:btn-lg">Gerar relatório</button>
                         </>
                     default:
-                        return ""
+                        return null
                 }
                 })()}
-            
+
             </div>
 
-            <div id='chart-side'>
-            
+            <div id='chart-side' style={{ width: '75vw' }}>
+
+                {(() => {
+                    switch (showReport) {
+                        case '1':
+                            return <>
+                                <ReportAvgPriceOverTime startDate={startDate} endDate={endDate}/>
+                            </>
+                        case '2':
+                            return <>
+                                <SalesPerformanceByProductCategory startDate={startDate} endDate={endDate}/>
+                            </>
+                        case '3':
+                            return <>
+                                <TopSellingProducts topNum={topNum} startDate={startDate} endDate={endDate}/>
+                            </>
+                        default:
+                            return null
+                    }
+                })()}
+
             </div>
 
         </section>
-
 
     </DefaultPage>
   )
