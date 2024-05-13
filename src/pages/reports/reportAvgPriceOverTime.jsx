@@ -9,7 +9,8 @@ import {
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+
   } from 'chart.js'
   import { Line } from 'react-chartjs-2'
 
@@ -89,11 +90,13 @@ function ReportAvgPriceOverTime({startDate, endDate}) {
 
 
     const downloadChart = () => {
-      const chartInstance = chartRef.current.chartInstance;
+
+      const chartInstance = chartRef.current;
       const link = document.createElement('a');
-      link.download = 'chart.jpeg';
+      link.download = 'reportAverageOrderPriceOverTime.jpeg';
       link.href = chartInstance?.toBase64Image('image/jpeg', 1);
       link.click();
+
   };
 
   return (

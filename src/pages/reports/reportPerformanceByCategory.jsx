@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { getCurrentUserToken } from '../../utils/UserlocalStorage'
 
 import {
@@ -18,6 +18,7 @@ import {
 function SalesPerformanceByProductCategory({startDate, endDate}) {
 
     const [reportData, setReportData] = useState([]);
+    const chartRef = useRef(null);
 
     ChartJS.register(
         CategoryScale,
@@ -62,7 +63,7 @@ function SalesPerformanceByProductCategory({startDate, endDate}) {
 
     const chartOptions = {
         responsive: true,
-        maintainAspectRatio: false,
+        // maintainAspectRatio: false,
         locale:'pt-BR',
     };
 
@@ -82,8 +83,21 @@ function SalesPerformanceByProductCategory({startDate, endDate}) {
 
     };
 
+    const downloadChart = () => {
+
+      const chartInstance = chartRef.current;
+      const link = document.createElement('a');
+      link.download = 'reportPerformanceByCategory.jpeg';
+      link.href = chartInstance?.toBase64Image('image/jpeg', 1);
+      link.click();
+
+    };
+
   return (
-    <Bar data={chartData} options={chartOptions} />
+    <>
+      <Bar ref={chartRef} data={chartData} options={chartOptions} />
+      <button onClick={downloadChart} className="mt-5 btn btn-success btn-xs sm:btn-sm md:btn-md lg:btn-lg">Baixar relatório</button>                       
+    </>
   )
 }
 
