@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { getCurrentUserToken } from '../../utils/UserlocalStorage'
 
 import {
@@ -17,6 +17,8 @@ import {
 function ReportAvgPriceOverTime({startDate, endDate}) {
 
     const [reportData, setReportData] = useState([]);
+    const chartRef = useRef(null);
+
 
     ChartJS.register(
         CategoryScale,
@@ -27,7 +29,7 @@ function ReportAvgPriceOverTime({startDate, endDate}) {
         Tooltip,
         Legend,
     )
-    
+
 
     const fetchDataReport = async (url = `http://127.0.0.1:8000/api/v1/reports/avg-price-over-time/?startDate=${startDate}&endDate=${endDate}`) => {
 
@@ -49,6 +51,7 @@ function ReportAvgPriceOverTime({startDate, endDate}) {
 
 
     useEffect(()=>{fetchDataReport()}, [])
+    
 
     const processChartData = () => {
 
@@ -60,7 +63,7 @@ function ReportAvgPriceOverTime({startDate, endDate}) {
 
     const chartOptions = {
         responsive: true,
-        maintainAspectRatio: false, // Set to false to allow the chart to resize freely
+        // maintainAspectRatio: false, // Set to false to allow the chart to resize freely
         locale:'pt-BR',
     };
 
@@ -84,8 +87,20 @@ function ReportAvgPriceOverTime({startDate, endDate}) {
 
     };
 
+
+    const downloadChart = () => {
+      const chartInstance = chartRef.current.chartInstance;
+      const link = document.createElement('a');
+      link.download = 'chart.jpeg';
+      link.href = chartInstance?.toBase64Image('image/jpeg', 1);
+      link.click();
+  };
+
   return (
-    <Line data={chartData} options={chartOptions} />
+    <>
+      <Line ref={chartRef} data={chartData} options={chartOptions} />
+      <button onClick={downloadChart} className="mt-5 btn btn-success btn-xs sm:btn-sm md:btn-md lg:btn-lg">Baixar relatório</button>                       
+    </>
   )
 }
 

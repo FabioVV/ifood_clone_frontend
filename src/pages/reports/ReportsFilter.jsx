@@ -32,6 +32,21 @@ function ReportsFilter() {
 
     useEffect(()=>{clearFields();}, [reportType])
 
+    useEffect(() => {
+        switch (showReport) {
+            case '1':
+                setShowReport(<ReportAvgPriceOverTime startDate={startDate} endDate={endDate}/>);
+                break;
+            case '2':
+                setShowReport(<SalesPerformanceByProductCategory startDate={startDate} endDate={endDate}/>);
+                break;
+            case '3':
+                setShowReport(<TopSellingProducts topNum={topNum} startDate={startDate} endDate={endDate}/>);
+                break;
+          
+        }
+    }, [showReport, startDate, endDate, topNum]);
+
     /*
         Average Order Value Over Time:
         X-axis: Time (e.g., daily, weekly, monthly).
@@ -61,7 +76,7 @@ function ReportsFilter() {
             <div id='filter-side'>
                 <h1 className='payment-title'>Relatórios</h1>
                 <select value={reportType} onChange={(event)=>setReportType(event.target.value)} className="select select-bordered select-lg w-full max-w">
-                    <option value='' disabled selected>Escolha uma forma de relátorio</option>
+                    <option value='' disabled selected>Escolha um relátorio</option>
                     <option value='1'>Preço médio de pedido em determinado período</option>
                     <option value='2'>Produtos mais vendidos de cada categoria</option>
                     <option value='3'>Produtos mais vendidos</option>
@@ -85,11 +100,10 @@ function ReportsFilter() {
                                 </div>
                                 <input value={endDate} onChange={(e)=>setEndDate(e.target.value)} type="datetime-local" className="input input-bordered w-full max-w-xs" />
                             </label>
-                            <button onClick={()=>{setShowReport('1')}} className="mt-5 btn btn-outline btn-info btn-xs sm:btn-sm md:btn-md lg:btn-lg">Gerar relatório</button>
-                        </>
+                            <button onClick={() => {setShowReport('1')}} className="mt-5 btn btn-outline btn-info btn-xs sm:btn-sm md:btn-md lg:btn-lg">Gerar relatório</button>                        </>
                     case '2':
                         return <>
-                            <label className="form-control w-full max-w-xs">
+                            {/* <label className="form-control w-full max-w-xs">
                                 <div className="label">
                                     <span className="label-text">De</span>
                                 </div>
@@ -100,12 +114,12 @@ function ReportsFilter() {
                                     <span className="label-text">Até</span>
                                 </div>
                                 <input value={endDate} onChange={(e)=>setEndDate(e.target.value)} type="datetime-local" className="input input-bordered w-full max-w-xs" />
-                            </label>
+                            </label> */}
                             <button onClick={()=>{setShowReport('2')}} className="mt-5 btn btn-outline btn-info btn-xs sm:btn-sm md:btn-md lg:btn-lg">Gerar relatório</button>
                         </>
                     case '3':
                         return <>
-                            <label className="form-control w-full max-w-xs">
+                            {/* <label className="form-control w-full max-w-xs">
                                 <div className="label">
                                     <span className="label-text">De</span>
                                 </div>
@@ -116,7 +130,7 @@ function ReportsFilter() {
                                     <span className="label-text">Até</span>
                                 </div>
                                 <input value={endDate} onChange={(e)=>setEndDate(e.target.value)} type="datetime-local" className="input input-bordered w-full max-w-xs" />
-                            </label>
+                            </label> */}
 
                             <label className="form-control w-full max-w-xs">
                                 <div className="label">
@@ -133,27 +147,8 @@ function ReportsFilter() {
 
             </div>
 
-            <div id='chart-side' style={{ width: '75vw' }}>
-
-                {(() => {
-                    switch (showReport) {
-                        case '1':
-                            return <>
-                                <ReportAvgPriceOverTime startDate={startDate} endDate={endDate}/>
-                            </>
-                        case '2':
-                            return <>
-                                <SalesPerformanceByProductCategory startDate={startDate} endDate={endDate}/>
-                            </>
-                        case '3':
-                            return <>
-                                <TopSellingProducts topNum={topNum} startDate={startDate} endDate={endDate}/>
-                            </>
-                        default:
-                            return null
-                    }
-                })()}
-
+            <div id='chart-side' style={{ width: '80vw' }}>
+                {showReport}
             </div>
 
         </section>
