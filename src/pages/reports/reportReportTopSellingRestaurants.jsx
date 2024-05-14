@@ -15,7 +15,7 @@ import {
   import { Line } from 'react-chartjs-2'
 
 
-function ReportAvgPriceOverTime({startDate, endDate}) {
+function TopSellingRestaurants({startDate, endDate, topNum}) {
 
     const [reportData, setReportData] = useState([]);
     const chartRef = useRef(null);
@@ -32,7 +32,7 @@ function ReportAvgPriceOverTime({startDate, endDate}) {
     )
 
 
-    const fetchDataReport = async (url = `http://127.0.0.1:8000/api/v1/reports/avg-price-over-time/?startDate=${startDate}&endDate=${endDate}`) => {
+    const fetchDataReport = async (url = `http://127.0.0.1:8000/api/v1/reports/top-selling-restaurants/?startDate=${startDate}&endDate=${endDate}&topNum=${topNum}`) => {
 
         try{
           const response = await fetch(url, {
@@ -56,9 +56,9 @@ function ReportAvgPriceOverTime({startDate, endDate}) {
 
     const processChartData = () => {
 
-        const dates = reportData['data']?.map(order => order.created_at);
-        const averageOrderValues = reportData['data']?.map(order => order.avg_order_price);
-        return { dates, averageOrderValues };
+        const totalOrders = reportData['data']?.map(order => order.total_orders);
+        const restaurant = reportData['data']?.map(order => order.restaurant);
+        return { totalOrders, restaurant };
         
     };
 
@@ -69,12 +69,12 @@ function ReportAvgPriceOverTime({startDate, endDate}) {
     };
 
     const chartData = {
-        labels: processChartData().dates,
+        labels: processChartData().restaurant,
         
         datasets: [
         {
-            label: 'Preço médio',
-            data: processChartData().averageOrderValues,
+            label: 'Total de pedidos',
+            data: processChartData().totalOrders,
             borderColor: 'rgb(75, 192, 192)',
             borderWidth: 2,
             backgroundColor: [
@@ -107,4 +107,4 @@ function ReportAvgPriceOverTime({startDate, endDate}) {
   )
 }
 
-export default ReportAvgPriceOverTime
+export default TopSellingRestaurants

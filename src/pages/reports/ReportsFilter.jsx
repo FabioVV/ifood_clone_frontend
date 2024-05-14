@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import DefaultPage from '../../components/DefaultPage'
 
-import ReportAvgPriceOverTime from './reportAvgPriceOverTime'
+import TopSellingRestaurants from './reportReportTopSellingRestaurants'
 import SalesPerformanceByProductCategory from './reportPerformanceByCategory'
 import TopSellingProducts from './reportTopSellingProducts'
 import ProductPriceVsTotalSold from './reportProductPriceVsTotalSold'
@@ -35,7 +35,7 @@ function ReportsFilter() {
     useEffect(() => {
         switch (showReport) {
             case '1':
-                setShowReport(<ReportAvgPriceOverTime startDate={startDate} endDate={endDate}/>);
+                setShowReport(<TopSellingRestaurants topNum={topNum} startDate={startDate} endDate={endDate}/>);
                 break;
             case '2':
                 setShowReport(<SalesPerformanceByProductCategory startDate={startDate} endDate={endDate}/>);
@@ -46,8 +46,7 @@ function ReportsFilter() {
             case '4':
                 setShowReport(<ProductPriceVsTotalSold topNum={topNum} startDate={startDate} endDate={endDate}/>);
                 break;
-        
-    }
+        }
     }, [showReport, startDate, endDate, topNum]);
 
     /*
