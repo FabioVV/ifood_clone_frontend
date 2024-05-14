@@ -73,7 +73,7 @@ function ReportsFilter() {
         Chart Type: Horizontal bar chart.
     */
   return (
-    // Restaurantes que mais venderam
+    // Produtos mais vendidos de cada categoria
     <DefaultPage>
         <section className='reports-container'>
             <div id='filter-side'>
@@ -81,7 +81,7 @@ function ReportsFilter() {
                 <select value={reportType} onChange={(event)=>setReportType(event.target.value)} className="select select-bordered select-lg w-full max-w">
                     <option value='' disabled selected>Escolha um relátorio</option>
                     <option value='1'>Restaurantes que mais venderam</option>
-                    <option value='2'>Produtos mais vendidos de cada categoria</option>
+                    <option value='2'>Total de unidades vendidas por categoria</option>
                     <option value='3'>Produtos mais vendidos</option>
                     <option value='4'>Total vendidos do produto VS seu preço</option>
 
