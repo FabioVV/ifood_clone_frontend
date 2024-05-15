@@ -62,20 +62,20 @@ function TopSellingProducts({startDate, endDate, topNum}) {
         // maintainAspectRatio: false,
         locale:'pt-BR',
         indexAxis: 'y', 
-          scales: {
-            y: {
-              title: {
-                display: true,
-                text: 'Nome do produto'
-              }
-            },
-            x: {
-              title: {
-                display: true,
-                text: 'Quantidade vendida'
-              }
+        scales: {
+          y: {
+            title: {
+              display: true,
+              text: 'Nome do produto'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Quantidade vendida'
             }
           }
+        }
     };
 
     const chartData = {

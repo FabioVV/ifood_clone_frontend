@@ -66,6 +66,20 @@ function TopSellingRestaurants({startDate, endDate, topNum}) {
         responsive: true,
         // maintainAspectRatio: false, // Set to false to allow the chart to resize freely
         locale:'pt-BR',
+        scales: {
+        y: {
+          title: {
+            display: true,
+            text: 'Total de pedidos'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Restaurates'
+          }
+        }
+      }
     };
 
     const chartData = {
