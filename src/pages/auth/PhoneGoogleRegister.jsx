@@ -10,7 +10,7 @@ import { getCurrentUser, getCurrentUserToken, setCurrentUser } from '../../utils
 function PhoneGoogleRegister() {
     const { register, handleSubmit, setError,formState: { errors } } = useForm();
 
-    const [PhoneConfirmed, SetPhoneConfirmed] = useState(false)
+    // const [PhoneConfirmed, SetPhoneConfirmed] = useState(false)
     const [CheckOTP, SetCheckOTP]     = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 

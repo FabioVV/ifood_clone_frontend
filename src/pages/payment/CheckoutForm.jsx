@@ -6,7 +6,7 @@ import { totalPriceCart } from "../../utils/CartLocalStorage";
 import { useNavigate } from "react-router-dom";
 
 
-const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type, address_selected}) => {
+const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type, address_selected, type}) => {
     const user = getCurrentUser()
     const navigate = useNavigate()
 
@@ -19,7 +19,6 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type, address_selecte
 
     const stripe = useStripe()
     const elements = useElements()
-
 
     useEffect(()=>{
         setTotalAmount(parseFloat(totalPriceCart(products))+delivery_fee_speed_type+10+0.99)
@@ -65,9 +64,10 @@ const CheckoutForm = ({user_cpf_on_nfe, delivery_fee_speed_type, address_selecte
                     "payment_method_id": paymentMethod?.id,
                     "amount":totalAmount,
                     "email":email,
+                    "type":type,
                     "cpf":user_cpf_on_nfe ? user_cpf_on_nfe:"",
                     "user_id":user?.id,
-                    "restaurant_id":products[0]?.id,
+                    "restaurant_id":products[0].restaurant_id,
                     "products_ids":productsIds,
                 })
             })

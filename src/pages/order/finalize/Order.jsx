@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import DefaultPage from '../../../components/DefaultPage'
 import Addresses from '../../../components/Addresses'
 import useLocalStorageState from 'use-local-storage-state'
@@ -20,6 +20,8 @@ function Order() {
   const [SelectedAddress, SetSelectedAddress] = useState('')
   const [DeliveryType, SetDeliveryType] = useState('default')
   const [DeliveryTypePrice, SetDeliveryTypePrice] = useState(8.99)
+  const [Type, SetType] = useState('EE') // EE: Entrega TK: Retirar na loja
+
 
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -28,6 +30,7 @@ function Order() {
   const [cpfNota, setcpfNota] = useState(false)
 
 
+  useEffect(()=>{console.log(Type)},[Type])
   return (
     <DefaultPage>
         <section id='order-section'>
@@ -35,7 +38,7 @@ function Order() {
               <h1 id='finalize-title'>Finalize seu pedido</h1>
 
               <div role="tablist" className="tabs tabs-bordered">
-                <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Entrega" defaultChecked/>
+                <input type="radio" onClick={()=>{SetType('EE')}} name="type" role="tab" className="tab" aria-label="Entrega" defaultChecked/>
                 <div role="tabpanel" className="tab-content p-10">
 
                   <div id='user-addresses-div'>
@@ -45,10 +48,10 @@ function Order() {
                     {SelectedAddress?.id ? 
                       
                       <Address
-                      key={SelectedAddress?.id}
-                      address={SelectedAddress}
-                      HandleFetch={null}
-                      excludeDel={true}
+                        key={SelectedAddress?.id}
+                        address={SelectedAddress}
+                        HandleFetch={null}
+                        excludeDel={true}
                       />
 
                     :
@@ -86,17 +89,31 @@ function Order() {
 
                   <section className='pay-sec'>
                     <Elements stripe={stripePromise}>
-                      <CheckoutForm user_cpf_on_nfe={cpfNota ? cpf: ""} delivery_fee_speed_type={DeliveryType == 'fast' ? 8.99:14.99} address_selected={SelectedAddress}/>
+                      <CheckoutForm type={Type} user_cpf_on_nfe={cpfNota ? cpf: ""} delivery_fee_speed_type={DeliveryType == 'fast' ? 8.99:14.99} address_selected={SelectedAddress}/>
                     </Elements>
                   </section>
 
 
                 </div>
 
-                {/* <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Retirada"  disabled />
+                <input type="radio" name="type" role="tab" className="tab" aria-label="Retirada" onClick={()=>{SetType('TK')}} />
                 <div role="tabpanel" className="tab-content p-10">
-                  Retirada
-                </div> */}
+                  <div style={{marginTop:'1.3rem'}}>
+                      <div className="form-control">
+                        <label className="label cursor-pointer">
+                          <span className="label-text">CPF na nota</span> 
+                          <input type="checkbox" checked={cpfNota} onChange={()=>{setcpfNota(!cpfNota)}} className="checkbox" />
+                        </label>
+                      </div>
+                      <input disabled={cpfNota ? false: true} id='cpf' type="text" className="input input-bordered input-md w-full max-w" value={cpf} onChange={(event) => {setCpf(event.target.value)} }/>
+                    </div>
+
+                    <section className='pay-sec'>
+                      <Elements stripe={stripePromise}>
+                        <CheckoutForm type={Type} user_cpf_on_nfe={cpfNota ? cpf: ""} delivery_fee_speed_type={DeliveryType == 'fast' ? 8.99:14.99} address_selected={SelectedAddress}/>
+                      </Elements>
+                    </section>
+                </div>
 
               </div>
                 
