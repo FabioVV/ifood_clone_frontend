@@ -27,7 +27,6 @@ function Publicity() {
   })
 
   const handleCheckboxChange = (event) => {
-    alert(event.target.checked)
     SetReceive_ads({...Receive_ads, receive_ads:event.target.checked});
 
     document.getElementById('btn-sub').click()
