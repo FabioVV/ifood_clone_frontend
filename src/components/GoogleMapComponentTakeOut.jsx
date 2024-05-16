@@ -12,13 +12,11 @@ import Alert from './Alert';
 const libraries = ["places"]
 
 const mapContainerStyle = {
-    width:'100%',
+    width:'50%',
     height:'50vh',
 }
 
-
-
-function GoogleMapComponent({UserGeolocation, user_geolocation_fn}) {
+function GoogleMapComponentTakeOut({UserGeolocation, user_geolocation_fn}) {
 
     const {isLoaded, loadError} = useLoadScript({googleMapsApiKey:import.meta.env.VITE_GOOGLE_MAPS_KEY, libraries})
     const { register, handleSubmit, reset, setError, formState: { errors } } = useForm();
@@ -266,4 +264,4 @@ function GoogleMapComponent({UserGeolocation, user_geolocation_fn}) {
   )
 }
 
-export default GoogleMapComponent
+export default GoogleMapComponentTakeOut

@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react'
 import DefaultPage from '../../../components/DefaultPage'
 import Delivery from './Delivery'
 import Takeout from './Takeout'
@@ -9,17 +8,18 @@ function Status() {
 
   const user = getCurrentUser()
   const TypeBought = user?.order.type
+  const products = user?.order?.products
 
-
+  console.log(user)
   return (
     <DefaultPage>
       {(() => {
         switch (TypeBought) {
           case 'TK':
-            return <Takeout/>;
+            return <Takeout products={products}/>;
 
           case 'EE':
-            return <Delivery/>;
+            return <Delivery products={products}/>;
 
         }
       })()}

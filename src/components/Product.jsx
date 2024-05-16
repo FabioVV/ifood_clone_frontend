@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import useLocalStorageState from 'use-local-storage-state'
 
 
-function Product({product, HandleFetch}) {
+function Product({product, HandleFetch, show_modal = true}) {
   
   const [products, setProducts] = useLocalStorageState('bytefood_cart', [])
   const [TotalProductsCart, setTotalProductsCart] = useState(1)
@@ -65,7 +65,11 @@ function Product({product, HandleFetch}) {
   },[AddedToCart])
 
   return (
-    <div id="product" onClick={() => {document.getElementById(`product_modal_${product?.id}`).showModal()}}>
+    <div id="product" onClick={() => {
+        if(show_modal){
+          document.getElementById(`product_modal_${product?.id}`).showModal()
+        }
+      }}>
 
       <dialog id={`product_modal_${product?.id}`} className="modal">
         <div className="modal-box w-11/12 max-w-screen-2xl">

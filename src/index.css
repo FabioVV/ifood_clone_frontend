@@ -105,12 +105,17 @@ div.navbar{
     justify-items: center;
 }
 
+#products-takeout{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr)); /* 1 product per row */
+    gap: 1rem;
+    justify-items: center;
+}
 
-
-#product{
+#products-takeout > #product{
     max-width: fit-content;
-    width: 90%; /* adjust as needed */
-    height: 240px; /* adjust as needed */
+    width: 25vw; /* adjust as needed */
+    height: 25vh; /* adjust as needed */
     transition: 0.3s ease-in-out;
 
     display: flex;
@@ -118,9 +123,24 @@ div.navbar{
     justify-content: space-between;
     gap: 0.8rem;
     padding: 2rem;
+    border: 1px solid #e2e2e2;
+    cursor: auto;
+
+}
+
+
+#product{
+    max-width: fit-content;
+    width: 90%; /* adjust as needed */
+    height: 240px; /* adjust as needed */
+    transition: 0.3s ease-in-out;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding: 2rem;
     cursor: pointer;
     border: 1px solid #e2e2e2;
-
 }
 
 #product > div{
@@ -1029,6 +1049,29 @@ div#content{
 }
 
 
+.tk-buttons{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.takeout{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.takeout-title{
+    text-transform: none;
+    text-align: left;
+    text-align: initial;
+    letter-spacing: -1px;
+    font-weight: 600;
+    font-size: 2.125rem;
+    line-height: 2.625em;
+}
 
 .reports-container{
         /* display: grid;
