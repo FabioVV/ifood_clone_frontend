@@ -128,10 +128,9 @@ export default function GooglePlaces({user_geolocation_fn}) {
           setValue(newValue);
 
             try{
-
+              console.log(inputValue)
               const results = await getGeocode({ address: inputValue })
               const {lat, lng} =  getLatLng(results[0])
-
 
               let _results = results[0]
 

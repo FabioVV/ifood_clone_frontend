@@ -1,16 +1,23 @@
+import { useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from '../../../utils/UserlocalStorage'
 import DefaultPage from '../../../components/DefaultPage'
 import Delivery from './Delivery'
 import Takeout from './Takeout'
-import { getCurrentUser } from '../../../utils/UserlocalStorage'
-
 
 function Status() {
+  let navigate = useNavigate();
 
   const user = getCurrentUser()
-  const TypeBought = user?.order.type
+  const TypeBought = user?.order?.type 
   const products = user?.order?.products
 
-  console.log(user)
+  useEffect(()=>{
+    if(!user?.order){
+      navigate('/')
+    }
+  },[])
+
   return (
     <DefaultPage>
       {(() => {

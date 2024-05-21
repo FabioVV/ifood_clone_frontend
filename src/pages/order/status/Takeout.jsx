@@ -8,7 +8,7 @@ function Takeout({products}) {
 
     return (
         <section className="takeout">
-            <h1 className="takeout-title">Seu pedido está sendo preparado</h1>
+            <h1 className="takeout-title">Seu pedido está sendo preparado - {products[0]?.restaurant_name}</h1>
             <ProgressBar value={0} valueBuffer={100}/>
 
             <div style={{marginBottom:'1rem', marginTop:'1rem'}} id="products-takeout">
@@ -24,7 +24,7 @@ function Takeout({products}) {
             </div>
 
             <div className="map-restaurant-location">
-
+                <GoogleMapComponentTakeOut products={products}/>
             </div>
 
             <div className="tk-buttons">
