@@ -8,8 +8,11 @@ function Takeout({products}) {
 
     return (
         <section className="takeout">
-            <h1 className="takeout-title">Seu pedido está sendo preparado - {products[0]?.restaurant_name}</h1>
-            <ProgressBar value={0} valueBuffer={100}/>
+
+            <div className="sticky top-0 z-10">
+                <h1 className="takeout-title">Seu pedido está sendo preparado - {products[0]?.restaurant_name}</h1>
+                <ProgressBar value={0} valueBuffer={100}/>
+            </div>
 
             <div style={{marginBottom:'1rem', marginTop:'1rem'}} id="products-takeout">
                 
@@ -35,8 +38,6 @@ function Takeout({products}) {
 
 
 
-
-
             <dialog id={`my_modal_cancel_order`} className="modal">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">
@@ -58,8 +59,6 @@ function Takeout({products}) {
             </dialog>
 
         </section>
-
-
 
 
 
