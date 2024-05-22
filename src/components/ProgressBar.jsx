@@ -11,15 +11,25 @@ export default function ProgressBar({value, valueBuffer}) {
 
     useEffect(() => {
       progressRef.current = () => {
-        if (progress > 50) {
+
+        if(value == 100){
+          setProgress(100);
+          setBuffer(100);
+        } else {
+          if (progress > 50) {
             setProgress(0);
             setBuffer(50);
-        } else {
-          const diff = Math.random() * 25;
-          const diff2 = Math.random() * 10;
-          setProgress(progress + diff);
-          setBuffer(buffer + diff2);
+
+          } else {
+            const diff = Math.random() * 25;
+            const diff2 = Math.random() * 10;
+            setProgress(progress + diff);
+            setBuffer(buffer + diff2);
+          }
+
         }
+
+      
       };
     });
   

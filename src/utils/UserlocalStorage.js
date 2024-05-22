@@ -96,6 +96,22 @@ export function updateCurrentUser(user_new_data){
     }
 }
 
+export function removeOrderFromUser(){
+    try{
+
+        let user = getCurrentUser()
+        delete user?.order;
+
+        removeCurrentUser()
+
+        localStorage.setItem('userBytefood', JSON.stringify(user))
+
+
+    } catch(error){
+        console.log("Error updating user ->" + error)
+    }
+}
+
 
 export function updateCurrentUserOrder(order){
     try{

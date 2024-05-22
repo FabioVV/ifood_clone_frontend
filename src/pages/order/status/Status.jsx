@@ -23,7 +23,7 @@ function Status() {
       {(() => {
         switch (TypeBought) {
           case 'TK':
-            return <Takeout products={products}/>;
+            return <Takeout products={products} user_id={user?.id} order_id={user?.order?.id}/>;
 
           case 'EE':
             return <Delivery products={products}/>;

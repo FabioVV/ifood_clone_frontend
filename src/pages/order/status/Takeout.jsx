@@ -2,16 +2,150 @@ import { useEffect, useState } from "react"
 import Product from "../../../components/Product"
 import ProgressBar from "../../../components/ProgressBar"
 import GoogleMapComponentTakeOut from "../../../components/GoogleMapComponentTakeOut"
+import { getCurrentUserToken, removeOrderFromUser, getCurrentUser } from "../../../utils/UserlocalStorage"
+import { useNavigate } from "react-router-dom";
 
 
-function Takeout({products}) {
+function Takeout({products, user_id, order_id}) {
+    let navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState(false)
+    const [readyToTakeout, setReadyToTakeout] = useState(false)
+
+    const [ShowAlert, setShowAlert] = useState({
+        show: false,
+        message:'',
+        type:'',
+    })
+
+    async function markReadyToTakeout(){
+        setIsLoading(true)
+
+        try{
+
+            const res = await fetch("http://127.0.0.1:8000/api/v1/payments/mark-order-ready-tk/",{
+                method:"PATCH",
+                headers:{
+                    "Content-Type":"application/json", 
+                    Authorization:` Token ${getCurrentUserToken()}`,
+                },
+
+                body:JSON.stringify({
+                    order_id: order_id,
+                    user_id: user_id,
+                })
+            })
+
+            if (!res.ok) {
+                console.log(res.status)
+            }
+            
+            const result = await res.json()
+
+            if(result['success']){
+                setReadyToTakeout(true)
+            }
+
+
+        } catch(error){
+            console.log(error)
+
+        } finally {
+            setIsLoading(false)
+
+        }
+    }
+
+    async function markOrderDone(){
+        setIsLoading(true)
+
+        try{
+
+            const res = await fetch("http://127.0.0.1:8000/api/v1/payments/mark-order-done-tk/",{
+                method:"PATCH",
+                headers:{
+                    "Content-Type":"application/json", 
+                    Authorization:` Token ${getCurrentUserToken()}`,
+                },
+
+                body:JSON.stringify({
+                    order_id: order_id,
+                    user_id: user_id,
+                })
+            })
+
+            if (!res.ok) {
+                console.log(res.status)
+            }
+            
+            const result = await res.json()
+
+            if(result['success']){
+                removeOrderFromUser()
+                navigate('/')
+            }
+
+
+        } catch(error){
+            console.log(error)
+
+        } finally {
+            setIsLoading(false)
+
+        }
+
+    }
+
+    
+    async function markOrderCancelled(){
+        setIsLoading(true)
+
+        try{
+
+            const res = await fetch("http://127.0.0.1:8000/api/v1/payments/mark-order-cancelled-tk/",{
+                method:"PATCH",
+                headers:{
+                    "Content-Type":"application/json", 
+                    Authorization:` Token ${getCurrentUserToken()}`,
+                },
+
+                body:JSON.stringify({
+                    order_id: order_id,
+                    user_id: user_id,
+                })
+            })
+
+            if (!res.ok) {
+                console.log(res.status)
+            }
+            
+            const result = await res.json()
+
+            if(result['success']){
+                removeOrderFromUser()
+                navigate('/')
+            }
+
+
+        } catch(error){
+            console.log(error)
+
+        } finally {
+            setIsLoading(false)
+
+        }
+
+    }
 
     return (
         <section className="takeout">
 
             <div className="sticky top-0 z-10">
-                <h1 className="takeout-title">Seu pedido está sendo preparado - {products[0]?.restaurant_name}</h1>
-                <ProgressBar value={0} valueBuffer={100}/>
+                <h1 className="takeout-title">
+                    {!readyToTakeout ? " Seu pedido está sendo preparado -": "Seu pedido está pronto para ser retirado -"}
+                    {products[0]?.restaurant_name}
+                    </h1>
+                <ProgressBar value={readyToTakeout ? 100: 0} valueBuffer={100}/>
             </div>
 
             <div style={{marginBottom:'1rem', marginTop:'1rem'}} id="products-takeout">
@@ -31,9 +165,15 @@ function Takeout({products}) {
             </div>
 
             <div className="tk-buttons">
-                <button className="btn btn-info text-white">Marcar pedido pronto para retirada <i className="fa-solid fa-check"></i></button>
-                <button className="btn btn-success" >Marcar pedido entregue <i className="fa-solid fa-check"></i></button>
-                <button onClick={()=>{document.getElementById('my_modal_cancel_order').showModal()}} className="btn btn-error text-white">Cancelar pedido <i className="fa-solid fa-x"></i></button>
+                <button onClick={()=>markReadyToTakeout()} disabled={isLoading} type='submit' className="btn btn-info text-white">
+                    {isLoading ? <span className="loading loading-spinner loading-lg"></span>: <span>Marcar pedido pronto para retirada <i className="fa-solid fa-check"></i></span>}
+                </button>
+                <button onClick={()=>markOrderDone()} disabled={isLoading || readyToTakeout} type='submit' className="btn btn-success">
+                    {isLoading ? <span className="loading loading-spinner loading-lg"></span>: <span>Marcar pedido concluído <i className="fa-solid fa-check"></i></span>}
+                </button>
+                <button onClick={()=>{document.getElementById('my_modal_cancel_order').showModal()}} disabled={isLoading} type='submit' className="btn btn-error text-white">
+                    {isLoading ? <span className="loading loading-spinner loading-lg"></span>: <span>Cancelar pedido <i className="fa-solid fa-x"></i></span>}
+                </button>
             </div>
 
 
@@ -49,7 +189,7 @@ function Takeout({products}) {
                     <p className="py-4">Voçê tem certeza que deseja cancelar o pedido?</p>
                     <div className="modal-action">
 
-                        <button id={`my_modal_cancel_order`} className="btn btn-error text-white">Cancelar</button>
+                        <button onClick={()=>{markOrderCancelled()}} id={`my_modal_cancel_order`} className="btn btn-error text-white">Cancelar</button>
 
                         <form method="dialog">
                             <button id={`my_modal_cancel_order`} className="btn">Fechar</button>
