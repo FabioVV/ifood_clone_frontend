@@ -2,9 +2,11 @@ import { useEffect, useState } from "react"
 import Product from "../../../components/Product"
 import ProgressBar from "../../../components/ProgressBar"
 import GoogleMapComponentTakeOut from "../../../components/GoogleMapComponentTakeOut"
-import { getCurrentUserToken, removeOrderFromUser, getCurrentUser } from "../../../utils/UserlocalStorage"
+import { getCurrentUserToken, removeOrderFromUser } from "../../../utils/UserlocalStorage"
 import { useNavigate } from "react-router-dom";
 
+import Alert from "../../../components/Alert"
+import { show_flash_message } from "../../../utils/FlashMessages"
 
 function Takeout({products, user_id, order_id}) {
     let navigate = useNavigate();
@@ -57,6 +59,9 @@ function Takeout({products, user_id, order_id}) {
     }
 
     async function markOrderDone(){
+
+        if(!readyToTakeout) return false;
+
         setIsLoading(true)
 
         try{
@@ -95,7 +100,6 @@ function Takeout({products, user_id, order_id}) {
         }
 
     }
-
     
     async function markOrderCancelled(){
         setIsLoading(true)
@@ -139,6 +143,7 @@ function Takeout({products, user_id, order_id}) {
 
     return (
         <section className="takeout">
+            {ShowAlert?.show ? <Alert message={`${ShowAlert?.message}`} type={`${ShowAlert?.type}`}/>: ""}
 
             <div className="sticky top-0 z-10">
                 <h1 className="takeout-title">
@@ -165,10 +170,10 @@ function Takeout({products, user_id, order_id}) {
             </div>
 
             <div className="tk-buttons">
-                <button onClick={()=>markReadyToTakeout()} disabled={isLoading} type='submit' className="btn btn-info text-white">
+                <button onClick={()=>markReadyToTakeout()} disabled={isLoading || readyToTakeout} type='submit' className="btn btn-info text-white">
                     {isLoading ? <span className="loading loading-spinner loading-lg"></span>: <span>Marcar pedido pronto para retirada <i className="fa-solid fa-check"></i></span>}
                 </button>
-                <button onClick={()=>markOrderDone()} disabled={isLoading || readyToTakeout} type='submit' className="btn btn-success">
+                <button onClick={()=>markOrderDone()} disabled={isLoading || !readyToTakeout} type='submit' className="btn btn-success">
                     {isLoading ? <span className="loading loading-spinner loading-lg"></span>: <span>Marcar pedido concluído <i className="fa-solid fa-check"></i></span>}
                 </button>
                 <button onClick={()=>{document.getElementById('my_modal_cancel_order').showModal()}} disabled={isLoading} type='submit' className="btn btn-error text-white">
